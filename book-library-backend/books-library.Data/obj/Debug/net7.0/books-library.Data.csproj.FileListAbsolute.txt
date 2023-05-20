@@ -1,0 +1,14 @@
+/Users/alexia/Desktop/books-library/books-library.Data/bin/Debug/net7.0/libraries.json
+/Users/alexia/Desktop/books-library/books-library.Data/bin/Debug/net7.0/books.json
+/Users/alexia/Desktop/books-library/books-library.Data/bin/Debug/net7.0/books-library.Data.deps.json
+/Users/alexia/Desktop/books-library/books-library.Data/bin/Debug/net7.0/books-library.Data.dll
+/Users/alexia/Desktop/books-library/books-library.Data/bin/Debug/net7.0/books-library.Data.pdb
+/Users/alexia/Desktop/books-library/books-library.Data/obj/Debug/net7.0/books-library.Data.csproj.AssemblyReference.cache
+/Users/alexia/Desktop/books-library/books-library.Data/obj/Debug/net7.0/books-library.Data.GeneratedMSBuildEditorConfig.editorconfig
+/Users/alexia/Desktop/books-library/books-library.Data/obj/Debug/net7.0/books-library.Data.AssemblyInfoInputs.cache
+/Users/alexia/Desktop/books-library/books-library.Data/obj/Debug/net7.0/books-library.Data.AssemblyInfo.cs
+/Users/alexia/Desktop/books-library/books-library.Data/obj/Debug/net7.0/books-library.Data.csproj.CoreCompileInputs.cache
+/Users/alexia/Desktop/books-library/books-library.Data/obj/Debug/net7.0/books-library.Data.dll
+/Users/alexia/Desktop/books-library/books-library.Data/obj/Debug/net7.0/refint/books-library.Data.dll
+/Users/alexia/Desktop/books-library/books-library.Data/obj/Debug/net7.0/books-library.Data.pdb
+/Users/alexia/Desktop/books-library/books-library.Data/obj/Debug/net7.0/ref/books-library.Data.dll

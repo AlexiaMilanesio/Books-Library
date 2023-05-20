@@ -1,0 +1,15 @@
+.edit-book-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+
+    input {
+        margin: 1em;
+        padding: 1em;
+    }
+
+    button {
+        align-self: center;
+        padding: 1em;
+    }
+}

@@ -1,0 +1,64 @@
+.general-container {
+  max-width: 100%;
+  margin: auto;
+}
+
+h1 {
+    text-align: center;
+    margin: 1em;
+}
+
+.search-engine-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(208, 195, 224);
+
+  div {
+    margin: 0 3em;
+  }
+}
+
+table {
+  width: 100%;
+  margin: auto;
+}
+
+.mat-cell,
+.mat-header-cell {
+  padding: 0 0.5em;
+  font-size: 0.9em;
+}
+
+.mat-cell {
+  overflow: hidden;
+}
+
+.col-title {
+  text-transform: capitalize;
+}
+
+.full-width {
+  font-size: 14px;
+  width: 100%;
+}
+
+input {
+  margin: 1em 0;
+  padding: 0.5em;
+}
+
+button {
+  align-self: center;
+  padding: 0.5em;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.error-message {
+  width: 100%;
+  text-align: center;
+  margin-top: 4em;
+}

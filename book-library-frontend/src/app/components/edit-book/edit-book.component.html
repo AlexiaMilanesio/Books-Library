@@ -1,0 +1,10 @@
+<div class="edit-book-container">
+    <input type="text" placeholder="Enter title" [value]="currentBook.title" #title/>
+    <input type="text" placeholder="Enter year" [value]="currentBook.year" #year/>
+    <input type="text" placeholder="Enter publisher" [value]="currentBook.publisher" #publisher/>
+    <input type="file" [value]="currentBook.image_url" #image_url/>
+    <input type="text" placeholder="Enter library id" [value]="currentBook.libraryId" #libraryId/>
+    <input type="text" placeholder="Enter author id" [value]="currentBook.authorId" #authorId/>
+
+    <button (click)="editBook(title, year, publisher, image_url, libraryId, authorId)">Edit book</button>
+</div>

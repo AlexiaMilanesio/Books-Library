@@ -1,0 +1,10 @@
+<div class="add-book-container">
+    <input type="text" placeholder="Enter title" #title/>
+    <input type="text" placeholder="Enter year" #year/>
+    <input type="text" placeholder="Enter publisher" #publisher/>
+    <input type="file" placeholder="Enter image" #image_url/>
+    <input type="text" placeholder="Enter library id" #libraryId/>
+    <input type="text" placeholder="Enter author id" #authorId/>
+
+    <button (click)="addBook(title, year, publisher, image_url, libraryId, authorId)">Add book</button>
+</div>
