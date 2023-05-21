@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Cors;
 using static System.Reflection.Metadata.BlobBuilder;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using books_library.Api.Wrappers;
+using Microsoft.EntityFrameworkCore;
 
 namespace books_library.Api.Controllers;
 
@@ -25,12 +26,13 @@ public class BooksController : ControllerBase
         _context = context;
     }
 
-
+  
     [HttpGet("GetBooks")]
     public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
     {
         try
         {
+            // .Where(books => books.libraryId == id).Include(book => book.Author)
             List<Book> books = _context.Books.Take(1000).ToList();
             if (books == null) throw new Exception("Couldn't get all books");
 
@@ -142,20 +144,13 @@ public class BooksController : ControllerBase
             string body = await new StreamReader(Request.Body).ReadToEndAsync();
             if (string.IsNullOrWhiteSpace(body)) throw new Exception("Body is empty or a white space");
 
-            Book? book = JsonConvert.DeserializeObject<Book>(body);
-            if (book == null) throw new Exception("Book added data is empty");
+            Book? bookToAdd = JsonConvert.DeserializeObject<Book>(body);
+            if (bookToAdd == null) throw new Exception("Book added data is empty");
 
-            List<Book> books = _context.Books.ToList();
-            if (books == null) throw new Exception("Couldn't get all books");
-
-            books.Add(book);
-
-            Book? foundAddedBook = books.Find(b => b.isbn == book.isbn);
-            if (foundAddedBook == null) throw new Exception("Couldn't add new book");
-
+            _context.Books.Add(bookToAdd);
             _context.SaveChanges();
 
-            return Ok(new Response<Book>(foundAddedBook));
+            return Ok(new Response<Book>(bookToAdd));
         }
         catch (Exception e)
         {
@@ -206,16 +201,13 @@ public class BooksController : ControllerBase
         {
             if (string.IsNullOrWhiteSpace(id)) throw new Exception("Not a valid id");
 
-            List<Book> books = _context.Books.ToList();
-            if (books == null) throw new Exception("Couldn't get all books");
+            Book? bookToDelete = _context.Books.ToList().Find(book => book.isbn == id);
+            if (bookToDelete == null) throw new Exception("Book not found");
 
-            Book? foundBook = books.Find(book => book.isbn == id);
-            if (foundBook == null) throw new Exception("Book not found");
-
-            books.Remove(foundBook);
+            _context.Books.Remove(bookToDelete);
             _context.SaveChanges();
 
-            return Ok(new Response<Book>(foundBook));
+            return Ok(new Response<Book>(bookToDelete));
         }
         catch (Exception e)
         {

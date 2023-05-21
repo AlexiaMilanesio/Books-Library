@@ -16,7 +16,6 @@ export class BooksComponent implements OnInit {
   books!: MatTableDataSource<Book>;
   length!: number;
   pageEvent: PageEvent | undefined;
-  selectedLibraryId!: number;
   bookId!: string;
   errorMessage: string | undefined;
 

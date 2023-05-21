@@ -1,18 +1,29 @@
 <div class="general-container">
-  <div class="search-engine-container">
+  <div class="search-engine-container" #librarySearch>
     <div>
       <input type="num" placeholder="Enter library number" #searchedLibraryId />
       <button (click)="getLibraryId(searchedLibraryId.value); searchedLibraryId.value = ''">
-        Search
+        Search library books
       </button>
     </div>
 
-    <button (click)="resetSearch()">Reset search</button>
+    <button (click)="resetSearch()">Show libraries</button>
+  </div>
+
+  <div class="search-engine-container" #bookSearch>
+    <div>
+      <input type="text" placeholder="Enter book isbn" #searchedBookId />
+      <button (click)="getBookId(searchedBookId.value); searchedBookId.value = ''">
+        Search book by isbn
+      </button>
+    </div>
+
+    <!-- <button (click)="resetBooks()">Reset book search</button> -->
   </div>
 
   <table 
     mat-table 
-    [dataSource]="!books || books.data.length === 0 ? libraries : books" 
+    [dataSource]="dataSource" 
     *ngIf="!errorMessage"
     class="mat-elevation-z8" 
   >
@@ -22,7 +33,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="goToEditMode(row)"></tr>
   </table>
 
   <mat-paginator
