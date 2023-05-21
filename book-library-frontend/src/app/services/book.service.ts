@@ -32,8 +32,8 @@ export class BookService {
     return this.httpClient.get<BooksResponse>(this.URL + 'GetBookById/' + bookId);
   }
 
-  addBook(newBook: Book) {
-    this.httpClient.post<Book>(this.URL + 'AddBook', newBook);
+  addBook(newBook: Book): Observable<Book> {
+    return this.httpClient.post<Book>(this.URL + 'AddBook', newBook);
   }
 
   editBook(editedBook: Book): Observable<Book> {

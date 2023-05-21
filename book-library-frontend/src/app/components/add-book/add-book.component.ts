@@ -12,6 +12,7 @@ import * as uuid from 'uuid';
 export class AddBookComponent implements OnInit {
   books!: Array<Book>;
   book: Book | undefined;
+  message: string | undefined;
 
   constructor(private booksService: BookService, private router: Router) {
     this.booksService.getBooks().subscribe((books) => {
@@ -41,20 +42,17 @@ export class AddBookComponent implements OnInit {
 
     this.book = book;
     
-    try {
-      this.booksService.addBook(book);
-    }
-    catch (e: any) {
-      console.log(e)
-    }
-
-    this.booksService.getBookById(this.book.isbn).subscribe(book => {
+    this.booksService.addBook(book).subscribe(book => {
       try {
-        if (!book) throw ({ message: "Book not found" });
-        console.log(book);
+        if (!book) throw ({ message: "Couldn't add book" });
+        else {
+          console.log("Added book:");
+          console.log(book);
+          this.message = "Book added successfully";
+        }
       }
-      catch (e: any) {
-        console.log(e.message);
+      catch(e: any) {
+        this.message = e.message;
       }
     })
   }

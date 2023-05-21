@@ -43,7 +43,7 @@ export class EditBookComponent implements OnInit {
         else {
           console.log("Edited book:");
           console.log(book);
-          throw ({ message: "Book successfully edited" });
+          this.message = "Book successfully edited";
         }
       }
       catch (e: any) {
@@ -60,7 +60,7 @@ export class EditBookComponent implements OnInit {
         else {
           console.log("Deleted book:");
           console.log(book);
-          throw ({ message: "Book successfully deleted" });
+          this.message = "Book successfully deleted";
         }
       }
       catch(e: any) {
