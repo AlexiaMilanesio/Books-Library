@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { Book } from 'src/app/models/models';
+import { Book, Library } from 'src/app/models/models';
 import { BookService } from 'src/app/services/book.service';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -14,12 +14,20 @@ export class BooksComponent implements OnInit {
   @ViewChild('paginator') paginator!: MatPaginator;
   displayedColumns!: string[];
   books!: MatTableDataSource<Book>;
+  libraries!: Array<Library>;
   length!: number;
   pageEvent: PageEvent | undefined;
   bookId!: string;
+  currentLibraryId!: number;
   errorMessage: string | undefined;
 
-  constructor(private booksService: BookService, private router: Router) {}
+
+  constructor(private booksService: BookService, private router: Router) {
+    this.currentLibraryId = this.booksService.currentLibraryId;
+    this.booksService.getLibraries().subscribe(libraries => {
+      this.libraries = libraries.data;
+    })
+  }
 
   ngOnInit(): void {}
 
@@ -27,32 +35,60 @@ export class BooksComponent implements OnInit {
     this.getServerData();
   }
 
+
   public getServerData(event?: PageEvent) {
-    this.getBooks();
+    this.getLibraryBooks();
     return event;
   }
 
-  public getBooks(): void {
-    this.booksService.getBooks().subscribe(books => {
+
+  public getLibraryBooks(): void {
+    this.booksService.getBooksByLibrary(this.currentLibraryId).subscribe((books) => {
       try {
-        if (books.data.length === 0 || books === undefined) throw ({ message: "Couldn't get books" });
-        
-        this.books = new MatTableDataSource(books.data);
-        this.books.paginator = this.paginator;
-        this.length = books.data.length;
-        this.displayedColumns = Object.keys(books.data[0]);
+        if (books.data.length === 0 || books === undefined) {
+          throw ({ message: "No books where found in this library" });
+        }
+        else {
+          this.books = new MatTableDataSource(books.data);
+          this.books.paginator = this.paginator;
+          this.displayedColumns = Object.keys(books.data[0]);
+          this.length = books.data.length;
+        }
       }
       catch (e: any) {
         this.errorMessage = e.message;
+        setTimeout(() => {
+          this.errorMessage = "";
+          this.router.navigate(['Libraries']);
+        }, 4000);
       }
-    });
+    })
   }
+
+
+  // public getBooks(): void {
+  //   this.booksService.getBooks().subscribe(books => {
+  //     try {
+  //       if (books.data.length === 0 || books === undefined) throw ({ message: "Couldn't get books" });
+        
+  //       this.books = new MatTableDataSource(books.data);
+  //       this.books.paginator = this.paginator;
+  //       this.length = books.data.length;
+  //       this.displayedColumns = Object.keys(books.data[0]);
+  //     }
+  //     catch (e: any) {
+  //       this.errorMessage = e.message;
+  //     }
+  //   });
+  // }
+
 
   public getBookId(id: string): void {
     if (id === "" || id === " ") return;
     this.bookId = id;
     this.searchBookById();
   }
+
 
   public searchBookById(): void {
     this.booksService.getBookById(this.bookId).subscribe(book => {
@@ -72,9 +108,16 @@ export class BooksComponent implements OnInit {
     })
   }
 
-  public resetBooks(): void {
-    this.getBooks();
+
+  public resetLibraryBooks(): void {
+    this.getLibraryBooks();
   }
+
+
+  public goToLibraries(): void {
+    this.router.navigate(['Libraries']);
+  }
+
 
   public goToEditMode(bookToEdit: Book): void {
     this.booksService.setCurrentBook(bookToEdit);

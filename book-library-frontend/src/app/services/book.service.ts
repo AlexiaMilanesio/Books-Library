@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 export class BookService {
   URL: string = "https://localhost:7156/Books/";
   currentBook!: Book;
+  currentLibraryId!: number;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -46,5 +47,9 @@ export class BookService {
 
   setCurrentBook(currentBook: Book) {
     this.currentBook = currentBook;
+  }
+
+  setCurrentLibraryId(currentLibraryId: number) {
+    this.currentLibraryId = currentLibraryId;
   }
 }

@@ -2,12 +2,12 @@
   <div class="search-engine-container">
     <div>
       <input type="text" placeholder="Enter book id" #searchedBookId />
-      <button (click)="getBookId(searchedBookId.value); searchedBookId.value = ''">
-        Search
-      </button>
+      <button (click)="getBookId(searchedBookId.value); searchedBookId.value = ''">Search book</button>
     </div>
 
-    <button (click)="resetBooks()">Reset books</button>
+    <button (click)="resetLibraryBooks()">Reset library books</button>
+
+    <button (click)="goToLibraries()" class="show-libraries-btn">Show libraries</button>
   </div>
 
   <table 

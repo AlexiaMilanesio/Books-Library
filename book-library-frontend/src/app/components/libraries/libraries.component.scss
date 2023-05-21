@@ -34,6 +34,10 @@ table {
   overflow: hidden;
 }
 
+td:hover {
+  cursor: pointer;
+}
+
 .col-title {
   text-transform: capitalize;
 }
@@ -62,5 +66,4 @@ button:hover {
   text-align: center;
   margin-top: 4em;
   color: black;
-  font-weight: bold;
 }
