@@ -31,7 +31,7 @@ export class AddBookComponent implements OnInit {
     let book = {
       isbn: uuid.v4().toString(),
       title: title.value.toString(),
-      year: Number(year),
+      year: Number(year.value),
       publisher: publisher.value.toString(),
       image_url: image_url.value.toString(),
       libraryId: Number(libraryId.value),

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Book } from 'src/app/models/models';
 import { BookService } from 'src/app/services/book.service';
 
@@ -11,7 +12,7 @@ export class EditBookComponent implements OnInit {
   currentBook!: Book;
   message: string = "";
 
-  constructor(private booksService: BookService) {
+  constructor(private booksService: BookService, private router: Router) {
     this.currentBook = this.booksService.currentBook;
   }
 
@@ -53,7 +54,6 @@ export class EditBookComponent implements OnInit {
 
   
   public deleteBook(): void {
-    console.log(this.currentBook.isbn)
     this.booksService.deleteBook(this.currentBook.isbn).subscribe(book => {
       try {
         if (!book) throw ({ message: "Book couldn't be deleted" });
@@ -67,5 +67,10 @@ export class EditBookComponent implements OnInit {
         this.message = e.message;
       }
     });
+  }
+
+
+  public goToBooks(): void {
+    this.router.navigate(['Books']);
   }
 }

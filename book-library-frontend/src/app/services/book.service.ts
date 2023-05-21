@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
 })
 export class BookService {
   URL: string = "https://localhost:7156/Books/";
-  books: Array<Book> = [];
   currentBook!: Book;
 
   constructor(private httpClient: HttpClient) {}
@@ -42,11 +41,7 @@ export class BookService {
   }
 
   deleteBook(bookId: string): Observable<Book> {
-    return this.httpClient.get<Book>(this.URL + 'DeleteBook/' + bookId);
-  }
-
-  setUpdatedBooks(books: Array<Book>) {
-    this.books = books;
+    return this.httpClient.delete<Book>(this.URL + 'DeleteBook/' + bookId);
   }
 
   setCurrentBook(currentBook: Book) {

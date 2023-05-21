@@ -43,13 +43,15 @@
 
   
   <div class="btn-container">
-    <button (click)="editBook(title, year, publisher, image_url, libraryId, authorId)">
-        Edit book
+    <button (click)="editBook(title, year, publisher, image_url, libraryId, authorId)" class="edit-btn">
+      Edit book
     </button>
 
-    <button (click)="deleteBook()">
-        Delete book
+    <button (click)="deleteBook()" class="delete-btn">
+      Delete book
     </button>
+
+    <button (click)="goToBooks()">Return to books</button>
   </div>
 
 

@@ -58,7 +58,7 @@ export class BooksComponent implements OnInit {
   public searchBookById(): void {
     this.booksService.getBookById(this.bookId).subscribe(book => {
       try {
-        if (!book.data) throw ({ message: "No book was found, try with a different id"});
+        if (book.data.length === 0) throw ({ message: "No book was found, try with a different id"});
 
         this.books = new MatTableDataSource(book.data);
         this.books.paginator = this.paginator;
@@ -66,6 +66,9 @@ export class BooksComponent implements OnInit {
       }
       catch (e: any) {
         this.errorMessage = e.message;
+        setTimeout(() => {
+          this.errorMessage = "";
+        }, 4000);
       }
     })
   }

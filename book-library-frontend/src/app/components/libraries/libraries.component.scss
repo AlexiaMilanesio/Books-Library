@@ -57,8 +57,10 @@ button:hover {
   cursor: pointer;
 }
 
-.error-message {
+.message {
   width: 100%;
   text-align: center;
   margin-top: 4em;
+  color: black;
+  font-weight: bold;
 }

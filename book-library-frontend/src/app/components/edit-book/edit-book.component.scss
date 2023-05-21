@@ -37,15 +37,28 @@ button {
   padding: 1em;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
+.delete-btn {
+  color: rgb(236, 55, 55);
+}
+
+.edit-btn {
+  color: rgb(67, 178, 60);
+}
+
 .btn-container {
-  width: 300px;
+  width: 450px;
   display: flex;
   justify-content: space-between;
 }
 
 .message {
-  margin-top: 1em;
-  color: black;
-  text-align: center;
   width: 100%;
+  text-align: center;
+  margin-top: 2em;
+  color: black;
+  font-weight: bold;
 }
