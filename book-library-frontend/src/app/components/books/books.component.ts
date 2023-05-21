@@ -21,9 +21,7 @@ export class BooksComponent implements OnInit {
 
   constructor(private booksService: BookService) {}
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit() {
     this.getServerData();
@@ -35,20 +33,19 @@ export class BooksComponent implements OnInit {
   }
 
   public getBooks(): void {
-    try {
-      this.booksService.getBooks().subscribe(books => {
+    this.booksService.getBooks().subscribe(books => {
+      try {
         if (books.data.length === 0 || books === undefined) throw ({ message: "Couldn't get books" });
-
+        
         this.books = new MatTableDataSource(books.data);
         this.books.paginator = this.paginator;
         this.displayedColumns = Object.keys(books.data[0]);
         this.length = books.data.length;
-        }
-      );
-    }
-    catch (e: any) {
-      this.errorMessage = e.message;
-    }
+      }
+      catch (e: any) {
+        this.errorMessage = e.message;
+      }
+    });
   }
 
   public getBookId(id: string): void {
@@ -61,8 +58,10 @@ export class BooksComponent implements OnInit {
     this.booksService.getBookById(this.bookId).subscribe(book => {
       try {
         if (!book.data) throw ({ message: "No book was found, try with a different id"});
+
         this.books = new MatTableDataSource(book.data);
-        console.log(this.books)
+        this.books.paginator = this.paginator;
+        this.displayedColumns = Object.keys(book.data[0]);
         this.length = this.books.data.length;
       }
       catch (e: any) {

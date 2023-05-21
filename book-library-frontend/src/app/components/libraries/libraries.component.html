@@ -29,7 +29,6 @@
     #paginator
     *ngIf="!errorMessage"
     [pageSizeOptions]="[10, 25, 50, 100]"
-    [pageSize]="10"
     [length]="length"
     showFirstLastButtons
     (page)="pageEvent = getServerData($event)"

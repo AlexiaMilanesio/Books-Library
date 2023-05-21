@@ -15,14 +15,15 @@ export class LibrariesComponent implements OnInit {
   libraries!: MatTableDataSource<Library>;
   books!: MatTableDataSource<any>;
   length!: number;
-  pageSize!: number;
   pageEvent: PageEvent | undefined;
   libraryId!: number; 
   errorMessage: string | undefined;
 
   constructor(private booksService: BookService) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  ngAfterViewInit() {
     this.getLibraries();
   }
 
@@ -67,8 +68,7 @@ export class LibrariesComponent implements OnInit {
       catch (e: any) {
         this.errorMessage = e.message;
         setTimeout(() => {
-          this.errorMessage = "" 
-          this.getLibraries();
+          this.errorMessage = "";
         }, 4000);
       }
     })
