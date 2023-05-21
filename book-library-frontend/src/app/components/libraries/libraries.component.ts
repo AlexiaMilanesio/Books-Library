@@ -15,6 +15,7 @@ export class LibrariesComponent implements OnInit {
   libraries!: MatTableDataSource<Library>;
   books!: MatTableDataSource<any>;
   length!: number;
+  pageSize!: number;
   pageEvent: PageEvent | undefined;
   libraryId!: number; 
   errorMessage: string | undefined;
@@ -27,8 +28,15 @@ export class LibrariesComponent implements OnInit {
 
   public getLibraries(): void {
     this.booksService.getLibraries().subscribe((libraries) => {
-      this.libraries = new MatTableDataSource(libraries.data);
-      this.displayedColumns = Object.keys(libraries.data[0]);
+      try {
+        this.libraries = new MatTableDataSource(libraries.data);
+        this.displayedColumns = Object.keys(libraries.data[0]);
+
+        if (libraries.data.length === 0 || libraries === undefined) throw ({ message: "There's been an error: no libraries where found" });
+      }
+      catch (e: any) {
+        this.errorMessage = e.message;
+      }
     });
   }
 
@@ -46,7 +54,8 @@ export class LibrariesComponent implements OnInit {
   public searchLibraryBooks(): void {
     this.booksService.getBooksByLibrary(this.libraryId).subscribe((books) => {
       try {
-        let idExists = this.libraries.data.find((library: Library) => library.id === this.libraryId)
+        let idExists = this.libraries.data.find((library: Library) => library.id === this.libraryId);
+          
         if (idExists === undefined) throw ({ message: "Id doesn't exists, try a different one" });
         if (books.data.length === 0 || books === undefined) throw ({ message: "No books where found in this library" });
 
@@ -57,10 +66,12 @@ export class LibrariesComponent implements OnInit {
       }
       catch (e: any) {
         this.errorMessage = e.message;
-        setTimeout(() => this.errorMessage = "", 4000);
-        this.getLibraries();
+        setTimeout(() => {
+          this.errorMessage = "" 
+          this.getLibraries();
+        }, 4000);
       }
-    });
+    })
   }
 
   public resetSearch(): void {
