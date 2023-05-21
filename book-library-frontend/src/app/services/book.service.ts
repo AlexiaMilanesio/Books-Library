@@ -28,7 +28,7 @@ export class BookService {
   }
 
   getBooksByLibrary(libraryId: number, pageNumber: number, pageSize: number): Observable<PagedBooksResponse> {
-    return this.httpClient.get<PagedBooksResponse>(this.URL + 'GetBooksByLibrary/' + libraryId + "?pageNumner=" + pageNumber + "&pageSize=" + pageSize);
+    return this.httpClient.get<PagedBooksResponse>(this.URL + 'GetBooksByLibrary/' + libraryId + "?pageNumber=" + pageNumber + "&pageSize=" + pageSize);
   }
 
   getBooksByAuthor(bookAuthor: string): Observable<BooksResponse> {

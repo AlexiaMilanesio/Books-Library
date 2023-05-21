@@ -42,10 +42,20 @@ export class BooksComponent implements OnInit {
 
   public getServerData(event?: PageEvent) {
     if (event) {
-      console.log("library id: " + this.libraryId + ", page number: " + (event?.pageIndex + 1) + ", page size: " + this.pageSize)
-      this.getLibraryBooks(this.libraryId, event?.pageIndex + 1, this.pageSize);
+      this.pageNumber = event.pageIndex + 1;
+      this.pageSize = event.pageSize;
+      console.log(
+        "library id: " + this.libraryId + 
+        ", page number: " + this.pageNumber + 
+        ", page size: " + this.pageSize
+      );
+      this.getLibraryBooks(this.libraryId, this.pageNumber , this.pageSize);
     } else {
-      console.log("library id: " + this.libraryId + ", page number: " +  this.pageNumber + ", page size: " + this.pageSize)
+      console.log(
+        "library id: " + this.libraryId + 
+        ", page number: " +  this.pageNumber + 
+        ", page size: " + this.pageSize
+      );
       this.getLibraryBooks(this.libraryId, this.pageNumber, this.pageSize);
     }
     return event;
@@ -59,6 +69,7 @@ export class BooksComponent implements OnInit {
           throw ({ message: "No books where found in this library" });
         }
         else {
+          console.log(response);
           this.books = new MatTableDataSource(response.data);
           this.books.paginator = this.paginator;
           this.displayedColumns = Object.keys(response.data[0]);
