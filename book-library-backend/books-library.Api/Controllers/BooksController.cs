@@ -88,16 +88,31 @@ public class BooksController : ControllerBase
 
 
     [HttpGet("GetBooksByLibrary/{id}")]
-    public async Task<ActionResult<IEnumerable<Book>>> GetBooksByLibary(string id, [FromQuery] PaginationFilter filter)
+    public async Task<ActionResult<IEnumerable<Book>>> GetBooksByLibary(string id)
     {
         try
         {
+            string? pageNumber = Request.Query["pageNumber"];
+            string? pageSize = Request.Query["pageSize"];
+
+            if (
+                string.IsNullOrWhiteSpace(pageNumber) ||
+                string.IsNullOrWhiteSpace(pageSize) ||
+                string.IsNullOrWhiteSpace(id)
+            ) throw new Exception("Didn't get all parameters needed");
+
+
             int libraryId;
             if (!int.TryParse(id, out libraryId)) throw new Exception("Not a valid id");
-            
-            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+
+            int pNumber, pSize;
+            if (!int.TryParse(pageNumber, out pNumber) || !int.TryParse(pageSize, out pSize)) throw new Exception("Parameters have to be numbers");
+
+
+            var validFilter = new PaginationFilter(pNumber, pSize);
 
             List<Book> books = _context.Books.ToList();
+            if (books == null) throw new Exception("Couldn't get all books");
 
             List<Book> pagedData = books
                 .FindAll(book => book.libraryId == libraryId)
@@ -105,11 +120,10 @@ public class BooksController : ControllerBase
                 .Take(validFilter.PageSize)
                 .ToList();
 
-            int totalPages = _context.Books.Where(book => book.libraryId == libraryId).Count() / filter.PageSize;
+            int totalPages = _context.Books.Where(book => book.libraryId == libraryId).Count() / pSize;
             int totalRecords = _context.Books.Where(book => book.libraryId == libraryId).Count();
 
-            if (books == null) throw new Exception("Couldn't get all books");
-
+            
             return Ok(new PagedResponse<List<Book>>(pagedData, validFilter.PageNumber, validFilter.PageSize, totalPages, totalRecords));
         }
         catch (Exception e)
