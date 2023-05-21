@@ -65,24 +65,7 @@ export class BooksComponent implements OnInit {
     })
   }
 
-
-  // public getBooks(): void {
-  //   this.booksService.getBooks().subscribe(books => {
-  //     try {
-  //       if (books.data.length === 0 || books === undefined) throw ({ message: "Couldn't get books" });
-        
-  //       this.books = new MatTableDataSource(books.data);
-  //       this.books.paginator = this.paginator;
-  //       this.length = books.data.length;
-  //       this.displayedColumns = Object.keys(books.data[0]);
-  //     }
-  //     catch (e: any) {
-  //       this.errorMessage = e.message;
-  //     }
-  //   });
-  // }
-
-
+  
   public getBookId(id: string): void {
     if (id === "" || id === " ") return;
     this.bookId = id;
