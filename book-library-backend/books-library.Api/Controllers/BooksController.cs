@@ -9,6 +9,7 @@ using static System.Reflection.Metadata.BlobBuilder;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using books_library.Api.Wrappers;
 using Microsoft.EntityFrameworkCore;
+using books_library.Api.Services;
 
 namespace books_library.Api.Controllers;
 
@@ -51,16 +52,16 @@ public class BooksController : ControllerBase
     //    try
     //    {
     //        var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
-    //        List<Book> pagedBooks = _context.Books
+    //        List<Book> pagedData = _context.Books
     //            .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
     //            .Take(validFilter.PageSize)
     //            .ToList();
-    //        int totalBookCount = _context.Books.Count();
+    //        int totalRecords = _context.Books.Count();
 
-    //        if (pagedBooks == null) throw new Exception("Couldn't get paged books");
-    //        if (totalBookCount == 0) throw new Exception("Couldn't get books");
+    //        if (pagedData == null) throw new Exception("Couldn't get paged books");
+    //        if (totalRecords == 0) throw new Exception("Couldn't get books");
 
-    //        return Ok(new PagedResponse<List<Book>>(pagedBooks, validFilter.PageNumber, validFilter.PageSize));
+    //        return Ok(new PagedResponse<List<Book>>(pagedData, validFilter.PageNumber, validFilter.PageSize));
     //    }
     //    catch(Exception e)
     //    {
@@ -98,19 +99,18 @@ public class BooksController : ControllerBase
 
             List<Book> books = _context.Books.ToList();
 
-            List<Book> pagedBooks = books
+            List<Book> pagedData = books
                 .FindAll(book => book.libraryId == libraryId)
                 .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
                 .Take(validFilter.PageSize)
                 .ToList();
 
-            int totalBookCount = _context.Books.Where(book => book.libraryId == libraryId).Count();
+            int totalPages = _context.Books.Where(book => book.libraryId == libraryId).Count() / filter.PageSize;
+            int totalRecords = _context.Books.Where(book => book.libraryId == libraryId).Count();
 
             if (books == null) throw new Exception("Couldn't get all books");
-            if (pagedBooks == null) throw new Exception("Couldn't get paged books");
-            if (totalBookCount == 0) throw new Exception("Couldn't get books count");
 
-            return Ok(new PagedResponse<List<Book>>(pagedBooks, validFilter.PageNumber, validFilter.PageSize));
+            return Ok(new PagedResponse<List<Book>>(pagedData, validFilter.PageNumber, validFilter.PageSize, totalPages, totalRecords));
         }
         catch (Exception e)
         {
