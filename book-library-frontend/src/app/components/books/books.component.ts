@@ -3,6 +3,7 @@ import { Book } from 'src/app/models/models';
 import { BookService } from 'src/app/services/book.service';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-books',
@@ -19,7 +20,7 @@ export class BooksComponent implements OnInit {
   bookId!: string;
   errorMessage: string | undefined;
 
-  constructor(private booksService: BookService) {}
+  constructor(private booksService: BookService, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -39,8 +40,8 @@ export class BooksComponent implements OnInit {
         
         this.books = new MatTableDataSource(books.data);
         this.books.paginator = this.paginator;
-        this.displayedColumns = Object.keys(books.data[0]);
         this.length = books.data.length;
+        this.displayedColumns = Object.keys(books.data[0]);
       }
       catch (e: any) {
         this.errorMessage = e.message;
@@ -61,7 +62,6 @@ export class BooksComponent implements OnInit {
 
         this.books = new MatTableDataSource(book.data);
         this.books.paginator = this.paginator;
-        this.displayedColumns = Object.keys(book.data[0]);
         this.length = this.books.data.length;
       }
       catch (e: any) {
@@ -72,5 +72,10 @@ export class BooksComponent implements OnInit {
 
   public resetBooks(): void {
     this.getBooks();
+  }
+
+  public goToEditMode(bookToEdit: Book): void {
+    this.booksService.setCurrentBook(bookToEdit);
+    this.router.navigate(["EditBook"]);
   }
 }

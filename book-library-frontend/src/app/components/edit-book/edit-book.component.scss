@@ -1,15 +1,51 @@
+.general-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: auto;
+}
+
+h2 {
+  margin-top: 2em;
+}
+
 .edit-book-container {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+
+  p {
     display: flex;
-    flex-direction: column;
-    max-width: 400px;
+    justify-content: flex-start;
+    align-self: flex-start;
+    padding: 1em;
+    margin-left: 1em;
+    background-color: lightgray;
+    font-weight: bold;
+  }
 
-    input {
-        margin: 1em;
-        padding: 1em;
-    }
+  input {
+    margin: 1em;
+    padding: 1em;
+  }
+}
 
-    button {
-        align-self: center;
-        padding: 1em;
-    }
+button {
+  align-self: center;
+  padding: 1em;
+}
+
+.btn-container {
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.message {
+  margin-top: 1em;
+  color: black;
+  text-align: center;
+  width: 100%;
 }

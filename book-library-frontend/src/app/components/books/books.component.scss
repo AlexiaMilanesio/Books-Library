@@ -29,8 +29,16 @@ table {
   overflow: hidden;
 }
 
+.mat-cell:hover {
+  cursor: pointer;
+}
+
 .col-title {
   text-transform: capitalize;
+}
+
+.delete-btn, .edit-btn {
+  background-color: lightgray;
 }
 
 .full-width {

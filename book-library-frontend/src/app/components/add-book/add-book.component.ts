@@ -10,11 +10,11 @@ import * as uuid from 'uuid';
 })
 export class AddBookComponent implements OnInit {
   books!: Array<Book>;
+  book: Book | undefined;
 
   constructor(private booksService: BookService) {
     this.booksService.getBooks().subscribe((books) => {
       this.books = books.data;
-      console.log(this.books);
     });
   }
 
@@ -38,8 +38,23 @@ export class AddBookComponent implements OnInit {
       authorId: Number(authorId.value),
     };
 
-    console.log(book);
-    console.log(this.books);
-    this.booksService.addBook(book);
+    this.book = book;
+    
+    try {
+      this.booksService.addBook(book);
+    }
+    catch (e: any) {
+      console.log(e)
+    }
+
+    this.booksService.getBookById(this.book.isbn).subscribe(book => {
+      try {
+        if (!book) throw ({ message: "Book not found" });
+        console.log(book);
+      }
+      catch (e: any) {
+        console.log(e.message);
+      }
+    })
   }
 }

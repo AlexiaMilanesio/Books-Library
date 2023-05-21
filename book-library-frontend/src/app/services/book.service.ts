@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Book, Library, BooksResponse, LibrariesResponse, AuthorsResponse } from '../models/models';
+import { Book, BooksResponse, LibrariesResponse, AuthorsResponse } from '../models/models';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -37,12 +37,12 @@ export class BookService {
     this.httpClient.post<Book>(this.URL + 'AddBook', newBook);
   }
 
-  editBook(editedBook: Book) {
-    this.httpClient.post<Book>(this.URL + 'EditBook', editedBook);
+  editBook(editedBook: Book): Observable<Book> {
+    return this.httpClient.put<Book>(this.URL + 'EditBook', editedBook);
   }
 
-  deleteBook(bookId: string): Observable<Book[]> {
-    return this.httpClient.get<Book[]>(this.URL + 'DeleteBook/' + bookId); // todo revisar type
+  deleteBook(bookId: string): Observable<Book> {
+    return this.httpClient.get<Book>(this.URL + 'DeleteBook/' + bookId);
   }
 
   setUpdatedBooks(books: Array<Book>) {

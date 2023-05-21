@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Book } from 'src/app/models/models';
 import { BookService } from 'src/app/services/book.service';
 
@@ -9,10 +9,10 @@ import { BookService } from 'src/app/services/book.service';
 })
 export class EditBookComponent implements OnInit {
   currentBook!: Book;
+  message: string = "";
 
   constructor(private booksService: BookService) {
     this.currentBook = this.booksService.currentBook;
-    console.log(this.currentBook);
   }
 
   ngOnInit(): void {}
@@ -24,22 +24,46 @@ export class EditBookComponent implements OnInit {
     image_url: HTMLInputElement,
     libraryId: HTMLInputElement,
     authorId: HTMLInputElement
-  ) {
-    let editedBook = {
-      ...this.currentBook,
+  ): void {
+    const editedBook: Book = {
+      isbn: this.currentBook.isbn,
       title: title.value.toString(),
-      year: Number(year),
+      year: Number(year.value),
       publisher: publisher.value.toString(),
       image_url: image_url.value.toString(),
       libraryId: Number(libraryId.value),
       authorId: Number(authorId.value),
     };
 
-    console.log(editedBook);
-    this.booksService.addBook(editedBook);
-    this.booksService.books.forEach((book) => {
-      if (book.isbn === this.currentBook.isbn) {
-        book = editedBook;
+    this.booksService.editBook(editedBook).subscribe(book => {
+      try {
+        if (!book) throw ({ message: "Book couldn't be edited" });
+
+        else {
+          console.log("Edited book:");
+          console.log(book);
+          throw ({ message: "Book successfully edited" });
+        }
+      }
+      catch (e: any) {
+        this.message = e.message;
+      }
+    });
+  }
+
+  
+  public deleteBook(): void {
+    this.booksService.deleteBook(this.currentBook.isbn).subscribe(book => {
+      try {
+        if (!book) throw ({ message: "Book couldn't be deleted" });
+        else {
+          console.log("Deleted book:");
+          console.log(book);
+          throw ({ message: "Book successfully deleted" });
+        }
+      }
+      catch(e: any) {
+        this.message = e.message;
       }
     });
   }

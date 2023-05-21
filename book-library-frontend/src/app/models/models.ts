@@ -1,5 +1,3 @@
-// Backend types
-
 export interface Book {
   isbn: string;
   title: string;
@@ -22,8 +20,6 @@ export interface Author {
   name: string;
   year: number;
 }
-
-// Response types
 
 export interface BooksResponse {
   data: Book[];
