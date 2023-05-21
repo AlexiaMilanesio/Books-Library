@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Book } from 'src/app/models/models';
 import { BookService } from 'src/app/services/book.service';
 import * as uuid from 'uuid';
@@ -12,7 +13,7 @@ export class AddBookComponent implements OnInit {
   books!: Array<Book>;
   book: Book | undefined;
 
-  constructor(private booksService: BookService) {
+  constructor(private booksService: BookService, private router: Router) {
     this.booksService.getBooks().subscribe((books) => {
       this.books = books.data;
     });
@@ -56,5 +57,10 @@ export class AddBookComponent implements OnInit {
         console.log(e.message);
       }
     })
+  }
+
+
+  public goToBooks(): void {
+    this.router.navigate(['Books']);
   }
 }
