@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Book, BooksResponse, LibrariesResponse } from '../models/models';
+import { Book, BooksResponse, PagedBooksResponse, LibrariesResponse } from '../models/models';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -27,8 +27,8 @@ export class BookService {
     return this.httpClient.get<LibrariesResponse>(this.URL + 'GetLibraries');
   }
 
-  getBooksByLibrary(libraryId: number): Observable<BooksResponse> {
-    return this.httpClient.get<BooksResponse>(this.URL + 'GetBooksByLibrary/' + libraryId);
+  getBooksByLibrary(libraryId: number, pageNumber: number, pageSize: number): Observable<PagedBooksResponse> {
+    return this.httpClient.get<PagedBooksResponse>(this.URL + 'GetBooksByLibrary/' + libraryId + "?pageNumner=" + pageNumber + "&pageSize=" + pageSize);
   }
 
   getBooksByAuthor(bookAuthor: string): Observable<BooksResponse> {

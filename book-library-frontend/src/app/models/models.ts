@@ -28,6 +28,21 @@ export interface BooksResponse {
   message: string;
 }
 
+export interface PagedBooksResponse {
+  pageNumber: number;
+  pageSize: number;
+  firstPage: number;
+  lastPage: number;
+  totalPages: number;
+  totalRecords: number;
+  nextPage: number;
+  previousPage: number;
+  data: Book[];
+  succeeded: true;
+  errors: null;
+  message: string;
+}
+
 export interface LibrariesResponse {
   data: Library[];
   succeded: boolean;

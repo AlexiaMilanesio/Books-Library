@@ -28,8 +28,10 @@
   <mat-paginator
     #paginator
     *ngIf="!errorMessage"
-    [pageSizeOptions]="[10, 25, 50, 100]"
+    [pageIndex]="pageIndex"
     [length]="length"
+    [pageSizeOptions]="pageSizeOptions"
+    [pageSize]="pageSize"
     showFirstLastButtons
     (page)="pageEvent = getServerData($event)"
   ></mat-paginator>

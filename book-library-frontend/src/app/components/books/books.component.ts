@@ -14,16 +14,20 @@ export class BooksComponent implements OnInit {
   @ViewChild('paginator') paginator!: MatPaginator;
   displayedColumns!: string[];
   books!: MatTableDataSource<Book>;
-  libraries!: Array<Library>;
-  length!: number;
-  pageEvent: PageEvent | undefined;
   bookId!: string;
-  currentLibraryId!: number;
+  libraries!: Array<Library>;
+  libraryId!: number;
   errorMessage: string | undefined;
+  length!: number;
+  pageNumber: number = 1; 
+  pageIndex: number = 0;
+  pageSize: number = 10;
+  pageSizeOptions: Array<number> = [10, 25, 50, 100];
+  pageEvent: PageEvent | undefined;
 
 
   constructor(private booksService: BookService, private router: Router) {
-    this.currentLibraryId = this.booksService.currentLibraryId;
+    this.libraryId = this.booksService.currentLibraryId;
     this.booksService.getLibraries().subscribe(libraries => {
       this.libraries = libraries.data;
     })
@@ -37,22 +41,28 @@ export class BooksComponent implements OnInit {
 
 
   public getServerData(event?: PageEvent) {
-    this.getLibraryBooks();
+    if (event) {
+      console.log("library id: " + this.libraryId + ", page number: " + (event?.pageIndex + 1) + ", page size: " + this.pageSize)
+      this.getLibraryBooks(this.libraryId, event?.pageIndex + 1, this.pageSize);
+    } else {
+      console.log("library id: " + this.libraryId + ", page number: " +  this.pageNumber + ", page size: " + this.pageSize)
+      this.getLibraryBooks(this.libraryId, this.pageNumber, this.pageSize);
+    }
     return event;
   }
 
 
-  public getLibraryBooks(): void {
-    this.booksService.getBooksByLibrary(this.currentLibraryId).subscribe((books) => {
+  public getLibraryBooks(libraryId: number, pageNumber: number, pageSize: number): void {
+    this.booksService.getBooksByLibrary(libraryId, pageNumber, pageSize).subscribe((response) => {
       try {
-        if (books.data.length === 0 || books === undefined) {
+        if (response.data.length === 0 || response === undefined) {
           throw ({ message: "No books where found in this library" });
         }
         else {
-          this.books = new MatTableDataSource(books.data);
+          this.books = new MatTableDataSource(response.data);
           this.books.paginator = this.paginator;
-          this.displayedColumns = Object.keys(books.data[0]);
-          this.length = books.data.length;
+          this.displayedColumns = Object.keys(response.data[0]);
+          this.length = response.totalRecords;
         }
       }
       catch (e: any) {
@@ -93,7 +103,7 @@ export class BooksComponent implements OnInit {
 
 
   public resetLibraryBooks(): void {
-    this.getLibraryBooks();
+    this.getLibraryBooks(this.libraryId, 1, this.pageSize);
   }
 
 
