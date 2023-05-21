@@ -1,4 +1,18 @@
-<div class="general-container">
+<h2>Search books</h2>
+
+<div class="search-container">
+  <div>
+    <input type="text" placeholder="Enter book author" #authorName />
+    <button (click)="getBooksByAuthor(authorName.value)">Search</button>
+  </div>
+
+  <div>
+    <input type="text" placeholder="Enter book title" #bookTitle />
+    <button (click)="getBooksByTitle(authorName.value)">Search</button>
+  </div>
+</div>
+
+<div class="libraries-container">
   <table 
     mat-table 
     [dataSource]="libraries" 

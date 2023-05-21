@@ -34,10 +34,3 @@ export interface LibrariesResponse {
   errors: null;
   message: string;
 }
-
-export interface AuthorsResponse {
-  data: Author[];
-  succeded: boolean;
-  errors: null;
-  message: string;
-}

@@ -26,66 +26,47 @@ public class BooksController : ControllerBase
         _context = context;
     }
 
-  
-    [HttpGet("GetBooks")]
-    public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
-    {
-        try
-        {
-            // .Where(books => books.libraryId == id).Include(book => book.Author)
-            List<Book> books = _context.Books.Take(1000).ToList();
-            if (books == null) throw new Exception("Couldn't get all books");
 
-            return Ok(new Response<List<Book>>(books));
-        }
-        catch (Exception e)
-        {
-            return NotFound(e);
-        }
-    }
+    //[HttpGet("GetBooks")]
+    //public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
+    //{
+    //    try
+    //    {
+    //        // .Where(books => books.libraryId == id).Include(book => book.Author)
+    //        List<Book> books = _context.Books.Take(1000).ToList();
+    //        if (books == null) throw new Exception("Couldn't get all books");
 
-
-    [HttpGet("GetAllBooks")]
-    public async Task<ActionResult<IEnumerable<Book>>> GetAllBooks([FromQuery] PaginationFilter filter)
-    {
-        try
-        {
-            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
-            List<Book> pagedBooks = _context.Books
-                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
-                .Take(validFilter.PageSize)
-                .ToList();
-            int totalBookCount = _context.Books.Count();
-
-            if (pagedBooks == null) throw new Exception("Couldn't get paged books");
-            if (totalBookCount == 0) throw new Exception("Couldn't get books");
-
-            return Ok(new PagedResponse<List<Book>>(pagedBooks, validFilter.PageNumber, validFilter.PageSize));
-        }
-        catch(Exception e)
-        {
-            return NotFound(e.Message);
-        } 
-    }
+    //        return Ok(new Response<List<Book>>(books));
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        return NotFound(e);
+    //    }
+    //}
 
 
-    [HttpGet("GetBookById/{id}")]
-    public async Task<IActionResult> GetBookById(string id)
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(id)) throw new Exception("Not a valid id");
+    //[HttpGet("GetAllBooks")]
+    //public async Task<ActionResult<IEnumerable<Book>>> GetAllBooks([FromQuery] PaginationFilter filter)
+    //{
+    //    try
+    //    {
+    //        var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+    //        List<Book> pagedBooks = _context.Books
+    //            .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+    //            .Take(validFilter.PageSize)
+    //            .ToList();
+    //        int totalBookCount = _context.Books.Count();
 
-            List<Book> foundBook = _context.Books.ToList().FindAll(book => book.isbn == id);
-            if (foundBook == null) throw new Exception("Book not found");
+    //        if (pagedBooks == null) throw new Exception("Couldn't get paged books");
+    //        if (totalBookCount == 0) throw new Exception("Couldn't get books");
 
-            return Ok(new Response<List<Book>>(foundBook));
-        }
-        catch (Exception e)
-        {
-            return NotFound(e.Message);
-        }
-    }
+    //        return Ok(new PagedResponse<List<Book>>(pagedBooks, validFilter.PageNumber, validFilter.PageSize));
+    //    }
+    //    catch(Exception e)
+    //    {
+    //        return NotFound(e.Message);
+    //    } 
+    //}
 
 
     [HttpGet("GetLibraries")]
@@ -112,28 +93,87 @@ public class BooksController : ControllerBase
         {
             int libraryId;
             if (!int.TryParse(id, out libraryId)) throw new Exception("Not a valid id");
+            
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
 
-            //var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
-            List<Book> books = _context.Books.Take(1000).ToList();
+            List<Book> books = _context.Books.ToList();
+
             List<Book> pagedBooks = books
-                .FindAll(book => book.libraryId == libraryId);
-            //    .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
-            //    .Take(validFilter.PageSize)
-            //    .ToList();
-            //int totalBookCount = _context.Books.Count();
+                .FindAll(book => book.libraryId == libraryId)
+                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize)
+                .ToList();
+
+            int totalBookCount = _context.Books.Where(book => book.libraryId == libraryId).Count();
 
             if (books == null) throw new Exception("Couldn't get all books");
             if (pagedBooks == null) throw new Exception("Couldn't get paged books");
-            //if (totalBookCount == 0) throw new Exception("Couldn't get books");
+            if (totalBookCount == 0) throw new Exception("Couldn't get books count");
 
-            //return Ok(new PagedResponse<List<Book>>(pagedBooks, validFilter.PageNumber, validFilter.PageSize));
-            return Ok(new Response<List<Book>>(pagedBooks));
+            return Ok(new PagedResponse<List<Book>>(pagedBooks, validFilter.PageNumber, validFilter.PageSize));
         }
         catch (Exception e)
         {
             return NotFound(e.Message);
         }
     }
+
+
+    [HttpGet("GetBookById/{id}")]
+    public async Task<IActionResult> GetBookById(string id)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(id)) throw new Exception("Not a valid id");
+
+            List<Book> foundBook = _context.Books.ToList().FindAll(book => book.isbn == id);
+            if (foundBook == null) throw new Exception("Book not found");
+
+            return Ok(new Response<List<Book>>(foundBook));
+        }
+        catch (Exception e)
+        {
+            return NotFound(e.Message);
+        }
+    }
+
+
+    [HttpGet("GetBookByTitle/{title}")]
+    public async Task<IActionResult> GetBookByTitle(string title)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(title)) throw new Exception("Not a valid id");
+
+            List<Book> foundBook = _context.Books.ToList().FindAll(book => book.title.Contains(title));
+            if (foundBook == null) throw new Exception("Book not found");
+
+            return Ok(new Response<List<Book>>(foundBook));
+        }
+        catch (Exception e)
+        {
+            return NotFound(e.Message);
+        }
+    }
+
+
+    //[HttpGet("GetBookByAuthor/{author}")]
+    //public async Task<IActionResult> GetBookByAuthor(string author)
+    //{
+    //    try
+    //    {
+    //        if (string.IsNullOrWhiteSpace(author)) throw new Exception("Not a valid author");
+
+    //        List<Book> foundBook = _context.Books.ToList().FindAll(book => book.author.Contains(author));
+    //        if (foundBook == null) throw new Exception("Book not found");
+
+    //        return Ok(new Response<List<Book>>(foundBook));
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        return NotFound(e.Message);
+    //    }
+    //}
 
 
     [HttpPost("AddBook")]

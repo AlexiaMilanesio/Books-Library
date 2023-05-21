@@ -10,17 +10,13 @@ import * as uuid from 'uuid';
   styleUrls: ['./add-book.component.scss'],
 })
 export class AddBookComponent implements OnInit {
-  books!: Array<Book>;
   book: Book | undefined;
   message: string | undefined;
 
-  constructor(private booksService: BookService, private router: Router) {
-    this.booksService.getBooks().subscribe((books) => {
-      this.books = books.data;
-    });
-  }
+  constructor(private booksService: BookService, private router: Router) {}
 
   ngOnInit(): void {}
+
 
   public addBook(
     title: HTMLInputElement,
@@ -29,7 +25,7 @@ export class AddBookComponent implements OnInit {
     image_url: HTMLInputElement,
     libraryId: HTMLInputElement,
     authorId: HTMLInputElement
-  ) {
+  ): void {
     let book = {
       isbn: uuid.v4().toString(),
       title: title.value.toString(),

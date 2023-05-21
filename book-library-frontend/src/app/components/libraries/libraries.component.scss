@@ -1,11 +1,21 @@
-.general-container {
-  max-width: 100%;
-  margin: auto;
+h2 {
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  margin: 1em 1em 0.5em 1em;
 }
 
-h1 {
-    text-align: center;
-    margin: 1em;
+.search-container {
+  width: 100%;
+  padding-left: 3em;
+  margin-bottom: 2em;
+  display: flex;
+  gap: 3em;
+}
+
+.libraries-container {
+  max-width: 100%;
+  margin: auto;
 }
 
 .search-engine-container {

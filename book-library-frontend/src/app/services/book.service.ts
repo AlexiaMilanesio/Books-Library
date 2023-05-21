@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Book, BooksResponse, LibrariesResponse, AuthorsResponse } from '../models/models';
+import { Book, BooksResponse, LibrariesResponse } from '../models/models';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -10,16 +10,18 @@ export class BookService {
   URL: string = "https://localhost:7156/Books/";
   currentBook!: Book;
   currentLibraryId!: number;
+  currentAuthorName!: string;
+  currentBookTitle!: string;
 
   constructor(private httpClient: HttpClient) {}
 
-  getBooks(): Observable<BooksResponse> {
-    return this.httpClient.get<BooksResponse>(this.URL + 'GetBooks');
-  }
+  // getBooks(): Observable<BooksResponse> {
+  //   return this.httpClient.get<BooksResponse>(this.URL + 'GetBooks');
+  // }
 
-  getAllBooks(): Observable<BooksResponse> {
-    return this.httpClient.get<BooksResponse>(this.URL + 'GetAllBooks');
-  }
+  // getAllBooks(): Observable<BooksResponse> {
+  //   return this.httpClient.get<BooksResponse>(this.URL + 'GetAllBooks');
+  // }
 
   getLibraries(): Observable<LibrariesResponse> {
     return this.httpClient.get<LibrariesResponse>(this.URL + 'GetLibraries');
@@ -29,8 +31,16 @@ export class BookService {
     return this.httpClient.get<BooksResponse>(this.URL + 'GetBooksByLibrary/' + libraryId);
   }
 
+  getBooksByAuthor(bookAuthor: string): Observable<BooksResponse> {
+    return this.httpClient.get<BooksResponse>(this.URL + 'GetBookById/' + bookAuthor);
+  }
+
   getBookById(bookId: string): Observable<BooksResponse> {
     return this.httpClient.get<BooksResponse>(this.URL + 'GetBookById/' + bookId);
+  }
+
+  getBookByTitle(bookTitle: string): Observable<BooksResponse> {
+    return this.httpClient.get<BooksResponse>(this.URL + 'GetBookById/' + bookTitle);
   }
 
   addBook(newBook: Book): Observable<Book> {
@@ -45,11 +55,21 @@ export class BookService {
     return this.httpClient.delete<Book>(this.URL + 'DeleteBook/' + bookId);
   }
 
+  // Setters
+
   setCurrentBook(currentBook: Book) {
     this.currentBook = currentBook;
   }
 
   setCurrentLibraryId(currentLibraryId: number) {
     this.currentLibraryId = currentLibraryId;
+  }
+
+  setCurrentAuthorName(currentAuthorName: string) {
+    this.currentAuthorName = currentAuthorName;
+  }
+
+  setCurrentBookTitle(currentBookTitle: string) {
+    this.currentBookTitle = currentBookTitle;
   }
 }

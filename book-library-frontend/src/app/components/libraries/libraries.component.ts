@@ -42,9 +42,9 @@ export class LibrariesComponent implements OnInit {
 
 
   public getLibraryBooks(library: Library): void {
-    let id = library.id;
-
+    const id = library.id;
     const idExists = this.libraries.data.find((library: Library) => library.id === Number(id));
+    
     if (idExists === undefined) {
       throw ({ message: "Id doesn't exists, try a different one" });
     }
@@ -54,8 +54,16 @@ export class LibrariesComponent implements OnInit {
   }
 
 
-  // public resetSearch(): void {
-  //   this.books.data = [];
-  //   this.getLibraries();
-  // }
+  public getBooksByAuthor(authorName: string): void {
+    if (authorName === "" || authorName === " ") return;
+    this.booksService.currentAuthorName = authorName;
+    this.router.navigate(["/Books"]);
+  }
+
+
+  public getBooksByTitle(bookTitle: string): void {
+    if (bookTitle === "" || bookTitle === " ") return;
+    this.booksService.currentBookTitle = bookTitle;
+    this.router.navigate(["/Books"]);
+  }
 }
