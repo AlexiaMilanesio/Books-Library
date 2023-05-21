@@ -9,8 +9,8 @@
 2. Ottenere tutti i libri per una certa biblioteca
 3. Ottenere un libro specifico dato il suo ID
 4. Aggiungere un nuovo libro 
-5. Modificare un libro esistente - (FALTA RENDERIZAR EN EL FRONT)
-6. Eliminare un libro - (FALTA ACTUALIZAR RENDERIZACION EN EL FORNT)
+5. Modificare un libro esistente
+6. Eliminare un libro
 7. Implementa la paginazione per limitare il numero di libri restituiti in una singola chiamata.
 Esempio:
     GET /api/libri?pagina=1&dimensionePagina=10: Restituisce i primi 10 libri della prima pagina.

@@ -53,6 +53,7 @@ export class EditBookComponent implements OnInit {
 
   
   public deleteBook(): void {
+    console.log(this.currentBook.isbn)
     this.booksService.deleteBook(this.currentBook.isbn).subscribe(book => {
       try {
         if (!book) throw ({ message: "Book couldn't be deleted" });

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "OmRJjJSX7b7uCjnE5EKCottzqi2DEIP03qD+/OwViYx+r/pRxBVrgiuT5VTw5qqiIbw+ZYFgXrhLxCBh2kyWNg==",
+  "dgSpecHash": "eqYOnhbKiNs5B8FtfZkT+izVvlHYeUBsGADYDkKPRL3HpLn3s5BfwGpCI1I6vN1c0VOgTx/lFmXLY3YUIZqRww==",
   "success": true,
-  "projectFilePath": "/Users/alexia/Desktop/books-library/books-library.Api/books-library.Api.csproj",
+  "projectFilePath": "/Users/alexia/Documents/BooksLibrary/book-library-backend/books-library.Api/books-library.Api.csproj",
   "expectedPackageFiles": [
     "/Users/alexia/.nuget/packages/microsoft.aspnetcore.cors/2.2.0/microsoft.aspnetcore.cors.2.2.0.nupkg.sha512",
     "/Users/alexia/.nuget/packages/microsoft.aspnetcore.http.abstractions/2.2.0/microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",

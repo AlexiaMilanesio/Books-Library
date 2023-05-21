@@ -13,7 +13,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "Policy",
         policy =>
         {
-            policy.WithOrigins("http://localhost:4200").WithMethods("POST", "GET").AllowAnyHeader();
+            policy.WithOrigins("http://localhost:4200", "https://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
         });
 });
 

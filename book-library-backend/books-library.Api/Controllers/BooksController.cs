@@ -67,6 +67,25 @@ public class BooksController : ControllerBase
     }
 
 
+    [HttpGet("GetBookById/{id}")]
+    public async Task<IActionResult> GetBookById(string id)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(id)) throw new Exception("Not a valid id");
+
+            List<Book> foundBook = _context.Books.ToList().FindAll(book => book.isbn == id);
+            if (foundBook == null) throw new Exception("Book not found");
+
+            return Ok(new Response<List<Book>>(foundBook));
+        }
+        catch (Exception e)
+        {
+            return NotFound(e.Message);
+        }
+    }
+
+
     [HttpGet("GetLibraries")]
     public async Task<ActionResult<IEnumerable<Library>>> GetLibraries()
     {
@@ -115,28 +134,6 @@ public class BooksController : ControllerBase
     }
 
 
-    [HttpGet("GetBookById/{id}")]
-    public async Task<IActionResult> GetBookById(string id) 
-    {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(id)) throw new Exception("Not a valid id");
-
-            List<Book> books = _context.Books.Take(1000).ToList();
-            if (books == null) throw new Exception("Couldn't get all books");
-
-            Book? foundBook = books.Find(book => book.isbn == id);
-            if (foundBook == null) throw new Exception("Book not found");
-
-            return Ok(new Response<Book>(foundBook));
-        }
-        catch (Exception e)
-        {
-            return NotFound(e.Message);
-        }
-    }
-
-
     [HttpPost("AddBook")]
     public async Task<ActionResult<Book>> AddBook()
     {
@@ -148,13 +145,17 @@ public class BooksController : ControllerBase
             Book? book = JsonConvert.DeserializeObject<Book>(body);
             if (book == null) throw new Exception("Book added data is empty");
 
-            List<Book> books = _context.Books.Take(1000).ToList();
+            List<Book> books = _context.Books.ToList();
             if (books == null) throw new Exception("Couldn't get all books");
 
             books.Add(book);
+
+            Book? foundAddedBook = books.Find(b => b.isbn == book.isbn);
+            if (foundAddedBook == null) throw new Exception("Couldn't add new book");
+
             _context.SaveChanges();
 
-            return Ok(new Response<Book>(book));
+            return Ok(new Response<Book>(foundAddedBook));
         }
         catch (Exception e)
         {
@@ -164,7 +165,7 @@ public class BooksController : ControllerBase
 
 
     [HttpPut("EditBook")]
-    public async Task<IActionResult> EditBook()
+    public async Task<ActionResult<Book>> EditBook()
     {
         try
         {
@@ -174,7 +175,7 @@ public class BooksController : ControllerBase
             Book? book = JsonConvert.DeserializeObject<Book>(body);
             if (book == null) throw new Exception("Book edited data is empty");
 
-            List<Book> books = _context.Books.Take(1000).ToList();
+            List<Book> books = _context.Books.ToList();
             if (books == null) throw new Exception("Couldn't get all books");
 
             Book? editedBook = books.Find(b => b.isbn == book.isbn);
@@ -205,7 +206,7 @@ public class BooksController : ControllerBase
         {
             if (string.IsNullOrWhiteSpace(id)) throw new Exception("Not a valid id");
 
-            List<Book> books = _context.Books.Take(1000).ToList();
+            List<Book> books = _context.Books.ToList();
             if (books == null) throw new Exception("Couldn't get all books");
 
             Book? foundBook = books.Find(book => book.isbn == id);
