@@ -29,23 +29,6 @@ public class BooksController : ControllerBase
     }
 
 
-    //[HttpGet("GetBooks")]
-    //public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
-    //{
-    //    try
-    //    {
-    //        List<Book> books = _context.Books.Take(1000).ToList();
-    //        if (books == null) throw new Exception("Couldn't get all books");
-
-    //        return Ok(new Response<List<Book>>(books));
-    //    }
-    //    catch (Exception e)
-    //    {
-    //        return NotFound(e);
-    //    }
-    //}
-
-
     //[HttpGet("GetAllBooks")]
     //public async Task<ActionResult<IEnumerable<Book>>> GetAllBooks([FromQuery] PaginationFilter filter)
     //{
