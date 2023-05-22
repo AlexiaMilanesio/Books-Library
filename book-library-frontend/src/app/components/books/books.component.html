@@ -8,7 +8,7 @@
     <button (click)="goToLibraries()" class="show-libraries-btn">Show libraries</button>
 
     <select [(ngModel)]="selected" #selectedOption (change)="valueChange(selectedOption.value)">
-      <option value="defaultOrder" defautl disabled>Select order</option>
+      <option value="" disabled>Select order</option>
       <option value="titleOrder">Order books by title</option>
       <option value="yearOrder">Order books by year</option>
     </select>

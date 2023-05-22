@@ -17,7 +17,12 @@ export class LibrariesComponent implements OnInit {
   errorMessage: string | undefined;
 
   
-  constructor(private booksService: BookService, private router: Router) {}
+  constructor(private booksService: BookService, private router: Router) {
+    this.booksService.currentLibraryId = undefined;
+    this.booksService.currentBookId = undefined;
+    this.booksService.currentBookTitle = undefined;
+    this.booksService.currentBookAuthor = undefined;
+  }
 
   ngOnInit(): void {}
 
