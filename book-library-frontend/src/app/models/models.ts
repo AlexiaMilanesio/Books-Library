@@ -49,3 +49,8 @@ export interface LibrariesResponse {
   errors: null;
   message: string;
 }
+
+export interface Filter {
+  filter: string;
+  filterType: string;
+}

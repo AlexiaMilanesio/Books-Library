@@ -7,10 +7,10 @@
 
     <button (click)="goToLibraries()" class="show-libraries-btn">Show libraries</button>
 
-    <select [(ngModel)]="selectedOrder" (ngModelChange)="valueChange($event)">
-      <option [ngValue]="undefined" disabled>Select order</option>
-      <option [ngValue]="orderByTitle" [selected]="orderByTitle == selectedOrder">Order books by title</option>
-      <option [ngValue]="orderByYear" [selected]="orderByTitle == selectedOrder">Order books by year</option>
+    <select [(ngModel)]="selected" #selectedOption (change)="valueChange(selectedOption.value)">
+      <option value="defaultOrder" defautl disabled>Select order</option>
+      <option value="titleOrder">Order books by title</option>
+      <option value="yearOrder">Order books by year</option>
     </select>
   </div>
 

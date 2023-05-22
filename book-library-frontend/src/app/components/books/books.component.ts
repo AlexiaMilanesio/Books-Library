@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { Book, Library } from 'src/app/models/models';
+import { Book, Filter, Library } from 'src/app/models/models';
 import { BookService } from 'src/app/services/book.service';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+// import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 
@@ -11,11 +11,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./books.component.scss']
 })
 export class BooksComponent implements OnInit {
-  @ViewChild('paginator') paginator!: MatPaginator;
+  // @ViewChild('paginator') paginator!: MatPaginator;
   libraryId: number | undefined;
   bookId: string | undefined;
   bookTitle: string | undefined;
   bookAuthor: string | undefined;
+  orderByTitle: string | undefined;
+  orderByYear: string | undefined;
   displayedColumns!: string[];
   books!: MatTableDataSource<Book>;
   errorMessage: string | undefined;
@@ -24,9 +26,8 @@ export class BooksComponent implements OnInit {
   pageSize: number = 10;
   totalPages!: number;
   totalRecords!: number;
-  selectedOrder: string | undefined;
-  orderByTitle: string | undefined;
-  orderByYear: string | undefined;
+  selected: string = '';
+
   // pageIndex: number = 0;
   // pageSizeOptions: Array<number> = [10, 25, 50, 100];
   // pageEvent: PageEvent | undefined;
@@ -42,25 +43,11 @@ export class BooksComponent implements OnInit {
   ngOnInit(): void {}
 
   ngAfterViewInit() {
-    if (this.libraryId) {
-      console.log("Searching books by library")
-      this.getLibraryBooks();
-    }
-    else if (this.bookId) {
-      console.log("Searching book by id")
-      this.getBookById();
-    }
-    else if (this.bookTitle) {
-      console.log("Searching books by title")
-      this.getBooksByTitle();
-    } 
-    else if (this.bookAuthor) {
-    console.log("Searching books by author")
-      this.getBooksByAuthor();
-    }
-    else {
-      this.errorMessage = "There has been an error while loading books";
-    }
+    if (this.libraryId) this.getLibraryBooks();
+    else if (this.bookId) this.getBookById();
+    else if (this.bookTitle) this.getBooksByTitle();
+    else if (this.bookAuthor) this.getBooksByAuthor();
+    else this.errorMessage = "There has been an error while loading books";
   }
 
 
@@ -85,13 +72,8 @@ export class BooksComponent implements OnInit {
 
   public getNextPage(): void {
     this.pageNumber = this.pageNumber + 1;
-    console.log(
-      "library id: " + this.libraryId + 
-      ", book title: " + this.bookTitle + 
-      ", book author: " + this.bookAuthor + 
-      ", page number: " + this.pageNumber + 
-      ", page size: " + this.pageSize
-    );
+    if (this.orderByTitle) this.sortBooksByTitle();
+    if (this.orderByYear) this.sortBooksByYear();
     if (this.libraryId) this.getLibraryBooks();
     if (this.bookTitle) this.getBooksByTitle();
     if (this.bookAuthor) this.getBooksByAuthor();
@@ -100,13 +82,8 @@ export class BooksComponent implements OnInit {
 
   public getPreviousPage(): void {
     this.pageNumber = this.pageNumber - 1;
-    console.log(
-      "library id: " + this.libraryId + 
-      ", book title: " + this.bookTitle + 
-      ", book author: " + this.bookAuthor + 
-      ", page number: " + this.pageNumber + 
-      ", page size: " + this.pageSize
-    );
+    if (this.orderByTitle) this.sortBooksByTitle();
+    if (this.orderByYear) this.sortBooksByYear();
     if (this.libraryId) this.getLibraryBooks();
     if (this.bookTitle) this.getBooksByTitle();
     if (this.bookAuthor) this.getBooksByAuthor();
@@ -115,6 +92,8 @@ export class BooksComponent implements OnInit {
 
   public getFirstPage(): void {
     this.pageNumber = 1;
+    if (this.orderByTitle) this.sortBooksByTitle();
+    if (this.orderByYear) this.sortBooksByYear();
     if (this.libraryId) this.getLibraryBooks();
     if (this.bookTitle) this.getBooksByTitle();
     if (this.bookAuthor) this.getBooksByAuthor();
@@ -123,6 +102,8 @@ export class BooksComponent implements OnInit {
 
   public getLastPage(): void {
     this.pageNumber = this.totalPages
+    if (this.orderByTitle) this.sortBooksByTitle();
+    if (this.orderByYear) this.sortBooksByYear();
     if (this.libraryId) this.getLibraryBooks();
     if (this.bookTitle) this.getBooksByTitle();
     if (this.bookAuthor) this.getBooksByAuthor();
@@ -139,7 +120,7 @@ export class BooksComponent implements OnInit {
           else {
             this.books = new MatTableDataSource(response.data);
             this.displayedColumns = Object.keys(response.data[0]);
-            this.books.paginator = this.paginator;
+            // this.books.paginator = this.paginator;
             this.length = response.totalRecords;
             this.totalPages = response.totalPages;
             this.totalRecords = response.totalRecords;
@@ -188,7 +169,7 @@ export class BooksComponent implements OnInit {
           }
           this.books = new MatTableDataSource(response.data);
           this.displayedColumns = Object.keys(response.data[0]);
-          this.books.paginator = this.paginator;
+          // this.books.paginator = this.paginator;
           this.length = response.totalRecords;
           this.totalPages = response.totalPages;
           this.totalRecords = response.totalRecords;
@@ -214,7 +195,7 @@ export class BooksComponent implements OnInit {
           }
           this.books = new MatTableDataSource(response.data);
           this.displayedColumns = Object.keys(response.data[0]);
-          this.books.paginator = this.paginator;
+          // this.books.paginator = this.paginator;
           this.length = response.totalRecords;
           this.totalPages = response.totalPages;
           this.totalRecords = response.totalRecords;
@@ -245,15 +226,70 @@ export class BooksComponent implements OnInit {
   }
 
 
-  public valueChange(event: Event): void {
-    console.log(event)
-    // const e = event as HTMLElement;
-    // console.log("selected value: " + e.target.value + ", value of selected: " + this.selected);
-    // this.selectedOrder = event.target.value;
+  public valueChange(selectedOption: string): void {
+    console.log(selectedOption);
+    this.selected = selectedOption;
+    if (this.selected === "titleOrder") this.sortBooksByTitle();
+    else if (this.selected === "yearOrder") this.sortBooksByYear();
+    else {
+      this.books = new MatTableDataSource(this.books.data);
+      this.displayedColumns = Object.keys(this.books.data[0]);
+    }
+  }
+
+  
+  public sortBooksByTitle(): void {
+    let filter: Filter = 
+      this.libraryId ? { filter: this.libraryId.toString(), filterType: "libraryId" } : 
+      this.bookId ? { filter: this.bookId, filterType: "bookId" } : 
+      this.bookTitle ? { filter: this.bookTitle, filterType: "bookTitle" } : 
+      this.bookAuthor ? { filter: this.bookAuthor, filterType: "bookAuthor" } : 
+      { filter: '', filterType: '' };
+
+    this.booksService.sortBooksByTitle(filter, this.pageNumber, this.pageSize).subscribe(response => {
+      try {
+        console.log(response);
+        if (response.data.length === 0 || response === undefined) {
+          throw ({ message: "There's been an error while trying to sort books by title" });
+        }
+
+        this.books = new MatTableDataSource(response.data);
+        this.displayedColumns = Object.keys(response.data[0]);
+      }
+      catch (e: any) {
+        this.errorMessage = e.message;
+        setTimeout(() => {
+          this.errorMessage = "";
+        }, 4000);
+      }
+    })
   }
 
 
-  public clearSelection(): void {
-    this.selectedOrder = undefined;
+  public sortBooksByYear(): void {
+    let filter: Filter = 
+      this.libraryId ? { filter: this.libraryId.toString(), filterType: "libraryId" } : 
+      this.bookId ? { filter: this.bookId, filterType: "bookId" } : 
+      this.bookTitle ? { filter: this.bookTitle, filterType: "bookTitle" } : 
+      this.bookAuthor ? { filter: this.bookAuthor, filterType: "bookAuthor" } : 
+      { filter: '', filterType: '' };
+      
+    this.booksService.sortBooksByYear(filter, this.pageNumber, this.pageSize).subscribe(response => {
+      try {
+        console.log(response);
+        if (response.data.length === 0 || response === undefined) {
+          throw ({ message: "There's been an error while trying to sort books by year" });
+        }
+
+        this.books = new MatTableDataSource(response.data);
+        this.displayedColumns = Object.keys(response.data[0]);
+      }
+      catch (e: any) {
+        this.errorMessage = e.message;
+        setTimeout(() => {
+          this.errorMessage = "";
+        }, 4000);
+      }
+    })
   }
 }
