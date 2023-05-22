@@ -8,10 +8,15 @@
   display: flex;
   flex-direction: row;
   background-color: rgb(236, 234, 239);
+  padding-left: 3em;
 
   div {
     margin: 0 3em;
   }
+}
+
+.show-libraries-btn {
+  margin-left: 3em;
 }
 
 table {
@@ -21,7 +26,7 @@ table {
 
 .mat-cell,
 .mat-header-cell {
-  padding: 0 0.5em;
+  padding: 0 1em;
   font-size: .9em;
 }
 
@@ -37,8 +42,12 @@ table {
   text-transform: capitalize;
 }
 
-.delete-btn, .edit-btn {
-  background-color: lightgray;
+.image_url, .title {
+  max-width: 500px;
+}
+
+.title, .publisher {
+  text-transform: capitalize;
 }
 
 .full-width {
@@ -46,12 +55,8 @@ table {
   width: 100%;
 }
 
-input {
-  margin: 1em 0;
-  padding: 0.5em;
-}
-
 button {
+  margin: 1em 0;
   align-self: center;
   padding: 0.5em;
 }
@@ -60,8 +65,24 @@ button:hover {
   cursor: pointer;
 }
 
-.show-libraries-btn {
-  margin-left: 3em;
+.paginator {
+  box-shadow: 0 0 5px grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 1em;
+  padding: 1em;
+  gap: 2em;
+
+  p {
+    margin-top: 1em;
+    color: rgb(169, 166, 166);
+  }
+
+  button {
+    padding: .5em 1em;
+  }
 }
 
 .message {

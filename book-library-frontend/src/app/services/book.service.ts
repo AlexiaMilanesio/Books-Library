@@ -9,9 +9,10 @@ import { Observable } from 'rxjs';
 export class BookService {
   URL: string = "https://localhost:7156/Books/";
   currentBook!: Book;
-  currentLibraryId!: number;
-  currentAuthorName!: string;
-  currentBookTitle!: string;
+  currentLibraryId: number | undefined;
+  currentBookId: string | undefined;
+  currentBookTitle!: string | undefined;
+  currentBookAuthor: string | undefined;
 
   constructor(private httpClient: HttpClient) {}
 
@@ -31,16 +32,16 @@ export class BookService {
     return this.httpClient.get<PagedBooksResponse>(this.URL + 'GetBooksByLibrary/' + libraryId + "?pageNumber=" + pageNumber + "&pageSize=" + pageSize);
   }
 
-  getBooksByAuthor(bookAuthor: string): Observable<BooksResponse> {
-    return this.httpClient.get<BooksResponse>(this.URL + 'GetBookById/' + bookAuthor);
-  }
-
   getBookById(bookId: string): Observable<BooksResponse> {
     return this.httpClient.get<BooksResponse>(this.URL + 'GetBookById/' + bookId);
   }
 
-  getBookByTitle(bookTitle: string): Observable<BooksResponse> {
-    return this.httpClient.get<BooksResponse>(this.URL + 'GetBookById/' + bookTitle);
+  getBooksByTitle(bookTitle: string, pageNumber: number, pageSize: number): Observable<PagedBooksResponse> {
+    return this.httpClient.get<PagedBooksResponse>(this.URL + 'GetBooksByTitle/' + bookTitle + "?pageNumber=" + pageNumber + "&pageSize=" + pageSize);
+  }
+
+  getBooksByAuthor(bookAuthor: string, pageNumber: number, pageSize: number): Observable<PagedBooksResponse> {
+    return this.httpClient.get<PagedBooksResponse>(this.URL + 'GetBooksByAuthor/' + bookAuthor + "?pageNumber=" + pageNumber + "&pageSize=" + pageSize);
   }
 
   addBook(newBook: Book): Observable<Book> {
@@ -65,8 +66,12 @@ export class BookService {
     this.currentLibraryId = currentLibraryId;
   }
 
-  setCurrentAuthorName(currentAuthorName: string) {
-    this.currentAuthorName = currentAuthorName;
+  setCurrentBookId(currentBookId: string) {
+    this.currentBookId = currentBookId;
+  }
+
+  setCurrentBookAuthor(currentBookAuthor: string) {
+    this.currentBookAuthor = currentBookAuthor;
   }
 
   setCurrentBookTitle(currentBookTitle: string) {

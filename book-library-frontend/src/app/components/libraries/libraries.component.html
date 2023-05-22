@@ -2,13 +2,18 @@
 
 <div class="search-container">
   <div>
-    <input type="text" placeholder="Enter book author" #authorName />
-    <button (click)="getBooksByAuthor(authorName.value)">Search</button>
+    <input type="text" placeholder="Enter book id" #bookId />
+    <button (click)="getBookId(bookId.value); bookId.value = ''">Search</button>
   </div>
 
   <div>
     <input type="text" placeholder="Enter book title" #bookTitle />
-    <button (click)="getBooksByTitle(authorName.value)">Search</button>
+    <button (click)="getBooksByTitle(bookTitle.value); bookTitle.value = ''">Search</button>
+  </div>
+  
+  <div>
+    <input type="text" placeholder="Enter book author" #bookAuthor />
+    <button (click)="getBooksByAuthor(bookAuthor.value); bookAuthor.value = ''">Search</button>
   </div>
 </div>
 

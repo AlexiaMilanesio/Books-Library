@@ -75,7 +75,20 @@ h2 {
     padding: .2em 0;
   }
 
+  p {
+    text-transform: capitalize;
+  }
+
   img {
     width: 100px;
+  }
+
+  .message {
+    width: 100%;
+    text-align: center;
+    margin-top: 2em;
+    color: black;
+    font-weight: bold;
+    text-transform: none;
   }
 }

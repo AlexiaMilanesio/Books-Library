@@ -54,9 +54,10 @@ export class LibrariesComponent implements OnInit {
   }
 
 
-  public getBooksByAuthor(authorName: string): void {
-    if (authorName === "" || authorName === " ") return;
-    this.booksService.currentAuthorName = authorName;
+  public getBookId(bookId: string): void {
+    console.log(bookId)
+    if (bookId === "" || bookId === " ") return;
+    this.booksService.currentBookId = bookId;
     this.router.navigate(["/Books"]);
   }
 
@@ -64,6 +65,13 @@ export class LibrariesComponent implements OnInit {
   public getBooksByTitle(bookTitle: string): void {
     if (bookTitle === "" || bookTitle === " ") return;
     this.booksService.currentBookTitle = bookTitle;
+    this.router.navigate(["/Books"]);
+  }
+
+
+  public getBooksByAuthor(bookAuthor: string): void {
+    if (bookAuthor === "" || bookAuthor === " ") return;
+    this.booksService.currentBookAuthor = bookAuthor;
     this.router.navigate(["/Books"]);
   }
 }

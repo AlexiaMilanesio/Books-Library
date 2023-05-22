@@ -11,12 +11,12 @@
 
     <div class="btn-container">
       <button
-        (click)="addBook(title, year, publisher, image_url, libraryId, authorId)" class="add-btn"
+        (click)="addBook(title.value, year.value, publisher.value, image_url.value, libraryId.value, authorId.value)" class="add-btn"
       >
         Add book
       </button>
 
-      <button (click)="goToBooks()">Return to books</button>
+      <button (click)="goToLibraries()">Show libraries</button>
     </div>
   </div>
 

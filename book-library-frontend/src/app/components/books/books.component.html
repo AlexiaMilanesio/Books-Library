@@ -1,31 +1,25 @@
 <div class="general-container">
-  <div class="search-engine-container">
-    <div>
-      <input type="text" placeholder="Enter book id" #searchedBookId />
-      <button (click)="getBookId(searchedBookId.value); searchedBookId.value = ''">Search book</button>
-    </div>
-
-    <button (click)="resetLibraryBooks()">Reset library books</button>
-
+  <div class="search-engine-container" *ngIf="books">
+    <button (click)="resetBooks()">Reset books</button>
     <button (click)="goToLibraries()" class="show-libraries-btn">Show libraries</button>
   </div>
 
   <table 
     mat-table 
     [dataSource]="books" 
-    *ngIf="!errorMessage"
+    *ngIf="!errorMessage && books"
     class="mat-elevation-z8" 
   >
     <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
       <th mat-header-cell *matHeaderCellDef class="col-title">{{ column === "Delete" || column === "Edit" ? "" : column }}</th>
-      <td mat-cell *matCellDef="let element">{{ element[column] }}</td> 
+      <td mat-cell *matCellDef="let element" class="{{column}}">{{ element[column] }}</td> 
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="goToEditMode(row)"></tr>
   </table>
 
-  <mat-paginator
+  <!-- <mat-paginator
     #paginator
     *ngIf="!errorMessage"
     [pageIndex]="pageIndex"
@@ -34,7 +28,20 @@
     [pageSize]="pageSize"
     showFirstLastButtons
     (page)="pageEvent = getServerData($event)"
-  ></mat-paginator>
+  ></mat-paginator> -->
+
+  <div class="paginator" *ngIf="!errorMessage && books">
+    <p>Total records: {{ totalRecords }}</p>
+    <p>Page: {{ pageNumber }} of {{ totalPages }}</p>
+
+    <button (click)="getFirstPage()"> << </button>
+
+    <button (click)="getPreviousPage()"> < </button>
+    <button (click)="getNextPage()"> > </button>
+
+    <button (click)="getLastPage()"> >> </button>
+  </div>
+
 
   <p *ngIf="errorMessage" class="message">{{ errorMessage }}</p>
 </div>

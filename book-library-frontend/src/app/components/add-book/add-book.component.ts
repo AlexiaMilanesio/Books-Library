@@ -19,21 +19,26 @@ export class AddBookComponent implements OnInit {
 
 
   public addBook(
-    title: HTMLInputElement,
-    year: HTMLInputElement,
-    publisher: HTMLInputElement,
-    image_url: HTMLInputElement,
-    libraryId: HTMLInputElement,
-    authorId: HTMLInputElement
+    title: string,
+    year: string,
+    publisher: string,
+    image_url: string,
+    libraryId: string,
+    authorId: string
   ): void {
+
+    let formattedTitle = title.charAt(0).toUpperCase() + title.slice(1);
+    let formattedPublisher = publisher.charAt(0).toUpperCase() + publisher.slice(1);
+    let formattedBookIsbn = uuid.v4().toString();
+
     let book = {
-      isbn: uuid.v4().toString(),
-      title: title.value.toString(),
-      year: Number(year.value),
-      publisher: publisher.value.toString(),
-      image_url: image_url.value.toString(),
-      libraryId: Number(libraryId.value),
-      authorId: Number(authorId.value),
+      isbn: formattedBookIsbn,
+      title: formattedTitle,
+      year: Number(year),
+      publisher: formattedPublisher,
+      image_url: image_url,
+      libraryId: Number(libraryId),
+      authorId: Number(authorId),
     };
 
     this.book = book;
@@ -54,7 +59,7 @@ export class AddBookComponent implements OnInit {
   }
 
 
-  public goToBooks(): void {
-    this.router.navigate(['Books']);
+  public goToLibraries(): void {
+    this.router.navigate(['Libraries']);
   }
 }

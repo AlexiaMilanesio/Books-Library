@@ -70,7 +70,7 @@ export class EditBookComponent implements OnInit {
   }
 
 
-  public goToBooks(): void {
-    this.router.navigate(['Books']);
+  public goToLibraries(): void {
+    this.router.navigate(['Libraries']);
   }
 }
