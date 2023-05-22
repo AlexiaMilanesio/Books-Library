@@ -34,7 +34,6 @@ public class BooksController : ControllerBase
     //{
     //    try
     //    {
-    //        // .Where(books => books.libraryId == id).Include(book => book.Author)
     //        List<Book> books = _context.Books.Take(1000).ToList();
     //        if (books == null) throw new Exception("Couldn't get all books");
 
@@ -52,22 +51,15 @@ public class BooksController : ControllerBase
     //{
     //    try
     //    {
-    //        var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
-    //        List<Book> pagedData = _context.Books
-    //            .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
-    //            .Take(validFilter.PageSize)
-    //            .ToList();
-    //        int totalRecords = _context.Books.Count();
+    //        List<Book> allBooks = _context.Books.ToList();
+    //        if (allBooks == null) throw new Exception("Couldn't get books");
 
-    //        if (pagedData == null) throw new Exception("Couldn't get paged books");
-    //        if (totalRecords == 0) throw new Exception("Couldn't get books");
-
-    //        return Ok(new PagedResponse<List<Book>>(pagedData, validFilter.PageNumber, validFilter.PageSize));
+    //        return Ok(new Response<List<Book>>(allBooks));
     //    }
-    //    catch(Exception e)
+    //    catch (Exception e)
     //    {
     //        return NotFound(e.Message);
-    //    } 
+    //    }
     //}
 
 
@@ -201,18 +193,168 @@ public class BooksController : ControllerBase
     //{
     //    try
     //    {
-    //        if (string.IsNullOrWhiteSpace(author)) throw new Exception("Not a valid author");
+    //        string? pageNumber = Request.Query["pageNumber"];
+    //        string? pageSize = Request.Query["pageSize"];
 
-    //        List<Book> foundBook = _context.Books.ToList().FindAll(book => book.Author.Contains(author));
-    //        if (foundBook == null) throw new Exception("Book not found");
+    //        if (
+    //            string.IsNullOrWhiteSpace(pageNumber) ||
+    //            string.IsNullOrWhiteSpace(pageSize) ||
+    //            string.IsNullOrWhiteSpace(author)
+    //        ) throw new Exception("Didn't get all parameters needed");
 
-    //        return Ok(new Response<List<Book>>(foundBook));
+
+    //        int pNumber, pSize;
+    //        if (!int.TryParse(pageNumber, out pNumber) || !int.TryParse(pageSize, out pSize)) throw new Exception("Parameters have to be numbers");
+
+
+    //        var validFilter = new PaginationFilter(pNumber, pSize);
+
+    //        List<Book> books = _context.Books.ToList();
+    //        if (books == null) throw new Exception("Couldn't get all books");
+
+    //        List<Book> pagedData = books
+    //            .FindAll(book => book.Author.ToLower().Contains(author.ToLower()))
+    //            .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+    //            .Take(validFilter.PageSize)
+    //            .ToList();
+
+    //        int totalRecords = _context.Books.Where(book => book.title.ToLower().Contains(author.ToLower())).Count();
+    //        int totalPages = (int)Math.Ceiling((double)totalRecords / pSize);
+
+
+    //        return Ok(new PagedResponse<List<Book>>(pagedData, validFilter.PageNumber, validFilter.PageSize, totalPages, totalRecords));
     //    }
     //    catch (Exception e)
     //    {
     //        return NotFound(e.Message);
     //    }
     //}
+
+
+    [HttpPost("SortBooksByTitle")]
+    public async Task<ActionResult<IEnumerable<Book>>> SortBooksByTitle()
+    {
+        try
+        {
+            string? pageNumber = Request.Query["pageNumber"];
+            string? pageSize = Request.Query["pageSize"];
+
+            string body = await new StreamReader(Request.Body).ReadToEndAsync();
+            if (string.IsNullOrWhiteSpace(body)) throw new Exception("Body is empty or a white space");
+            FilterBody? filter = JsonConvert.DeserializeObject<FilterBody>(body);
+
+            if (
+                string.IsNullOrWhiteSpace(pageNumber) ||
+                string.IsNullOrWhiteSpace(pageSize) ||
+                filter == null
+            ) throw new Exception("Didn't get all parameters needed");
+
+
+            int pNumber, pSize;
+            if (!int.TryParse(pageNumber, out pNumber) || !int.TryParse(pageSize, out pSize)) throw new Exception("Parameters have to be numbers");
+
+
+            List<Book>? books = _context.Books.ToList();
+
+            if (filter.FilterType == "libraryId")
+            {
+                int filt;
+                if (!int.TryParse(filter.Filter, out filt)) throw new Exception("Library id is invalid");
+                books = _context.Books.Where(books => books.libraryId == filt).ToList();
+            }
+            if (filter.FilterType == "bookId")
+            {
+                books = _context.Books.Where(books => books.isbn == filter.Filter).ToList();
+            }
+            if (filter.FilterType == "bookTitle")
+            {
+                books = _context.Books.Where(books => books.title.ToLower().Contains(filter.Filter.ToLower())).ToList();
+            }
+
+
+            var validFilter = new PaginationFilter(pNumber, pSize);
+
+            List<Book> sortedBooks = books.OrderBy(book => book.title).ToList();
+
+            List<Book> pagedData = sortedBooks
+                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize)
+                .ToList();
+
+            int totalRecords = books.Count;
+            int totalPages = (int)Math.Ceiling((double)totalRecords / pSize);
+
+
+            return Ok(new PagedResponse<List<Book>>(pagedData, validFilter.PageNumber, validFilter.PageSize, totalPages, totalRecords));
+        }
+        catch (Exception e)
+        {
+            return NotFound(e.Message);
+        }
+    }
+
+
+    [HttpPost("SortBooksByYear")]
+    public async Task<ActionResult<IEnumerable<Book>>> SortBooksByYear()
+    {
+        try
+        {
+            string? pageNumber = Request.Query["pageNumber"];
+            string? pageSize = Request.Query["pageSize"];
+
+            string body = await new StreamReader(Request.Body).ReadToEndAsync();
+            if (string.IsNullOrWhiteSpace(body)) throw new Exception("Body is empty or a white space");
+            FilterBody? filter = JsonConvert.DeserializeObject<FilterBody>(body);
+
+            if (
+                string.IsNullOrWhiteSpace(pageNumber) ||
+                string.IsNullOrWhiteSpace(pageSize) ||
+                filter == null
+            ) throw new Exception("Didn't get all parameters needed");
+
+
+            int pNumber, pSize;
+            if (!int.TryParse(pageNumber, out pNumber) || !int.TryParse(pageSize, out pSize)) throw new Exception("Parameters have to be numbers");
+
+
+            List<Book>? books = _context.Books.ToList();
+
+            if (filter.FilterType == "libraryId")
+            {
+                int filt;
+                if (!int.TryParse(filter.Filter, out filt)) throw new Exception("Library id is invalid");
+                books = _context.Books.Where(books => books.libraryId == filt).ToList();
+            }
+            if (filter.FilterType == "bookId")
+            {
+                books = _context.Books.Where(books => books.isbn == filter.Filter).ToList();
+            }
+            if (filter.FilterType == "bookTitle")
+            {
+                books = _context.Books.Where(books => books.title.ToLower().Contains(filter.Filter.ToLower())).ToList();
+            }
+
+
+            var validFilter = new PaginationFilter(pNumber, pSize);
+
+            List<Book> sortedBooks = books.OrderBy(book => book.year).ToList();
+
+            List<Book> pagedData = sortedBooks
+                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize)
+                .ToList();
+
+            int totalRecords = books.Count;
+            int totalPages = (int)Math.Ceiling((double)totalRecords / pSize);
+
+
+            return Ok(new PagedResponse<List<Book>>(pagedData, validFilter.PageNumber, validFilter.PageSize, totalPages, totalRecords));
+        }
+        catch (Exception e)
+        {
+            return NotFound(e.Message);
+        }
+    }
 
 
     [HttpPost("AddBook")]
