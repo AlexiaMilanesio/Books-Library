@@ -10,6 +10,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using books_library.Api.Wrappers;
 using Microsoft.EntityFrameworkCore;
 using books_library.Api.Services;
+using System.Linq;
 
 namespace books_library.Api.Controllers;
 
@@ -120,10 +121,10 @@ public class BooksController : ControllerBase
                 .Take(validFilter.PageSize)
                 .ToList();
 
-            int totalPages = _context.Books.Where(book => book.libraryId == libraryId).Count() / pSize;
             int totalRecords = _context.Books.Where(book => book.libraryId == libraryId).Count();
+            int totalPages = (int) Math.Ceiling((double) totalRecords / pSize);
 
-            
+
             return Ok(new PagedResponse<List<Book>>(pagedData, validFilter.PageNumber, validFilter.PageSize, totalPages, totalRecords));
         }
         catch (Exception e)
@@ -134,7 +135,7 @@ public class BooksController : ControllerBase
 
 
     [HttpGet("GetBookById/{id}")]
-    public async Task<IActionResult> GetBookById(string id)
+    public async Task<ActionResult<Book>> GetBookById(string id)
     {
         try
         {
@@ -152,17 +153,41 @@ public class BooksController : ControllerBase
     }
 
 
-    [HttpGet("GetBookByTitle/{title}")]
-    public async Task<IActionResult> GetBookByTitle(string title)
+    [HttpGet("GetBooksByTitle/{title}")]
+    public async Task<ActionResult<IEnumerable<Book>>> GetBooksByTitle(string title)
     {
         try
         {
-            if (string.IsNullOrWhiteSpace(title)) throw new Exception("Not a valid id");
+            string? pageNumber = Request.Query["pageNumber"];
+            string? pageSize = Request.Query["pageSize"];
 
-            List<Book> foundBook = _context.Books.ToList().FindAll(book => book.title.Contains(title));
-            if (foundBook == null) throw new Exception("Book not found");
+            if (
+                string.IsNullOrWhiteSpace(pageNumber) ||
+                string.IsNullOrWhiteSpace(pageSize) ||
+                string.IsNullOrWhiteSpace(title)
+            ) throw new Exception("Didn't get all parameters needed");
 
-            return Ok(new Response<List<Book>>(foundBook));
+
+            int pNumber, pSize;
+            if (!int.TryParse(pageNumber, out pNumber) || !int.TryParse(pageSize, out pSize)) throw new Exception("Parameters have to be numbers");
+
+
+            var validFilter = new PaginationFilter(pNumber, pSize);
+
+            List<Book> books = _context.Books.ToList();
+            if (books == null) throw new Exception("Couldn't get all books");
+
+            List<Book> pagedData = books
+                .FindAll(book => book.title.ToLower().Contains(title.ToLower()))
+                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize)
+                .ToList();
+
+            int totalRecords = _context.Books.Where(book => book.title.ToLower().Contains(title.ToLower())).Count();
+            int totalPages = (int)Math.Ceiling((double)totalRecords / pSize);
+
+
+            return Ok(new PagedResponse<List<Book>>(pagedData, validFilter.PageNumber, validFilter.PageSize, totalPages, totalRecords));
         }
         catch (Exception e)
         {
@@ -171,14 +196,14 @@ public class BooksController : ControllerBase
     }
 
 
-    //[HttpGet("GetBookByAuthor/{author}")]
-    //public async Task<IActionResult> GetBookByAuthor(string author)
+    //[HttpGet("GetBooksByAuthor/{author}")]
+    //public async Task<ActionResult<IEnumerable<Book>>> GetBooksByAuthor(string author)
     //{
     //    try
     //    {
     //        if (string.IsNullOrWhiteSpace(author)) throw new Exception("Not a valid author");
 
-    //        List<Book> foundBook = _context.Books.ToList().FindAll(book => book.author.Contains(author));
+    //        List<Book> foundBook = _context.Books.ToList().FindAll(book => book.Author.Contains(author));
     //        if (foundBook == null) throw new Exception("Book not found");
 
     //        return Ok(new Response<List<Book>>(foundBook));
