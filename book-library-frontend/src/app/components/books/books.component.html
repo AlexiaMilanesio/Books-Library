@@ -1,6 +1,11 @@
 <div class="general-container">
   <div class="search-engine-container" *ngIf="books">
     <button (click)="goToLibraries()" class="show-libraries-btn">Show libraries</button>
+
+    <h2 *ngIf="libraryId">Books of library id: {{ libraryId }}</h2>
+    <h2 *ngIf="bookId">Books with isbn: {{ bookId }}</h2>
+    <h2 *ngIf="bookTitle">Books with title: {{ bookTitle }}</h2>
+    <h2 *ngIf="bookAuthor">Books of author: {{ bookAuthor }}</h2>
   </div>
 
   <table 
@@ -30,14 +35,11 @@
   ></mat-paginator> -->
 
   <div class="paginator" *ngIf="!errorMessage && books">
+    <button (click)="getFirstPage()"> << </button>
+    <button (click)="getPreviousPage()"> < </button>
     <p>Total records: {{ totalRecords }}</p>
     <p>Page: {{ pageNumber }} of {{ totalPages }}</p>
-
-    <button (click)="getFirstPage()"> << </button>
-
-    <button (click)="getPreviousPage()"> < </button>
     <button (click)="getNextPage()"> > </button>
-
     <button (click)="getLastPage()"> >> </button>
   </div>
 
