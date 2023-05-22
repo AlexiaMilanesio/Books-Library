@@ -99,7 +99,7 @@ export class BooksComponent implements OnInit {
 
 
   public getLastPage(): void {
-    this.pageNumber = this.totalPages
+    this.pageNumber = this.totalPages;
     if (this.selected === "titleOrder") this.sortBooksByTitle();
     if (this.selected === "yearOrder") this.sortBooksByYear();
     if (this.libraryId) this.getLibraryBooks();
