@@ -22,13 +22,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Wrappers\" />
     <None Remove="Filters\" />
     <None Remove="Services\" />
+    <None Remove="Wrappers\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Wrappers\" />
     <Folder Include="Filters\" />
     <Folder Include="Services\" />
+    <Folder Include="Wrappers\" />
   </ItemGroup>
 </Project>
