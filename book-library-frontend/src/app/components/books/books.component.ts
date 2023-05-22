@@ -227,14 +227,6 @@ export class BooksComponent implements OnInit {
   }
 
 
-  public resetBooks(): void {
-    this.pageNumber = 1;
-    if (this.libraryId) this.getLibraryBooks();
-    if (this.bookTitle) this.getBooksByTitle();
-    if (this.bookAuthor) this.getBooksByAuthor();
-  }
-
-
   public goToLibraries(): void {
     this.booksService.currentLibraryId = undefined;
     this.booksService.currentBookId = undefined;
