@@ -104,6 +104,7 @@ public class BooksController : ControllerBase
 
             var validFilter = new PaginationFilter(pNumber, pSize);
 
+            //List<Book> books = _context.Books.Where(b => b.libraryId == libraryId).Include(book => book.Author).ToList();
             List<Book> books = _context.Books.ToList();
             if (books == null) throw new Exception("Couldn't get all books");
 
@@ -133,7 +134,7 @@ public class BooksController : ControllerBase
         {
             if (string.IsNullOrWhiteSpace(id)) throw new Exception("Not a valid id");
 
-            List<Book> foundBook = _context.Books.ToList().FindAll(book => book.isbn == id);
+            List<Book> foundBook = _context.Books.ToList().FindAll(book => book.isbn.ToLower() == id.ToLower());
             if (foundBook == null) throw new Exception("Book not found");
 
             return Ok(new Response<List<Book>>(foundBook));
@@ -264,7 +265,7 @@ public class BooksController : ControllerBase
             }
             if (filter.FilterType == "bookId")
             {
-                books = _context.Books.Where(books => books.isbn == filter.Filter).ToList();
+                books = _context.Books.Where(books => books.isbn.ToLower() == filter.Filter.ToLower()).ToList();
             }
             if (filter.FilterType == "bookTitle")
             {
@@ -327,7 +328,7 @@ public class BooksController : ControllerBase
             }
             if (filter.FilterType == "bookId")
             {
-                books = _context.Books.Where(books => books.isbn == filter.Filter).ToList();
+                books = _context.Books.Where(books => books.isbn.ToLower() == filter.Filter.ToLower()).ToList();
             }
             if (filter.FilterType == "bookTitle")
             {

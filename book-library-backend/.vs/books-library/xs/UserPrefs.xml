@@ -1,0 +1,29 @@
+﻿<Properties StartupConfiguration="{7C629C31-4F76-4BD0-8570-C9911E63CF13}|https">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="books-library.Api/Controllers/BooksController.cs">
+    <Files>
+      <File FileName="books-library.Api/Controllers/BooksController.cs" Line="274" Column="1" />
+      <File FileName="books-library.Api/Wrappers/PagedResponse.cs" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="books-library" expanded="True">
+            <Node name="books-library.Api" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="BooksController.cs" selected="True" />
+              </Node>
+              <Node name="Wrappers" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.books-library.Api PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+</Properties>
