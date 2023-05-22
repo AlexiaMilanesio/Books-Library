@@ -104,11 +104,33 @@ public class BooksController : ControllerBase
 
             var validFilter = new PaginationFilter(pNumber, pSize);
 
-            //List<Book> books = _context.Books.Where(b => b.libraryId == libraryId).Include(book => book.Author).ToList();
-            List<Book> books = _context.Books.ToList();
+            List<BookWithAuthor> books = new List<BookWithAuthor>();
+
+            var list = (
+                from book in _context.Books
+                join author in _context.Authors on book.authorId equals author.Id
+                select new { book.isbn, book.title, book.year, book.publisher, book.image_url, book.libraryId, author.Name }
+            ).ToList();
+
+            foreach(var item in list)
+            {
+                BookWithAuthor book = new BookWithAuthor();
+
+                book.isbn = item.isbn;
+                book.title = item.title;
+                book.year = item.year;
+                book.publisher = item.publisher;
+                book.image_url = item.image_url;
+                book.libraryId = item.libraryId;
+                book.author = item.Name;
+
+                books.Add(book);
+            }
+
+
             if (books == null) throw new Exception("Couldn't get all books");
 
-            List<Book> pagedData = books
+            List<BookWithAuthor> pagedData = books
                 .FindAll(book => book.libraryId == libraryId)
                 .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
                 .Take(validFilter.PageSize)
@@ -118,7 +140,7 @@ public class BooksController : ControllerBase
             int totalPages = (int) Math.Ceiling((double) totalRecords / pSize);
 
 
-            return Ok(new PagedResponse<List<Book>>(pagedData, validFilter.PageNumber, validFilter.PageSize, totalPages, totalRecords));
+            return Ok(new PagedResponse<List<BookWithAuthor>>(pagedData, validFilter.PageNumber, validFilter.PageSize, totalPages, totalRecords));
         }
         catch (Exception e)
         {
@@ -134,10 +156,33 @@ public class BooksController : ControllerBase
         {
             if (string.IsNullOrWhiteSpace(id)) throw new Exception("Not a valid id");
 
-            List<Book> foundBook = _context.Books.ToList().FindAll(book => book.isbn.ToLower() == id.ToLower());
+            List<BookWithAuthor> books = new List<BookWithAuthor>();
+
+            var list = (
+                from book in _context.Books
+                join author in _context.Authors on book.authorId equals author.Id
+                select new { book.isbn, book.title, book.year, book.publisher, book.image_url, book.libraryId, author.Name }
+            ).ToList();
+
+            foreach (var item in list)
+            {
+                BookWithAuthor book = new BookWithAuthor();
+
+                book.isbn = item.isbn;
+                book.title = item.title;
+                book.year = item.year;
+                book.publisher = item.publisher;
+                book.image_url = item.image_url;
+                book.libraryId = item.libraryId;
+                book.author = item.Name;
+
+                books.Add(book);
+            }
+
+            List<BookWithAuthor> foundBook = books.FindAll(book => book.isbn.ToLower() == id.ToLower());
             if (foundBook == null) throw new Exception("Book not found");
 
-            return Ok(new Response<List<Book>>(foundBook));
+            return Ok(new Response<List<BookWithAuthor>>(foundBook));
         }
         catch (Exception e)
         {
@@ -167,20 +212,42 @@ public class BooksController : ControllerBase
 
             var validFilter = new PaginationFilter(pNumber, pSize);
 
-            List<Book> books = _context.Books.ToList();
+            List<BookWithAuthor> books = new List<BookWithAuthor>();
+
+            var list = (
+                from book in _context.Books
+                join author in _context.Authors on book.authorId equals author.Id
+                select new { book.isbn, book.title, book.year, book.publisher, book.image_url, book.libraryId, author.Name }
+            ).ToList();
+
+            foreach (var item in list)
+            {
+                BookWithAuthor book = new BookWithAuthor();
+
+                book.isbn = item.isbn;
+                book.title = item.title;
+                book.year = item.year;
+                book.publisher = item.publisher;
+                book.image_url = item.image_url;
+                book.libraryId = item.libraryId;
+                book.author = item.Name;
+
+                books.Add(book);
+            }
+
             if (books == null) throw new Exception("Couldn't get all books");
 
-            List<Book> pagedData = books
+            List<BookWithAuthor> pagedData = books
                 .FindAll(book => book.title.ToLower().Contains(title.ToLower()))
                 .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
                 .Take(validFilter.PageSize)
                 .ToList();
 
-            int totalRecords = _context.Books.Where(book => book.title.ToLower().Contains(title.ToLower())).Count();
+            int totalRecords = books.Where(book => book.title.ToLower().Contains(title.ToLower())).Count();
             int totalPages = (int)Math.Ceiling((double)totalRecords / pSize);
 
 
-            return Ok(new PagedResponse<List<Book>>(pagedData, validFilter.PageNumber, validFilter.PageSize, totalPages, totalRecords));
+            return Ok(new PagedResponse<List<BookWithAuthor>>(pagedData, validFilter.PageNumber, validFilter.PageSize, totalPages, totalRecords));
         }
         catch (Exception e)
         {
@@ -189,47 +256,69 @@ public class BooksController : ControllerBase
     }
 
 
-    //[HttpGet("GetBooksByAuthor/{author}")]
-    //public async Task<ActionResult<IEnumerable<Book>>> GetBooksByAuthor(string author)
-    //{
-    //    try
-    //    {
-    //        string? pageNumber = Request.Query["pageNumber"];
-    //        string? pageSize = Request.Query["pageSize"];
+    [HttpGet("GetBooksByAuthor/{authorName}")]
+    public async Task<ActionResult<IEnumerable<Book>>> GetBooksByAuthor(string authorName)
+    {
+        try
+        {
+            string? pageNumber = Request.Query["pageNumber"];
+            string? pageSize = Request.Query["pageSize"];
 
-    //        if (
-    //            string.IsNullOrWhiteSpace(pageNumber) ||
-    //            string.IsNullOrWhiteSpace(pageSize) ||
-    //            string.IsNullOrWhiteSpace(author)
-    //        ) throw new Exception("Didn't get all parameters needed");
-
-
-    //        int pNumber, pSize;
-    //        if (!int.TryParse(pageNumber, out pNumber) || !int.TryParse(pageSize, out pSize)) throw new Exception("Parameters have to be numbers");
+            if (
+                string.IsNullOrWhiteSpace(pageNumber) ||
+                string.IsNullOrWhiteSpace(pageSize) ||
+                string.IsNullOrWhiteSpace(authorName)
+            ) throw new Exception("Didn't get all parameters needed");
 
 
-    //        var validFilter = new PaginationFilter(pNumber, pSize);
-
-    //        List<Book> books = _context.Books.ToList();
-    //        if (books == null) throw new Exception("Couldn't get all books");
-
-    //        List<Book> pagedData = books
-    //            .FindAll(book => book.Author.ToLower().Contains(author.ToLower()))
-    //            .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
-    //            .Take(validFilter.PageSize)
-    //            .ToList();
-
-    //        int totalRecords = _context.Books.Where(book => book.title.ToLower().Contains(author.ToLower())).Count();
-    //        int totalPages = (int)Math.Ceiling((double)totalRecords / pSize);
+            int pNumber, pSize;
+            if (!int.TryParse(pageNumber, out pNumber) || !int.TryParse(pageSize, out pSize)) throw new Exception("Parameters have to be numbers");
 
 
-    //        return Ok(new PagedResponse<List<Book>>(pagedData, validFilter.PageNumber, validFilter.PageSize, totalPages, totalRecords));
-    //    }
-    //    catch (Exception e)
-    //    {
-    //        return NotFound(e.Message);
-    //    }
-    //}
+            var validFilter = new PaginationFilter(pNumber, pSize);
+
+            List<BookWithAuthor> books = new List<BookWithAuthor>();
+
+            var list = (
+                from book in _context.Books
+                join author in _context.Authors on book.authorId equals author.Id
+                select new { book.isbn, book.title, book.year, book.publisher, book.image_url, book.libraryId, author.Name }
+            ).ToList();
+
+            foreach (var item in list)
+            {
+                BookWithAuthor book = new BookWithAuthor();
+
+                book.isbn = item.isbn;
+                book.title = item.title;
+                book.year = item.year;
+                book.publisher = item.publisher;
+                book.image_url = item.image_url;
+                book.libraryId = item.libraryId;
+                book.author = item.Name;
+
+                books.Add(book);
+            }
+
+            if (books == null) throw new Exception("Couldn't get all books");
+
+            List<BookWithAuthor> pagedData = books
+                .FindAll(book => book.author.ToLower().Contains(authorName.ToLower()))
+                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize)
+                .ToList();
+
+            int totalRecords = books.Where(book => book.author.ToLower().Contains(authorName.ToLower())).Count();
+            int totalPages = (int)Math.Ceiling((double)totalRecords / pSize);
+
+
+            return Ok(new PagedResponse<List<BookWithAuthor>>(pagedData, validFilter.PageNumber, validFilter.PageSize, totalPages, totalRecords));
+        }
+        catch (Exception e)
+        {
+            return NotFound(e.Message);
+        }
+    }
 
 
     [HttpPost("SortBooksByTitle")]
@@ -255,29 +344,51 @@ public class BooksController : ControllerBase
             if (!int.TryParse(pageNumber, out pNumber) || !int.TryParse(pageSize, out pSize)) throw new Exception("Parameters have to be numbers");
 
 
-            List<Book>? books = _context.Books.ToList();
+            List<BookWithAuthor> books = new List<BookWithAuthor>();
+
+            var list = (
+                from book in _context.Books
+                join author in _context.Authors on book.authorId equals author.Id
+                select new { book.isbn, book.title, book.year, book.publisher, book.image_url, book.libraryId, author.Name }
+            ).ToList();
+
+            foreach (var item in list)
+            {
+                BookWithAuthor book = new BookWithAuthor();
+
+                book.isbn = item.isbn;
+                book.title = item.title;
+                book.year = item.year;
+                book.publisher = item.publisher;
+                book.image_url = item.image_url;
+                book.libraryId = item.libraryId;
+                book.author = item.Name;
+
+                books.Add(book);
+            }
+
 
             if (filter.FilterType == "libraryId")
             {
                 int filt;
                 if (!int.TryParse(filter.Filter, out filt)) throw new Exception("Library id is invalid");
-                books = _context.Books.Where(books => books.libraryId == filt).ToList();
+                books = books.Where(books => books.libraryId == filt).ToList();
             }
             if (filter.FilterType == "bookId")
             {
-                books = _context.Books.Where(books => books.isbn.ToLower() == filter.Filter.ToLower()).ToList();
+                books = books.Where(books => books.isbn.ToLower() == filter.Filter.ToLower()).ToList();
             }
             if (filter.FilterType == "bookTitle")
             {
-                books = _context.Books.Where(books => books.title.ToLower().Contains(filter.Filter.ToLower())).ToList();
+                books = books.Where(books => books.title.ToLower().Contains(filter.Filter.ToLower())).ToList();
             }
 
 
             var validFilter = new PaginationFilter(pNumber, pSize);
 
-            List<Book> sortedBooks = books.OrderBy(book => book.title).ToList();
+            List<BookWithAuthor> sortedBooks = books.OrderBy(book => book.title).ToList();
 
-            List<Book> pagedData = sortedBooks
+            List<BookWithAuthor> pagedData = sortedBooks
                 .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
                 .Take(validFilter.PageSize)
                 .ToList();
@@ -286,7 +397,7 @@ public class BooksController : ControllerBase
             int totalPages = (int)Math.Ceiling((double)totalRecords / pSize);
 
 
-            return Ok(new PagedResponse<List<Book>>(pagedData, validFilter.PageNumber, validFilter.PageSize, totalPages, totalRecords));
+            return Ok(new PagedResponse<List<BookWithAuthor>>(pagedData, validFilter.PageNumber, validFilter.PageSize, totalPages, totalRecords));
         }
         catch (Exception e)
         {
@@ -318,29 +429,51 @@ public class BooksController : ControllerBase
             if (!int.TryParse(pageNumber, out pNumber) || !int.TryParse(pageSize, out pSize)) throw new Exception("Parameters have to be numbers");
 
 
-            List<Book>? books = _context.Books.ToList();
+            List<BookWithAuthor> books = new List<BookWithAuthor>();
+
+            var list = (
+                from book in _context.Books
+                join author in _context.Authors on book.authorId equals author.Id
+                select new { book.isbn, book.title, book.year, book.publisher, book.image_url, book.libraryId, author.Name }
+            ).ToList();
+
+            foreach (var item in list)
+            {
+                BookWithAuthor book = new BookWithAuthor();
+
+                book.isbn = item.isbn;
+                book.title = item.title;
+                book.year = item.year;
+                book.publisher = item.publisher;
+                book.image_url = item.image_url;
+                book.libraryId = item.libraryId;
+                book.author = item.Name;
+
+                books.Add(book);
+            }
+
 
             if (filter.FilterType == "libraryId")
             {
                 int filt;
                 if (!int.TryParse(filter.Filter, out filt)) throw new Exception("Library id is invalid");
-                books = _context.Books.Where(books => books.libraryId == filt).ToList();
+                books = books.Where(books => books.libraryId == filt).ToList();
             }
             if (filter.FilterType == "bookId")
             {
-                books = _context.Books.Where(books => books.isbn.ToLower() == filter.Filter.ToLower()).ToList();
+                books = books.Where(books => books.isbn.ToLower() == filter.Filter.ToLower()).ToList();
             }
             if (filter.FilterType == "bookTitle")
             {
-                books = _context.Books.Where(books => books.title.ToLower().Contains(filter.Filter.ToLower())).ToList();
+                books = books.Where(books => books.title.ToLower().Contains(filter.Filter.ToLower())).ToList();
             }
 
 
             var validFilter = new PaginationFilter(pNumber, pSize);
 
-            List<Book> sortedBooks = books.OrderBy(book => book.year).ToList();
+            List<BookWithAuthor> sortedBooks = books.OrderBy(book => book.year).ToList();
 
-            List<Book> pagedData = sortedBooks
+            List<BookWithAuthor> pagedData = sortedBooks
                 .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
                 .Take(validFilter.PageSize)
                 .ToList();
@@ -349,7 +482,7 @@ public class BooksController : ControllerBase
             int totalPages = (int)Math.Ceiling((double)totalRecords / pSize);
 
 
-            return Ok(new PagedResponse<List<Book>>(pagedData, validFilter.PageNumber, validFilter.PageSize, totalPages, totalRecords));
+            return Ok(new PagedResponse<List<BookWithAuthor>>(pagedData, validFilter.PageNumber, validFilter.PageSize, totalPages, totalRecords));
         }
         catch (Exception e)
         {
@@ -359,20 +492,60 @@ public class BooksController : ControllerBase
 
 
     [HttpPost("AddBook")]
-    public async Task<ActionResult<Book>> AddBook()
+    public async Task<ActionResult<BookWithAuthor>> AddBook()
     {
         try
         {
             string body = await new StreamReader(Request.Body).ReadToEndAsync();
             if (string.IsNullOrWhiteSpace(body)) throw new Exception("Body is empty or a white space");
 
-            Book? bookToAdd = JsonConvert.DeserializeObject<Book>(body);
+            BookWithAuthor? bookToAdd = JsonConvert.DeserializeObject<BookWithAuthor>(body);
             if (bookToAdd == null) throw new Exception("Book added data is empty");
 
-            _context.Books.Add(bookToAdd);
+            Author? author = _context.Authors.ToList().Find(a => a.Name == bookToAdd.author);
+            int authorId = -1;
+
+            if (author != null)
+            {
+                authorId = _context.Authors.ToList().Find(a => a.Name == bookToAdd.author).Id;
+            }
+
+            if (author == null)
+            {
+                int maxId = _context.Authors.Max(author => author.Id);
+                int year;
+                if(!int.TryParse(DateTime.Now.ToString("yyyy"), out year)) throw new Exception ("There's been an error while converting year into number");
+
+                Author newAuthor = new Author();
+
+                newAuthor.Id = maxId + 1;
+                newAuthor.Name = bookToAdd.author;
+                newAuthor.Year = year;
+
+                _context.Authors.Add(newAuthor);
+                _context.SaveChanges();
+
+                authorId = _context.Authors.ToList().Find(a => a.Name == bookToAdd.author).Id;
+            }
+
+            if (authorId < 0) throw new Exception("There has been a problem while getting author id");
+
+
+            Book addedBook = new Book();
+
+            addedBook.isbn = bookToAdd.isbn;
+            addedBook.title = bookToAdd.title;
+            addedBook.year = bookToAdd.year;
+            addedBook.publisher = bookToAdd.publisher;
+            addedBook.image_url = bookToAdd.image_url;
+            addedBook.libraryId = bookToAdd.libraryId;
+            addedBook.authorId = authorId;
+
+            _context.Books.Add(addedBook);
             _context.SaveChanges();
 
-            return Ok(new Response<Book>(bookToAdd));
+            
+            return Ok(new Response<BookWithAuthor>(bookToAdd));
         }
         catch (Exception e)
         {
@@ -389,25 +562,58 @@ public class BooksController : ControllerBase
             string body = await new StreamReader(Request.Body).ReadToEndAsync();
             if (string.IsNullOrWhiteSpace(body)) throw new Exception("Body is empty or a white space");
 
-            Book? book = JsonConvert.DeserializeObject<Book>(body);
-            if (book == null) throw new Exception("Book edited data is empty");
+            BookWithAuthor? bookToEdit = JsonConvert.DeserializeObject<BookWithAuthor>(body);
+            if (bookToEdit == null) throw new Exception("Book edited data is empty");
 
-            List<Book> books = _context.Books.ToList();
-            if (books == null) throw new Exception("Couldn't get all books");
+            Author? author = _context.Authors.ToList().Find(a => a.Name == bookToEdit.author);
+            int authorId = -1;
 
-            Book? editedBook = books.Find(b => b.isbn == book.isbn);
-            if (editedBook == null) throw new Exception("Book not found");
+            if (author != null)
+            {
+                authorId = _context.Authors.ToList().Find(a => a.Name == bookToEdit.author).Id;
+            }
 
-            editedBook.title = book.title;
-            editedBook.year = book.year;
-            editedBook.publisher = book.publisher;
-            editedBook.image_url = book.image_url;
-            editedBook.libraryId = book.libraryId;
-            editedBook.authorId = book.authorId;
+            if (author == null)
+            {
+                int maxId = _context.Authors.Max(author => author.Id);
+                int year;
+                if (!int.TryParse(DateTime.Now.ToString("yyyy"), out year)) throw new Exception("There's been an error while converting year into number");
 
-            _context.SaveChanges();
-                    
-            return Ok(new Response<Book>(editedBook));
+                Author newAuthor = new Author();
+
+                newAuthor.Id = maxId + 1;
+                newAuthor.Name = bookToEdit.author;
+                newAuthor.Year = year;
+
+                _context.Authors.Add(newAuthor);
+                _context.SaveChanges();
+
+                authorId = _context.Authors.ToList().Find(a => a.Name == bookToEdit.author).Id;
+            }
+
+            if (authorId < 0) throw new Exception("There has been a problem while getting author id");
+
+
+            Book? editedBook = _context.Books.ToList().Find(book => book.isbn == bookToEdit.isbn);
+
+            if (editedBook != null)
+            {
+                editedBook.isbn = bookToEdit.isbn;
+                editedBook.title = bookToEdit.title;
+                editedBook.year = bookToEdit.year;
+                editedBook.publisher = bookToEdit.publisher;
+                editedBook.image_url = bookToEdit.image_url;
+                editedBook.libraryId = bookToEdit.libraryId;
+                editedBook.authorId = authorId;
+
+                _context.SaveChanges();
+
+                return Ok(new Response<BookWithAuthor>(bookToEdit));
+            }
+            else
+            {
+                throw new Exception("Couldn't edit book");
+            }
         }
         catch (Exception e)
         {

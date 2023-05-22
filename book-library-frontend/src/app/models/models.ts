@@ -5,7 +5,7 @@ export interface Book {
   publisher: string;
   image_url: string;
   libraryId: number;
-  authorId: number;
+  author: string;
 }
 
 export interface Library {

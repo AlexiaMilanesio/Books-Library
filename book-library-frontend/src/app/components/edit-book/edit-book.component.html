@@ -35,15 +35,17 @@
     />
     <input
       type="text"
-      placeholder="Enter author id"
-      [value]="currentBook.authorId"
-      #authorId
+      placeholder="Enter author name"
+      [value]="currentBook.author"
+      #author
     />
   </div>
 
   
   <div class="btn-container">
-    <button (click)="editBook(title, year, publisher, image_url, libraryId, authorId)" class="edit-btn">Edit book</button>
+    <button (click)="editBook(title.value, year.value, publisher.value, image_url.value, libraryId.value, author.value)" class="edit-btn">
+      Edit book
+    </button>
     <button (click)="deleteBook()" class="delete-btn">Delete book</button>
     <button (click)="goToLibraries()">Show libraries</button>
   </div>

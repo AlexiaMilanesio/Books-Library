@@ -18,15 +18,7 @@ export class AddBookComponent implements OnInit {
   ngOnInit(): void {}
 
 
-  public addBook(
-    title: string,
-    year: string,
-    publisher: string,
-    image_url: string,
-    libraryId: string,
-    authorId: string
-  ): void {
-
+  public addBook(title: string, year: string, publisher: string, image_url: string, libraryId: string, author: string): void {
     let formattedTitle = title.charAt(0).toUpperCase() + title.slice(1);
     let formattedPublisher = publisher.charAt(0).toUpperCase() + publisher.slice(1);
     let formattedBookIsbn = uuid.v4().toString();
@@ -38,7 +30,7 @@ export class AddBookComponent implements OnInit {
       publisher: formattedPublisher,
       image_url: image_url,
       libraryId: Number(libraryId),
-      authorId: Number(authorId),
+      author: author,
     };
 
     this.book = book;

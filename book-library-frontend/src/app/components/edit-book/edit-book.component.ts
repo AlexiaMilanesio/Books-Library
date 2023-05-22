@@ -18,22 +18,15 @@ export class EditBookComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public editBook(
-    title: HTMLInputElement,
-    year: HTMLInputElement,
-    publisher: HTMLInputElement,
-    image_url: HTMLInputElement,
-    libraryId: HTMLInputElement,
-    authorId: HTMLInputElement
-  ): void {
+  public editBook(title: string, year: string, publisher: string, image_url: string, libraryId: string, author: string): void {
     const editedBook: Book = {
       isbn: this.currentBook.isbn,
-      title: title.value.toString(),
-      year: Number(year.value),
-      publisher: publisher.value.toString(),
-      image_url: image_url.value.toString(),
-      libraryId: Number(libraryId.value),
-      authorId: Number(authorId.value),
+      title: title,
+      year: Number(year),
+      publisher: publisher,
+      image_url: image_url,
+      libraryId: Number(libraryId),
+      author: author,
     };
 
     this.booksService.editBook(editedBook).subscribe(book => {
