@@ -21,7 +21,7 @@
   <table 
     mat-table 
     [dataSource]="libraries" 
-    *ngIf="!errorMessage"
+    *ngIf="!errorMessage && libraries"
     class="mat-elevation-z8" 
   >
     <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">

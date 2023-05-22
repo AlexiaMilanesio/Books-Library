@@ -16,8 +16,7 @@ export class BooksComponent implements OnInit {
   bookId: string | undefined;
   bookTitle: string | undefined;
   bookAuthor: string | undefined;
-  orderByTitle: string | undefined;
-  orderByYear: string | undefined;
+  selected: string = '';
   displayedColumns!: string[];
   books!: MatTableDataSource<Book>;
   errorMessage: string | undefined;
@@ -26,7 +25,6 @@ export class BooksComponent implements OnInit {
   pageSize: number = 10;
   totalPages!: number;
   totalRecords!: number;
-  selected: string = '';
 
   // pageIndex: number = 0;
   // pageSizeOptions: Array<number> = [10, 25, 50, 100];
@@ -72,8 +70,8 @@ export class BooksComponent implements OnInit {
 
   public getNextPage(): void {
     this.pageNumber = this.pageNumber + 1;
-    if (this.orderByTitle) this.sortBooksByTitle();
-    if (this.orderByYear) this.sortBooksByYear();
+    if (this.selected === "titleOrder") this.sortBooksByTitle();
+    if (this.selected === "yearOrder") this.sortBooksByYear();
     if (this.libraryId) this.getLibraryBooks();
     if (this.bookTitle) this.getBooksByTitle();
     if (this.bookAuthor) this.getBooksByAuthor();
@@ -82,8 +80,8 @@ export class BooksComponent implements OnInit {
 
   public getPreviousPage(): void {
     this.pageNumber = this.pageNumber - 1;
-    if (this.orderByTitle) this.sortBooksByTitle();
-    if (this.orderByYear) this.sortBooksByYear();
+    if (this.selected === "titleOrder") this.sortBooksByTitle();
+    if (this.selected === "yearOrder") this.sortBooksByYear();
     if (this.libraryId) this.getLibraryBooks();
     if (this.bookTitle) this.getBooksByTitle();
     if (this.bookAuthor) this.getBooksByAuthor();
@@ -92,8 +90,8 @@ export class BooksComponent implements OnInit {
 
   public getFirstPage(): void {
     this.pageNumber = 1;
-    if (this.orderByTitle) this.sortBooksByTitle();
-    if (this.orderByYear) this.sortBooksByYear();
+    if (this.selected === "titleOrder") this.sortBooksByTitle();
+    if (this.selected === "yearOrder") this.sortBooksByYear();
     if (this.libraryId) this.getLibraryBooks();
     if (this.bookTitle) this.getBooksByTitle();
     if (this.bookAuthor) this.getBooksByAuthor();
@@ -102,8 +100,8 @@ export class BooksComponent implements OnInit {
 
   public getLastPage(): void {
     this.pageNumber = this.totalPages
-    if (this.orderByTitle) this.sortBooksByTitle();
-    if (this.orderByYear) this.sortBooksByYear();
+    if (this.selected === "titleOrder") this.sortBooksByTitle();
+    if (this.selected === "yearOrder") this.sortBooksByYear();
     if (this.libraryId) this.getLibraryBooks();
     if (this.bookTitle) this.getBooksByTitle();
     if (this.bookAuthor) this.getBooksByAuthor();
