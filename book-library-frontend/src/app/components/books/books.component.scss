@@ -14,7 +14,7 @@ h2 {
   margin: 0;
   padding: 0;
   width: 100%;
-  padding-left: 3em;
+  padding-left: 2em;
   margin-bottom: 1em;
   display: flex;
 }
@@ -66,6 +66,12 @@ button:hover {
   cursor: pointer;
 }
 
+.show-libraries-btn {
+  margin: 0;
+  margin: 1em 0 1em 3em;
+  margin-top: 1.5em;
+}
+
 .paginator {
   display: flex;
   justify-content: center;
@@ -90,4 +96,16 @@ button:hover {
   margin-top: 1em;
   text-align: center;
   color: black;
+}
+
+select {
+  margin: 0;
+  padding: 0;
+  margin-top: 1.5em;
+  margin-left: 3em;
+  padding: 0 .3em;
+  height: 2.5em;
+  border-radius: 3px;
+  background-color: rgb(246, 242, 242);
+  width: 200px;
 }

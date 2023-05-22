@@ -24,6 +24,9 @@ export class BooksComponent implements OnInit {
   pageSize: number = 10;
   totalPages!: number;
   totalRecords!: number;
+  selectedOrder: string | undefined;
+  orderByTitle: string | undefined;
+  orderByYear: string | undefined;
   // pageIndex: number = 0;
   // pageSizeOptions: Array<number> = [10, 25, 50, 100];
   // pageEvent: PageEvent | undefined;
@@ -239,5 +242,18 @@ export class BooksComponent implements OnInit {
   public goToEditMode(bookToEdit: Book): void {
     this.booksService.setCurrentBook(bookToEdit);
     this.router.navigate(["EditBook"]);
+  }
+
+
+  public valueChange(event: Event): void {
+    console.log(event)
+    // const e = event as HTMLElement;
+    // console.log("selected value: " + e.target.value + ", value of selected: " + this.selected);
+    // this.selectedOrder = event.target.value;
+  }
+
+
+  public clearSelection(): void {
+    this.selectedOrder = undefined;
   }
 }

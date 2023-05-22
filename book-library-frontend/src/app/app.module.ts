@@ -11,6 +11,7 @@ import { BooksComponent } from './components/books/books.component';
 import { AddBookComponent } from './components/add-book/add-book.component';
 import { EditBookComponent } from './components/edit-book/edit-book.component';
 import { LibrariesComponent } from './components/libraries/libraries.component';
+import { AuthorsComponent } from './components/authors/authors.component';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -23,7 +24,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { AuthorsComponent } from './components/authors/authors.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { AuthorsComponent } from './components/authors/authors.component';
     MatButtonModule,
     MatIconModule,
     MatToolbarModule,
+    FormsModule,
   ],
   providers: [BookService],
   bootstrap: [AppComponent]
