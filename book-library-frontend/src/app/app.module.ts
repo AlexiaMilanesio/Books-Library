@@ -11,7 +11,6 @@ import { BooksComponent } from './components/books/books.component';
 import { AddBookComponent } from './components/add-book/add-book.component';
 import { EditBookComponent } from './components/edit-book/edit-book.component';
 import { LibrariesComponent } from './components/libraries/libraries.component';
-import { AuthorsComponent } from './components/authors/authors.component';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -33,7 +32,6 @@ import { FormsModule } from '@angular/forms';
     AddBookComponent,
     EditBookComponent,
     LibrariesComponent,
-    AuthorsComponent,
   ],
   imports: [
     BrowserModule,
