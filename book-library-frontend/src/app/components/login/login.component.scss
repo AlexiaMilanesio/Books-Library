@@ -1,0 +1,47 @@
+.general-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+mat-card {
+  margin-top: 3em;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2em 3em;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+mat-card-title {
+  margin-bottom: 1em;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  flex-wrap: wrap;
+
+  > * {
+    // all form children
+    flex: 1 0 33%;
+  }
+}
+
+mat-form-field,
+button {
+  max-height: 4.9em;
+}
+
+.message-container {
+  text-align: center;
+  margin-top: 2em;
+
+  .login-error {
+    color: rgb(223, 39, 39);
+  }
+}
+

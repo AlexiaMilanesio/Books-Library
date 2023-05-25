@@ -1,0 +1,119 @@
+.general-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 2em;
+}
+
+mat-card {
+  padding: 2em;
+  min-width: 450px;
+
+  mat-card-title {
+    margin-bottom: 2em;
+  }
+
+  p > span {
+    font-weight: bold;
+  }
+
+  .user-info {
+    margin-bottom: 4em;
+  }
+}
+
+.delete-btn, .edit-btn {
+  color: white;
+}
+
+.delete-btn {
+  background-color: rgb(236, 55, 55);
+}
+
+.edit-btn {
+  background-color: rgb(255, 136, 0);
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.register-container {
+  margin-left: 5em;
+
+  .users-title {
+    font-size: 1.5em;
+    margin-bottom: 1.5em;
+  }
+
+  mat-card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: -.5em;
+    margin-left: -1.2em;
+    margin-bottom: 1em;
+  }
+
+  .register-title {
+    font-size: 1.2em;
+  }
+
+  .register-btn {
+    background-color: rgb(9, 170, 9);
+  }
+
+  .users-list-title {
+    margin-top: 2em;
+    font-weight: bold;
+    color: black;
+  }
+
+  mat-card-content {
+    height: 500px;
+    overflow-y: scroll;
+
+    mat-card {
+      margin-top: 1em;
+      background-color: rgb(243, 243, 243);
+
+      mat-card-subtitle {
+        margin-bottom: .5em;
+      }
+
+      p {
+        font-size: .9em;
+        padding: 0;
+        margin: 0;
+      }
+
+      .small-edit-btn, .small-delete-btn {
+        margin: 1em 1em 0 0;
+        border: none;
+        border-radius: 3px;
+        padding: .3em .8em;
+        color: white;
+      }
+
+      .small-edit-btn {
+        background-color: rgb(255, 136, 0);
+      }
+
+      .small-delete-btn {
+        background-color: rgb(236, 55, 55);
+      }
+
+      .small-edit-btn:hover, .small-delete-btn:hover {
+        cursor: pointer;
+      }
+    }
+
+    mat-card:first-child {
+      margin-top: 0;
+    }
+  }
+}
+

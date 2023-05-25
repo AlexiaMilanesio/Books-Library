@@ -2,35 +2,80 @@
 
 <div class="search-container">
   <div>
-    <input type="text" placeholder="Enter book id" #bookId />
-    <button (click)="getBookId(bookId.value); bookId.value = ''">Search</button>
+    <mat-form-field>
+      <input 
+        type="text" 
+        placeholder="Enter book id" 
+        matInput
+        #bookId 
+      />
+    </mat-form-field>
+
+    <button
+      (click)="getBookId(bookId.value); bookId.value = ''"
+      class="search-button"
+    >
+      Search
+    </button>
   </div>
 
   <div>
-    <input type="text" placeholder="Enter book title" #bookTitle />
-    <button (click)="getBooksByTitle(bookTitle.value); bookTitle.value = ''">Search</button>
+    <mat-form-field>
+      <input 
+        type="text" 
+        placeholder="Enter book title" 
+        matInput
+        #bookTitle 
+      />
+    </mat-form-field>
+
+    <button
+      (click)="getBooksByTitle(bookTitle.value); bookTitle.value = ''"
+      class="search-button"
+    >
+      Search
+    </button>
   </div>
-  
+
   <div>
-    <input type="text" placeholder="Enter book author" #bookAuthor />
-    <button (click)="getBooksByAuthor(bookAuthor.value); bookAuthor.value = ''">Search</button>
+    <mat-form-field>
+      <input 
+        type="text" 
+        placeholder="Enter book author" 
+        matInput
+        #bookAuthor 
+      />
+    </mat-form-field>
+    <button
+      (click)="getBooksByAuthor(bookAuthor.value); bookAuthor.value = ''"
+      class="search-button"
+    >
+      Search
+    </button>
   </div>
 </div>
 
 <div class="libraries-container">
-  <table 
-    mat-table 
-    [dataSource]="libraries" 
+  <table
+    mat-table
+    [dataSource]="libraries"
     *ngIf="!errorMessage && libraries"
-    class="mat-elevation-z8" 
+    class="mat-elevation-z8"
   >
-    <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+    <ng-container
+      [matColumnDef]="column"
+      *ngFor="let column of displayedColumns"
+    >
       <th mat-header-cell *matHeaderCellDef class="col-title">{{ column }}</th>
       <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="getLibraryBooks(row)"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      (click)="getLibraryBooks(row)"
+    ></tr>
   </table>
 
   <p *ngIf="errorMessage" class="message">{{ errorMessage }}</p>

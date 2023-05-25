@@ -4,6 +4,7 @@ import { BookService } from 'src/app/services/book.service';
 // import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-books',
@@ -11,23 +12,21 @@ import { Router } from '@angular/router';
   styleUrls: ['./books.component.scss']
 })
 export class BooksComponent implements OnInit {
-  // @ViewChild('paginator') paginator!: MatPaginator;
   libraryId: number | undefined;
   bookId: string | undefined;
   bookTitle: string | undefined;
   bookAuthor: string | undefined;
-  selected: string = '';
+  selectedOrder = new FormControl('');
   displayedColumns!: string[];
   books!: MatTableDataSource<Book>;
   errorMessage: string | undefined;
   length!: number;
   pageNumber: number = 1; 
+  lastPageNumber!: number;
   pageSize: number = 10;
   totalPages!: number;
   totalRecords!: number;
-  // pageIndex: number = 0;
-  // pageSizeOptions: Array<number> = [10, 25, 50, 100];
-  // pageEvent: PageEvent | undefined;
+  selectedPagination= new FormControl('10');
 
 
   constructor(private booksService: BookService, private router: Router) {
@@ -48,32 +47,13 @@ export class BooksComponent implements OnInit {
   }
 
 
-  // public getServerData(event?: PageEvent) {
-  //   if (event) {
-  //     this.pageNumber = event.pageIndex + 1;
-  //     this.pageSize = event.pageSize;
-  //     this.length = event.length;
-
-  //     console.log(event);
-  //     console.log(
-  //       "library id: " + this.libraryId + 
-  //       ", page number: " + this.pageNumber + 
-  //       ", page size: " + this.pageSize
-  //     );
-      
-  //     this.getLibraryBooks(this.libraryId, this.pageNumber, this.pageSize);
-  //   } 
-  //   return event;
-  // }
-
-
   public getNextPage(): void {
     this.pageNumber = this.pageNumber + 1;
-    if (this.selected === "titleOrder") {
+    if (this.selectedOrder.value === "titleOrder") {
       this.sortBooksByTitle();
       return;
     }
-    if (this.selected === "yearOrder") {
+    if (this.selectedOrder.value === "yearOrder") {
       this.sortBooksByYear();
       return;
     }
@@ -94,11 +74,11 @@ export class BooksComponent implements OnInit {
 
   public getPreviousPage(): void {
     this.pageNumber = this.pageNumber - 1;
-    if (this.selected === "titleOrder") {
+    if (this.selectedOrder.value === "titleOrder") {
       this.sortBooksByTitle();
       return;
     }
-    if (this.selected === "yearOrder") {
+    if (this.selectedOrder.value === "yearOrder") {
       this.sortBooksByYear();
       return;
     }
@@ -119,11 +99,11 @@ export class BooksComponent implements OnInit {
 
   public getFirstPage(): void {
     this.pageNumber = 1;
-    if (this.selected === "titleOrder") {
+    if (this.selectedOrder.value === "titleOrder") {
       this.sortBooksByTitle();
       return;
     }
-    if (this.selected === "yearOrder") {
+    if (this.selectedOrder.value === "yearOrder") {
       this.sortBooksByYear();
       return;
     }
@@ -144,11 +124,11 @@ export class BooksComponent implements OnInit {
 
   public getLastPage(): void {
     this.pageNumber = this.totalPages;
-    if (this.selected === "titleOrder") {
+    if (this.selectedOrder.value === "titleOrder") {
       this.sortBooksByTitle();
       return;
     }
-    if (this.selected === "yearOrder") {
+    if (this.selectedOrder.value === "yearOrder") {
       this.sortBooksByYear();
       return;
     }
@@ -177,7 +157,6 @@ export class BooksComponent implements OnInit {
           else {
             this.books = new MatTableDataSource(response.data);
             this.displayedColumns = Object.keys(response.data[0]);
-            // this.books.paginator = this.paginator;
             this.length = response.totalRecords;
             this.totalPages = response.totalPages;
             this.totalRecords = response.totalRecords;
@@ -288,15 +267,37 @@ export class BooksComponent implements OnInit {
   }
 
 
-  public valueChange(selectedOption: string): void {
+  public orderChange(): void {
     this.pageNumber = 1;
-    this.selected = selectedOption;
-    if (this.selected === "titleOrder") this.sortBooksByTitle();
-    else if (this.selected === "yearOrder") this.sortBooksByYear();
+
+    if (this.selectedOrder.value === "titleOrder") this.sortBooksByTitle();
+    else if (this.selectedOrder.value === "yearOrder") this.sortBooksByYear();
     else {
       this.books = new MatTableDataSource(this.books.data);
       this.displayedColumns = Object.keys(this.books.data[0]);
     }
+  }
+
+  public pageSizeChange(): void {
+    if (this.selectedPagination.value === "10") this.pageSize = 10;
+    else if (this.selectedPagination.value === "25") this.pageSize = 25;
+    else if (this.selectedPagination.value === "50") this.pageSize = 50;
+    else if (this.selectedPagination.value === "100") this.pageSize = 100;
+    
+    let totalPages = Math.ceil(this.totalRecords / this.pageSize);
+    if (totalPages < this.pageNumber) {
+      console.log(this.pageNumber)
+      this.pageNumber = totalPages;
+    } else {
+      console.log(this.pageNumber)
+      this.pageNumber;
+    }
+
+    if (this.libraryId) this.getLibraryBooks();
+    else if (this.bookId) this.getBookById();
+    else if (this.bookTitle) this.getBooksByTitle();
+    else if (this.bookAuthor) this.getBooksByAuthor();
+    else this.errorMessage = "There has been an error while loading books";
   }
 
   
@@ -350,7 +351,7 @@ export class BooksComponent implements OnInit {
         this.errorMessage = e.message;
         setTimeout(() => {
           this.errorMessage = "";
-          this.selected = "";
+          // this.selectedOrder.value = "";
           this.router.navigate(['Libraries']);
         }, 4000);
       }

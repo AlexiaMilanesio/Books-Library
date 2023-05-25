@@ -56,6 +56,9 @@ export interface Filter {
 }
 
 export interface User {
+  id: string;
+  isSuperAdmin: boolean;
+  isLoggedIn: boolean;
   name: string;
   lastname: string;
   email: string;

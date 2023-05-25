@@ -5,12 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 
 import { BookService } from './services/book.service';
-
-import { AppComponent } from './app.component';
-import { BooksComponent } from './components/books/books.component';
-import { AddBookComponent } from './components/add-book/add-book.component';
-import { EditBookComponent } from './components/edit-book/edit-book.component';
-import { LibrariesComponent } from './components/libraries/libraries.component';
+import { UserService } from './services/user.service';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -23,15 +18,35 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { AppComponent } from './app.component';
+import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { LibrariesComponent } from './components/libraries/libraries.component';
+import { BooksComponent } from './components/books/books.component';
+import { AddBookComponent } from './components/add-book/add-book.component';
+import { EditBookComponent } from './components/edit-book/edit-book.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent,
+    LoginComponent,
+    RegisterComponent,
+    ProfileComponent,
+    LibrariesComponent,
     BooksComponent,
     AddBookComponent,
     EditBookComponent,
-    LibrariesComponent,
+    NotFoundComponent,
+    EditUserComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,8 +64,9 @@ import { FormsModule } from '@angular/forms';
     MatIconModule,
     MatToolbarModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
-  providers: [BookService],
+  providers: [BookService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

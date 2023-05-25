@@ -1,0 +1,72 @@
+<div class="general-container">
+  <mat-card>
+    <form #editionForm="ngForm" (ngSubmit)="editUser(editionForm.value)">
+      <mat-card-title>Edit</mat-card-title>
+
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input
+          name
+          type="text"
+          name="name"
+          ngModel="{{userToEdit.name}}"
+          matInput
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Lastname</mat-label>
+        <input
+          lastname
+          [value]="userToEdit.lastname"
+          type="text"
+          name="lastname"
+          ngModel="{{userToEdit.lastname}}"
+          matInput
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input
+          email
+          [value]="userToEdit.email"
+          type="email"
+          name="email"
+          ngModel="{{userToEdit.email}}"
+          matInput
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input
+          password
+          [value]="userToEdit.password"
+          type="password"
+          name="password"
+          placeholder="Enter password"
+          ngModel="{{userToEdit.password}}"
+          matInput
+          required
+        />
+      </mat-form-field>
+
+      <button
+        type="submit"
+        mat-raised-button
+        color="primary"
+        [disabled]="editionForm.invalid"
+      >
+        Edit
+      </button>
+    </form>
+  </mat-card>
+
+  <div *ngIf="editionError" class="message-container">
+    <p class="edition-error">{{ message }}</p>
+  </div>
+</div>

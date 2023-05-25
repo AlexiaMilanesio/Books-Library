@@ -1,0 +1,79 @@
+<div class="general-container">
+  <mat-card>
+    <form #registerForm="ngForm" (ngSubmit)="register(registerForm.value)">
+      <mat-card-title>Register</mat-card-title>
+
+      <mat-form-field>
+        <mat-label>Name</mat-label>
+        <input
+          name
+          type="text"
+          name="name"
+          placeholder="Enter name"
+          ngModel
+          matInput
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Lastname</mat-label>
+        <input
+          lastname
+          type="text"
+          name="lastname"
+          placeholder="Enter lastname"
+          ngModel
+          matInput
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input
+          email
+          type="email"
+          name="email"
+          placeholder="Enter email"
+          ngModel
+          matInput
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input
+          password
+          type="password"
+          name="password"
+          placeholder="Enter password"
+          ngModel
+          matInput
+          required
+        />
+      </mat-form-field>
+
+      <button
+        type="submit"
+        mat-raised-button
+        color="primary"
+        [disabled]="registerForm.invalid"
+      >
+        Register
+      </button>
+    </form>
+  </mat-card>
+
+  <div *ngIf="registerError" class="message-container">
+    <p class="register-error">{{ message }}</p>
+  </div>
+
+  <div *ngIf="showLogin" class="message-container">
+    <p class="register-error">{{ message }}</p>
+    <button (click)="goToLogin()" mat-raised-button color="primary">
+      Login
+    </button>
+  </div>
+</div>

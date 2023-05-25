@@ -8,14 +8,9 @@ h2 {
 .search-container {
   width: 100%;
   padding-left: 3em;
-  margin-bottom: 2em;
+  margin: 1.5em 0 2em 0;
   display: flex;
   gap: 3em;
-}
-
-.libraries-container {
-  max-width: 100%;
-  margin: auto;
 }
 
 .search-engine-container {
@@ -27,6 +22,24 @@ h2 {
   div {
     margin: 0 3em;
   }
+}
+
+.search-button {
+  border: none;
+  border-radius: 3px;
+  padding: .5em 1em;
+  color: white;
+  font-weight: bold;
+  background-color: rgb(110, 19, 195);
+}
+
+.search-button:hover {
+  cursor: pointer;
+}
+
+.libraries-container {
+  max-width: 100%;
+  margin: auto;
 }
 
 table {
@@ -55,20 +68,6 @@ td:hover {
 .full-width {
   font-size: 14px;
   width: 100%;
-}
-
-input {
-  margin: 1em 0;
-  padding: 0.5em;
-}
-
-button {
-  align-self: center;
-  padding: 0.5em;
-}
-
-button:hover {
-  cursor: pointer;
 }
 
 .message {
