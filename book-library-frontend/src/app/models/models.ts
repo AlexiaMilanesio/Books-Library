@@ -54,3 +54,10 @@ export interface Filter {
   filter: string;
   filterType: string;
 }
+
+export interface User {
+  name: string;
+  lastname: string;
+  email: string;
+  password: string;
+}
