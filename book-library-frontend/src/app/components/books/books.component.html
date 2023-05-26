@@ -1,12 +1,7 @@
 <div class="general-container">
   <div class="search-engine-container" *ngIf="books">
-    <button
-      (click)="goToLibraries()"
-      class="show-libraries-btn"
-      mat-raised-button
-      color="primary"
-    >
-      Show libraries
+    <button (click)="goToLibraries()" mat-raised-button color="primary" class="go-back-btn">
+      <mat-icon style="margin:0; padding:0;">arrow_back</mat-icon>Libraries
     </button>
 
     <h2 *ngIf="libraryId">Books of library id: {{ libraryId }}</h2>
@@ -56,8 +51,13 @@
 
 
   <div class="paginator" *ngIf="!errorMessage && books">
-    <button (click)="getFirstPage()"><<</button>
-    <button (click)="getPreviousPage()"><</button>
+    <button (click)="getFirstPage()" mat-raised-button color="primary" class="arrow-btn" [disabled]="pageNumber === 1">
+      <mat-icon class="arrow-icon" style="margin-right:-1em;">arrow_back_ios</mat-icon>
+      <mat-icon class="arrow-icon">arrow_back_ios</mat-icon>
+    </button>
+    <button (click)="getPreviousPage()" mat-raised-button color="primary" class="arrow-btn" [disabled]="pageNumber === 1">
+      <mat-icon class="arrow-icon">arrow_back_ios</mat-icon>
+    </button>
 
     <p>Total records: {{ totalRecords }}</p>
     <p>Page: {{ pageNumber }} of {{ totalPages }}</p>
@@ -76,8 +76,13 @@
       </mat-select>
     </mat-form-field>
 
-    <button (click)="getNextPage()">></button>
-    <button (click)="getLastPage()">>></button>
+    <button (click)="getNextPage()" mat-raised-button color="primary" class="arrow-btn" [disabled]="pageNumber === totalPages">
+      <mat-icon class="arrow-icon">arrow_forward_ios</mat-icon>
+    </button>
+    <button (click)="getLastPage()" mat-raised-button color="primary" class="arrow-btn" [disabled]="pageNumber === totalPages">
+      <mat-icon class="arrow-icon" style="margin-right:-1em;">arrow_forward_ios</mat-icon>
+      <mat-icon class="arrow-icon">arrow_forward_ios</mat-icon>
+    </button>
   </div>
 
   <mat-error *ngIf="errorMessage" class="error-message">{{ errorMessage }}</mat-error>

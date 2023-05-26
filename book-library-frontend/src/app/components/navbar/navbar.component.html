@@ -32,7 +32,7 @@
           <mat-icon>login</mat-icon>
           <span routerLink="Login">Login</span>
         </button>
-        <button mat-menu-item *ngIf="isLoggedIn">
+        <button mat-menu-item *ngIf="isLoggedIn && currentUser.isSuperAdmin">
           <mat-icon>person_add</mat-icon>
           <span routerLink="Register">Register</span>
         </button>
