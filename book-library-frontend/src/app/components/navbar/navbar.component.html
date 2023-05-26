@@ -44,5 +44,9 @@
     </mat-menu>
   </span>
 
-  <span class="fill-remaining-space">Blazar Academy Books Library</span>
+  <div class="navbar-remaining-space">
+      <p class="app-title">Blazar Academy Books Library</p>
+      <p *ngIf="currentUser.isLoggedIn" class="user-welcome-message">Welcome, {{ currentUser.name}} {{ currentUser.lastname }}</p>
+  </div>
+  <!-- <span class="fill-remaining-space">Blazar Academy Books Library</span> -->
 </mat-toolbar>

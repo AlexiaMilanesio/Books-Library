@@ -1,0 +1,17 @@
+.navbar-remaining-space {
+  padding-top: 0.7em;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-title {
+  // font-family: "Staatliches", Roboto, "Helvetica Neue", sans-serif;
+  font-size: 0.9em;
+}
+
+.user-welcome-message {
+  font-size: 0.7em;
+  font-weight: 300;
+}
