@@ -1,8 +1,19 @@
 <div class="general-container">
   <mat-card>
     <h1>Welcome to Blazar Books Library</h1>
-    <button (click)="goToLogin()" mat-raised-button color="primary" *ngIf="isLoggedIn === false">
-      Login
-    </button>
+
+    <div class="btn-container">
+      <button (click)="goToLogin()" mat-raised-button color="primary" *ngIf="!isLoggedIn">
+        Login
+      </button>
+  
+      <button (click)="goToLibraries()" mat-raised-button color="primary" *ngIf="isLoggedIn">
+        Search books
+      </button>
+  
+      <button (click)="goToProfile()" mat-raised-button color="primary" *ngIf="isLoggedIn">
+        My account
+      </button>
+    </div>
   </mat-card>
 </div>
