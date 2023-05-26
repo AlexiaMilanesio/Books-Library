@@ -13,7 +13,7 @@
     
       <div class="btn-container">
           <button (click)="goToEdit(currentUser.id)" mat-raised-button  class="edit-btn">Edit account</button>
-          <button (click)="deleteAccount(currentUser.id)" mat-raised-button  class="delete-btn" *ngIf="!currentUser.isSuperAdmin">Delete account</button>
+          <!-- <button (click)="deleteAccount(currentUser.id)" mat-raised-button class="delete-btn" *ngIf="!currentUser.isSuperAdmin">Delete account</button> -->
       </div>
   </mat-card>
 
@@ -35,7 +35,6 @@
         </button>
       </mat-card-header>
 
-      <!-- <mat-card-subtitle class="users-list-title">Users list</mat-card-subtitle> -->
       <mat-card-content>
         <mat-card *ngFor="let user of users">
           <mat-card-subtitle>User {{ user.name }} {{ user.lastname }}</mat-card-subtitle>

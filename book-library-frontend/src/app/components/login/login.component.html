@@ -38,9 +38,7 @@
         Login
       </button>
     </form>
-  </mat-card>
 
-  <div *ngIf="loginError" class="message-container">
-    <p class="login-error">{{ message }}</p>
-  </div>
+    <mat-error *ngIf="errorMessage" class="error-message">{{ errorMessage }}</mat-error>
+  </mat-card>
 </div>

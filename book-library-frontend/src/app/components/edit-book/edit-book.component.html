@@ -102,9 +102,9 @@
           (click)="editBook(editBookForm.value)"
           mat-raised-button
           class="edit-btn"
-          [disabled]="editBookForm.invalid || disabledAll"
+          [disabled]="editBookForm.pristine || editBookForm.invalid || disabledAll"
         >
-          Edit book
+          Confirm changes
         </button>
   
         <button (click)="deleteBook()" mat-raised-button class="delete-btn" [disabled]="disabledAll">
@@ -119,12 +119,7 @@
     </form>
 
     <app-loader *ngIf="!errorMessage && !successMessage && showLoader"></app-loader>
-
-    <mat-error *ngIf="errorMessage" class="error-message">
-      {{ errorMessage }}
-    </mat-error>
-    <mat-error *ngIf="successMessage" class="success-message">
-      {{ successMessage }}
-    </mat-error>
+    <mat-error *ngIf="errorMessage" class="error-message">{{ errorMessage }}</mat-error>
+    <mat-error *ngIf="successMessage" class="success-message">{{ successMessage }}</mat-error>
   </mat-card>
 </div>

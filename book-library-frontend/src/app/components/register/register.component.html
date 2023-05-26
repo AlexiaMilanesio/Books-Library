@@ -64,16 +64,12 @@
         Register
       </button>
     </form>
+
+
+    <mat-error *ngIf="errorMessage" class="error-message">{{ errorMessage }}</mat-error>
+    <mat-error *ngIf="successMessage" class="success-message">
+      <span>{{ successMessage }}</span>
+      <button (click)="goToProfile()" mat-raised-button color="primary">Profile</button>
+    </mat-error>
   </mat-card>
-
-  <div *ngIf="registerError" class="message-container">
-    <p class="register-error">{{ message }}</p>
-  </div>
-
-  <div *ngIf="showLogin" class="message-container">
-    <p class="register-error">{{ message }}</p>
-    <button (click)="goToLogin()" mat-raised-button color="primary">
-      Login
-    </button>
-  </div>
 </div>

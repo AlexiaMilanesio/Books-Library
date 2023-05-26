@@ -10,35 +10,29 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class LoginComponent implements OnInit {
   currentUser!: User;
-  loginError: boolean = false;
-  message!: string;
+  errorMessage: string | undefined;
 
   constructor(private userService: UserService, private router: Router) {
-    if (this.userService.getUsers('users').length === 0) { // todo revisar
+    if (this.userService.getUsers('users').length === 0) {
       this.userService.clearData();
     }
     this.userService.getUsers('users');
-    console.log('USERS FROM USER SERVICE - Login Component');
-    console.log(this.userService.users);
   }
 
   ngOnInit(): void {}
 
 
   public login(formValue: User): void {
-    this.loginError = false;
-    this.message = '';
+    this.errorMessage = undefined;
 
     let foundUser = this.userService.users.find((user) => user.email === formValue.email);
 
     if (!foundUser) {
-      this.message = 'You are not a register user, try again or ask a member of the staff to register you';
-      this.loginError = true;
+      this.errorMessage = 'You are not a register user, try again or ask a member of the staff to register you';
     } 
     else {
       if (foundUser.password !== formValue.password) {
-        this.message = 'Incorrect password, try again';
-        this.loginError = true;
+        this.errorMessage = 'Incorrect password, try again';
         return;
       }
 
@@ -56,7 +50,7 @@ export class LoginComponent implements OnInit {
       this.userService.saveData('currentUser', this.currentUser);
       this.userService.saveData('users', this.userService.users);
 
-      this.router.navigate([`/Profile/${this.currentUser.id}`]);
+      this.router.navigate(['']);
     }
   }
 }

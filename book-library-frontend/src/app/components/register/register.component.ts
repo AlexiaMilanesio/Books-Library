@@ -11,9 +11,9 @@ import * as uuid from 'uuid';
 })
 export class RegisterComponent implements OnInit {
   currentUser!: User;
-  showLogin: boolean = false;
-  registerError: boolean = false;
-  message!: string;
+  successMessage: string | undefined;
+  errorMessage: string | undefined;
+
 
   constructor(private userService: UserService, private router: Router) {
     console.log(this.userService.getUsers('users'));
@@ -21,16 +21,15 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {}
 
+
   public register(formValue: User): void {
-    this.showLogin = false;
-    this.registerError = false;
-    this.message = '';
+    this.successMessage = undefined;
+    this.errorMessage = undefined;
 
     let foundUser = this.userService.users.find((user) => user.email === formValue.email);
 
     if (foundUser) {
-      this.message = 'User already registered, try again or go to login';
-      this.showLogin = true;
+      this.errorMessage = 'User already registered, try again or go to login';
     } else {
       let id = uuid.v4().toString();
 
@@ -47,13 +46,17 @@ export class RegisterComponent implements OnInit {
       this.userService.setCurrentUser(this.currentUser);
       this.userService.setUsers(this.currentUser);
       this.userService.saveData('users', this.userService.users);
-      this.router.navigate([`/Profile/${this.currentUser.id}`]);
-
-      console.log(this.userService.getUsers('users'));
+      this.successMessage = 'User successfully registered';
     }
   }
 
+
   public goToLogin(): void {
-    this.router.navigate(['/Login']);
+    this.router.navigate(['Login']);
+  }
+
+
+  public goToProfile(): void {
+    this.router.navigate([`Profile/${this.currentUser.id}`]);
   }
 }

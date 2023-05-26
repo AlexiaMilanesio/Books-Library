@@ -18,7 +18,13 @@ export class HomeComponent implements OnInit {
     this.currentUser = this.userService.currentUser;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (!localStorage.getItem('reload')) { 
+      this.userService.saveData('reload', 'no reload');
+      location.reload();
+    } 
+    else this.userService.removeData('reload');
+  }
 
 
   public goToLogin(): void {

@@ -31,16 +31,20 @@ form {
   }
 }
 
-mat-form-field,
-button {
-  max-height: 4.9em;
+.success-message, .error-message {
+  margin-top: 2em;
+  text-align: center;
 }
 
-.message-container {
-  text-align: center;
-  margin-top: 2em;
+.success-message {
+  color: rgb(7, 162, 7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-  .register-error {
-    color: rgb(223, 39, 39);
+  button {
+    margin-top: 1em;
   }
 }
+

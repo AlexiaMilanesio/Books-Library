@@ -1,6 +1,6 @@
 <div class="general-container">
   <mat-card>
-    <form #editionForm="ngForm" (ngSubmit)="editUser(editionForm.value)">
+    <form #editionForm="ngForm">
       <mat-card-title>Editing user</mat-card-title>
 
       <mat-form-field>
@@ -12,6 +12,7 @@
           ngModel="{{userToEdit.name}}"
           matInput
           required
+          [disabled]="disabledAll"
         />
       </mat-form-field>
 
@@ -25,6 +26,7 @@
           ngModel="{{userToEdit.lastname}}"
           matInput
           required
+          [disabled]="disabledAll"
         />
       </mat-form-field>
 
@@ -38,6 +40,7 @@
           ngModel="{{userToEdit.email}}"
           matInput
           required
+          [disabled]="disabledAll"
         />
       </mat-form-field>
 
@@ -52,17 +55,29 @@
           ngModel="{{userToEdit.password}}"
           matInput
           required
+          [disabled]="disabledAll"
         />
       </mat-form-field>
 
       <div class="btn-container">
         <button
           type="submit"
+          (click)="editUser(editionForm.value)"
           mat-raised-button
-          [disabled]="editionForm.invalid"
+          [disabled]="editionForm.pristine || editionForm.invalid || disabledAll"
           class="edit-btn"
         >
-          Edit user
+          Confirm changes
+        </button>
+
+        <button
+          mat-raised-button
+          (click)="deleteUser(userToEdit.id)"
+          [disabled]="editionForm.invalid || disabledAll"
+          class="delete-btn"
+          *ngIf="currentUser.id !== userToEdit.id"
+        >
+          Delete user
         </button>
   
         <button (click)="goToProfile()" mat-raised-button color="primary" class="go-back-btn">
@@ -71,7 +86,6 @@
         </button>
       </div>
     </form>
-
 
     <mat-error *ngIf="errorMessage" class="error-message">{{ errorMessage }}</mat-error>
     <mat-error *ngIf="successMessage" class="success-message">{{ successMessage }}</mat-error>

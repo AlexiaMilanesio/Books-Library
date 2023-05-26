@@ -44,7 +44,7 @@
   </table>
 
 
-  <div class="paginator" *ngIf="!errorMessage && books">
+  <div class="paginator" *ngIf="!errorMessage && books && showPagination">
     <button (click)="getFirstPage()" mat-raised-button color="primary" class="arrow-btn" [disabled]="pageNumber === 1">
       <mat-icon class="arrow-icon" style="margin-right:-1em;">arrow_back_ios</mat-icon>
       <mat-icon class="arrow-icon">arrow_back_ios</mat-icon>

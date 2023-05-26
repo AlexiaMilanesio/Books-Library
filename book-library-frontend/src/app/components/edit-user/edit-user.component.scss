@@ -7,7 +7,7 @@
 
 mat-card {
   margin-top: 3em;
-  width: 400px;
+  width: 500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -42,6 +42,10 @@ form {
 
   .edit-btn:enabled {
     background-color: rgb(255, 136, 0);
+  }
+
+  .delete-btn:enabled {
+    background-color: rgb(236, 55, 55);
   }
 
   .go-back-btn {

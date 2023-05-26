@@ -12,18 +12,13 @@ export class ProfileComponent implements OnInit {
   currentUser!: User;
   users!: User[];
 
+
   constructor(private userService: UserService, private router: Router) {
     this.currentUser = this.userService.getCurrentUser('currentUser');
     this.users = this.userService.getUsers('users');
   }
 
-  ngOnInit(): void {
-    if (!localStorage.getItem('reload')) { 
-      this.userService.saveData('reload', 'no reload');
-      location.reload();
-    } 
-    else this.userService.removeData('reload');
-  }
+  ngOnInit(): void {}
 
   
   public goToEdit(id: string): void {
@@ -42,9 +37,6 @@ export class ProfileComponent implements OnInit {
         if (this.currentUser.id !== id) {
           this.users = this.userService.getUsers('users');
         } 
-        else {
-          this.logout(id);
-        }
       }
     }
   }
@@ -60,23 +52,6 @@ export class ProfileComponent implements OnInit {
     this.userService.saveData('users', this.userService.users);
   }
 
-
-  private logout(id: string): void {
-    this.currentUser = {
-      id: '',
-      isSuperAdmin: false,
-      isLoggedIn: false,
-      name: '',
-      lastname: '',
-      email: '',
-      password: '',
-    };
-  
-    this.userService.setCurrentUser(this.currentUser);
-    this.userService.saveData('currentUser', this.currentUser);
-    this.router.navigate(['']); 
-  }
-  
 
   public goToRegister(): void {
     this.router.navigate(['/Register']);

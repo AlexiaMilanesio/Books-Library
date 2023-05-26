@@ -30,6 +30,7 @@ export class BooksComponent implements OnInit {
   totalPages!: number;
   totalRecords!: number;
   selectedPagination = new FormControl('10');
+  showPagination: boolean = true;
 
   errorMessage: string | undefined;
 
@@ -46,7 +47,7 @@ export class BooksComponent implements OnInit {
 
     this.filter = this.libraryId
       ? { filter: this.libraryId.toString(), filterType: 'libraryId' }
-      : this.bookId // todo revisar
+      : this.bookId
       ? { filter: this.bookId, filterType: 'bookId' }
       : this.bookTitle
       ? { filter: this.bookTitle, filterType: 'bookTitle' }
@@ -151,6 +152,8 @@ export class BooksComponent implements OnInit {
 
 
   public getBookById(): void {
+    this.showPagination = false;
+
     if (this.bookId) {
       this.booksService.getBookById(this.bookId).subscribe((response) => {
         try {

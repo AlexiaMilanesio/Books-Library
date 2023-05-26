@@ -12,6 +12,7 @@ import { BookService } from 'src/app/services/book.service';
 export class EditBookComponent implements OnInit {
   libraries!: Library[];
   currentBook!: Book;
+  imageUrlRegex = /(https?:\/\/.*\.(?:png|jpg))/i;
   successMessage: string | undefined;
   errorMessage: string | undefined;
   selectedLibraryId;
@@ -36,6 +37,18 @@ export class EditBookComponent implements OnInit {
   
 
   public editBook(formValue: Book): void {
+    this.errorMessage = undefined;
+    this.successMessage = undefined;
+    
+    if (!Number(formValue.year)) {
+      this.errorMessage = "Year is invalid";
+      return;
+    }
+    if (!this.imageUrlRegex.test(formValue.image_url)) {
+      this.errorMessage = "Image url is invalid";
+      return;
+    }
+
     this.showLoader = true;
 
     const editedBook: Book = {
@@ -54,7 +67,6 @@ export class EditBookComponent implements OnInit {
         else {
           console.log('Edited book:');
           console.log(book);
-          this.errorMessage = undefined;
           this.showLoader = false;
           this.successMessage = 'Book successfully edited';
         }
@@ -67,6 +79,8 @@ export class EditBookComponent implements OnInit {
 
 
   public deleteBook(): void {
+    this.errorMessage = undefined;
+    this.successMessage = undefined;
     this.showLoader = true;
 
     this.booksService.deleteBook(this.currentBook.isbn).subscribe((book) => {
@@ -75,7 +89,6 @@ export class EditBookComponent implements OnInit {
         else {
           console.log('Deleted book:');
           console.log(book);
-          this.errorMessage = undefined;
           this.showLoader = false;
           this.successMessage = 'Book successfully deleted';
           this.disabledAll = true;

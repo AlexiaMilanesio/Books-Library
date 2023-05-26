@@ -26,22 +26,15 @@ form {
   flex-wrap: wrap;
 
   > * {
-    // all form children
     flex: 1 0 33%;
   }
 }
 
-mat-form-field,
-button {
-  max-height: 4.9em;
-}
-
-.message-container {
-  text-align: center;
+.success-message, .error-message {
   margin-top: 2em;
-
-  .login-error {
-    color: rgb(223, 39, 39);
-  }
+  text-align: center;
 }
 
+.success-message {
+  color: rgb(7, 162, 7);
+}

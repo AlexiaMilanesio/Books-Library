@@ -9,15 +9,18 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./edit-user.component.scss']
 })
 export class EditUserComponent implements OnInit {
+  users!: User[];
   currentUser!: User;
   id!: string;
   userToEdit!: User;
   editionError!: string;
   successMessage: string | undefined;
   errorMessage: string | undefined;
+  disabledAll: boolean = false;
 
   constructor(private userService: UserService, private router: Router, private route: ActivatedRoute) {
     this.currentUser = this.userService.getCurrentUser('currentUser');
+    this.users = this.userService.getUsers('users');
   }
 
   ngOnInit(): void {
@@ -62,8 +65,34 @@ export class EditUserComponent implements OnInit {
 
     this.userService.saveData('users', updatedUsers);
     this.successMessage = "User successfully updated";
+  }
 
-    // this.router.navigate([`Profile/${this.currentUser.id}`]);
+
+  public deleteUser(id: string): void {
+    let foundUser = this.userService.getUsers('users').find(user => user.id === id);
+
+    if (foundUser) {
+      if (confirm(`Are you sure you want to delete user ${foundUser.email}?`)) {
+        this.deleteFromUsers(id);
+        this.userService.saveData('users', this.userService.users);
+
+        if (this.currentUser.id !== id) {
+          this.users = this.userService.getUsers('users');
+          this.disabledAll = true;
+          this.successMessage = "User successfully deleted";
+        } 
+      }
+    }
+  }
+
+
+  private deleteFromUsers(id: string): void {
+    this.userService.users.filter((user, i) => {
+      if (user.id === id) {
+        this.userService.users.splice(i, 1);
+      }
+    });
+    this.userService.saveData('users', this.userService.users);
   }
 
 

@@ -52,6 +52,16 @@ export class NavbarComponent implements OnInit {
     this.userService.setCurrentUser(this.currentUser);
     this.userService.saveData('currentUser', this.currentUser);
     this.isLoggedIn = false;
-    this.router.navigate(['']);
+    this.router.navigate(['']); 
+    this.reload();   
+  }
+  
+
+  private reload(): void {
+    if (!localStorage.getItem('re-reload')) { 
+      this.userService.saveData('re-reload', 'no reload');
+      location.reload();
+    } 
+    else this.userService.removeData('re-reload');
   }
 }
