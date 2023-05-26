@@ -11,34 +11,34 @@
 
     <mat-menu #menu="matMenu" [overlapTrigger]="false">
       <span (mouseleave)="menuTrigger.closeMenu()">
-        <button mat-menu-item>
+        <button mat-menu-item routerLink="">
           <mat-icon>home</mat-icon>
-          <span routerLink="">Home</span>
+          <span>Home</span>
         </button>
-        <button mat-menu-item *ngIf="isLoggedIn">
+        <button mat-menu-item *ngIf="isLoggedIn" (click)="goToProfile()">
           <mat-icon *ngIf="!currentUser.isSuperAdmin">person</mat-icon>
           <mat-icon *ngIf="currentUser.isSuperAdmin">supervisor_account</mat-icon>
-          <span (click)="goToProfile()">Profile</span>
+          <span>Profile</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item routerLink="Libraries">
           <mat-icon>account_balance</mat-icon>
-          <span routerLink="Libraries">Libraries</span>
+          <span>Libraries</span>
         </button>
-        <button mat-menu-item *ngIf="isLoggedIn">
+        <button mat-menu-item *ngIf="isLoggedIn" routerLink="AddBook">
           <mat-icon>add</mat-icon>
-          <span routerLink="AddBook">Add book</span>
+          <span>Add book</span>
         </button>
-        <button mat-menu-item *ngIf="!isLoggedIn">
+        <button mat-menu-item *ngIf="!isLoggedIn" routerLink="Login">
           <mat-icon>login</mat-icon>
-          <span routerLink="Login">Login</span>
+          <span>Login</span>
         </button>
-        <button mat-menu-item *ngIf="isLoggedIn && currentUser.isSuperAdmin">
+        <button mat-menu-item *ngIf="isLoggedIn && currentUser.isSuperAdmin" routerLink="Register">
           <mat-icon>person_add</mat-icon>
-          <span routerLink="Register">Register</span>
+          <span>Register</span>
         </button>
-        <button mat-menu-item *ngIf="isLoggedIn">
+        <button mat-menu-item *ngIf="isLoggedIn"(click)="logout()">
           <mat-icon>logout</mat-icon>
-          <span (click)="logout()">Logout</span>
+          <span>Logout</span>
         </button>
       </span>
     </mat-menu>

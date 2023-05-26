@@ -11,12 +11,13 @@ import * as uuid from 'uuid';
   styleUrls: ['./add-book.component.scss'],
 })
 export class AddBookComponent implements OnInit {
+  libraries!: Library[];
   book: Book | undefined;
+  selectedLibraryId = new FormControl();
+  imageUrlRegex = /(https?:\/\/.*\.(?:png|jpg))/i;
   formErrorMessage: string | undefined;
   errorMessage: string | undefined;
   successMessage: string | undefined;
-  selectedLibraryId = new FormControl('');
-  libraries!: Library[];
 
 
   constructor(private booksService: BookService, private router: Router) {
@@ -29,17 +30,21 @@ export class AddBookComponent implements OnInit {
 
 
   public addBook(formValue: Book): void {
+    console.log(formValue)
+    this.formErrorMessage = undefined;
+
     if (!Number(formValue.year)) {
-      this.formErrorMessage = "Year has to be a number";
+      this.formErrorMessage = "Year is invalid";
       return;
     }
-    if (!formValue.image_url.toString().includes(".com")) { // todo use regex
+    if (!this.imageUrlRegex.test(formValue.image_url)) {
       this.formErrorMessage = "Image url is invalid";
       return;
     }
   
     let formattedTitle = formValue.title.charAt(0).toUpperCase() + formValue.title.slice(1);
     let formattedPublisher = formValue.publisher.charAt(0).toUpperCase() + formValue.publisher.slice(1);
+    let formattedAuthor = formValue.author.charAt(0).toUpperCase() + formValue.author.slice(1);
     let formattedBookIsbn = uuid.v4().toString();
 
     let book = {
@@ -49,7 +54,7 @@ export class AddBookComponent implements OnInit {
       publisher: formattedPublisher,
       image_url: formValue.image_url,
       libraryId: this.selectedLibraryId.value,
-      author: formValue.author,
+      author: formattedAuthor,
     };
 
     this.book = book;
@@ -69,6 +74,12 @@ export class AddBookComponent implements OnInit {
         this.errorMessage = e.message;
       }
     })
+  }
+
+
+  public getLibraryName(id: number): string {
+    let libraryName = this.libraries.find(library => library.id === id)?.name;
+    return libraryName ? libraryName : "";
   }
 
 

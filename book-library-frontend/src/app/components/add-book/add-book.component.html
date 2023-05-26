@@ -92,7 +92,7 @@
           mat-raised-button
           color="primary"
           class="add-btn"
-          [disabled]="addBookForm.invalid"
+          [disabled]="!selectedLibraryId.value || addBookForm.pristine || addBookForm.invalid"
         >
           Add book
         </button>
@@ -113,13 +113,13 @@
   <mat-card *ngIf="book" class="added-book-container">
     <mat-card-subtitle>Added book</mat-card-subtitle>
     
-    <p>Isbn: {{ book.isbn }}</p>
-    <p class="book-title">Title: {{ book.title }}</p>
-    <p>Year: {{ book.year }}</p>
-    <p>Publisher: {{ book.publisher }}</p>
+    <p><span>Isbn:</span> {{ book.isbn }}</p>
+    <p class="book-title"><span>Title:</span> {{ book.title }}</p>
+    <p><span>Year:</span> {{ book.year }}</p>
+    <p><span>Publisher:</span> {{ book.publisher }}</p>
     <img src="{{ book.image_url }}" alt="Book cover" />
-    <p>Library: {{ selectedLibraryId.value }}</p>
-    <p>Author: {{ book.author }}</p>
+    <p><span>Library:</span> {{ getLibraryName(book.libraryId) }}</p>
+    <p><span>Author:</span> {{ book.author }}</p>
 
     <app-loader *ngIf="!errorMessage && !successMessage"></app-loader>
 
