@@ -51,9 +51,21 @@ table {
   text-transform: capitalize;
 }
 
-.image_url,
+.isbn {
+  min-width: 80px;
+  max-width: 120px;
+}
+
 .title {
   max-width: 500px;
+}
+
+.image_url {
+  max-width: 500px;
+}
+
+.libraryId {
+  min-width: 110px;
 }
 
 .title,
