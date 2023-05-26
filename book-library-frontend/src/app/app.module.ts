@@ -33,6 +33,7 @@ import { EditBookComponent } from './components/edit-book/edit-book.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     NotFoundComponent,
     EditUserComponent,
     NavbarComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,

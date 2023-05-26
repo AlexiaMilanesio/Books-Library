@@ -100,18 +100,21 @@ export class BooksComponent implements OnInit {
   public getNextPage(): void {
     if (this.pageNumber < this.totalPages) this.pageNumber = this.pageNumber + 1;
     this.getServerData();
+    setTimeout(() => window.scrollTo(0, 0), 500); // todo buscar otra solución
   }
 
 
   public getPreviousPage(): void {
     if (this.pageNumber > 1) this.pageNumber = this.pageNumber - 1;
     this.getServerData();
+    setTimeout(() => window.scrollTo(0, 0), 500); // todo buscar otra solución
   }
 
 
   public getFirstPage(): void {
     this.pageNumber = 1;
     this.getServerData();
+    setTimeout(() => window.scrollTo(0, 0), 500); // todo buscar otra solución
   }
 
 
@@ -119,6 +122,7 @@ export class BooksComponent implements OnInit {
     this.updateTotalPages();
     this.pageNumber = this.totalPages;
     this.getServerData();
+    setTimeout(() => window.scrollTo(0, 0), 500); // todo buscar otra solución
   }
 
 

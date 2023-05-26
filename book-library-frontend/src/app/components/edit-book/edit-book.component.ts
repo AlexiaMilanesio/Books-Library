@@ -15,7 +15,8 @@ export class EditBookComponent implements OnInit {
   successMessage: string | undefined;
   errorMessage: string | undefined;
   selectedLibraryId;
-
+  showLoader: boolean = false;
+  disabledAll: boolean = false;
 
   constructor(private booksService: BookService, private router: Router) {
     this.booksService.getLibraries().subscribe((libraries) => {
@@ -35,6 +36,8 @@ export class EditBookComponent implements OnInit {
   
 
   public editBook(formValue: Book): void {
+    this.showLoader = true;
+
     const editedBook: Book = {
       isbn: this.currentBook.isbn,
       title: formValue.title,
@@ -52,9 +55,11 @@ export class EditBookComponent implements OnInit {
           console.log('Edited book:');
           console.log(book);
           this.errorMessage = undefined;
+          this.showLoader = false;
           this.successMessage = 'Book successfully edited';
         }
       } catch (e: any) {
+        this.showLoader = false;
         this.errorMessage = e.message;
       }
     });
@@ -62,6 +67,8 @@ export class EditBookComponent implements OnInit {
 
 
   public deleteBook(): void {
+    this.showLoader = true;
+
     this.booksService.deleteBook(this.currentBook.isbn).subscribe((book) => {
       try {
         if (!book) throw { message: "Book couldn't be deleted" };
@@ -69,9 +76,12 @@ export class EditBookComponent implements OnInit {
           console.log('Deleted book:');
           console.log(book);
           this.errorMessage = undefined;
+          this.showLoader = false;
           this.successMessage = 'Book successfully deleted';
+          this.disabledAll = true;
         }
       } catch (e: any) {
+        this.showLoader = false;
         this.errorMessage = e.message;
       }
     });

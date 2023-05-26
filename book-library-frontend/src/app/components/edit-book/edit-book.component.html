@@ -15,6 +15,7 @@
           ngModel
           matInput
           required
+          [disabled]="disabledAll"
         />
       </mat-form-field>
 
@@ -29,6 +30,7 @@
           ngModel
           matInput
           required
+          [disabled]="disabledAll"
         />
       </mat-form-field>
 
@@ -43,6 +45,7 @@
           ngModel
           matInput
           required
+          [disabled]="disabledAll"
         />
       </mat-form-field>
 
@@ -57,6 +60,7 @@
           ngModel
           matInput
           required
+          [disabled]="disabledAll"
         />
       </mat-form-field>
 
@@ -67,6 +71,7 @@
           [formControl]="selectedLibraryId"
           [compareWith]="compareWith"
           required
+          [disabled]="disabledAll"
         >
           <mat-option disabled="">Select library</mat-option>
           <mat-option *ngFor="let library of libraries" value="{{ library.id }}">
@@ -86,6 +91,7 @@
           ngModel
           matInput
           required
+          [disabled]="disabledAll"
         />
       </mat-form-field>
 
@@ -96,21 +102,23 @@
           (click)="editBook(editBookForm.value)"
           mat-raised-button
           class="edit-btn"
-          [disabled]="editBookForm.invalid"
+          [disabled]="editBookForm.invalid || disabledAll"
         >
           Edit book
         </button>
   
-        <button (click)="deleteBook()" mat-raised-button class="delete-btn">
+        <button (click)="deleteBook()" mat-raised-button class="delete-btn" [disabled]="disabledAll">
           Delete book
         </button>
 
         <button (click)="goToBooks()" mat-raised-button color="primary" class="go-back-btn">
-          <mat-icon style="margin:0; padding:0;">arrow_back</mat-icon>Books
+          <mat-icon style="margin:0; padding:0;">arrow_back</mat-icon>
+          <span>Books</span>
         </button>
       </div>
     </form>
 
+    <app-loader *ngIf="!errorMessage && !successMessage && showLoader"></app-loader>
 
     <mat-error *ngIf="errorMessage" class="error-message">
       {{ errorMessage }}

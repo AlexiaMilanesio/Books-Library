@@ -29,13 +29,11 @@ export class AddBookComponent implements OnInit {
 
 
   public addBook(formValue: Book): void {
-    console.log(formValue)
-
     if (!Number(formValue.year)) {
       this.formErrorMessage = "Year has to be a number";
       return;
     }
-    if (!formValue.image_url.toString().includes(".com")) {
+    if (!formValue.image_url.toString().includes(".com")) { // todo use regex
       this.formErrorMessage = "Image url is invalid";
       return;
     }
@@ -54,7 +52,6 @@ export class AddBookComponent implements OnInit {
       author: formValue.author,
     };
 
-    console.log(book)
     this.book = book;
 
     this.booksService.addBook(book).subscribe(book => {
@@ -72,11 +69,6 @@ export class AddBookComponent implements OnInit {
         this.errorMessage = e.message;
       }
     })
-  }
-
-
-  public selectionChange(): void {
-    console.log(this.selectedLibraryId.value);
   }
 
 
