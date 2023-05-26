@@ -89,10 +89,6 @@ export class BooksComponent implements OnInit {
     } 
     else {
       this.errorMessage = 'There has been an error while loading books, try again later';
-      setTimeout(() => {
-        this.errorMessage = undefined;
-        this.router.navigate(['Libraries']);
-      }, 4000);
     }
   }
 
@@ -148,11 +144,6 @@ export class BooksComponent implements OnInit {
           } 
           catch (e: any) {
             this.errorMessage = e.message;
-            setTimeout(() => {
-              this.errorMessage = undefined;
-              this.booksService.currentLibraryId = undefined;
-              this.router.navigate(['Libraries']);
-            }, 4000);
           }
         });
     }
@@ -171,11 +162,6 @@ export class BooksComponent implements OnInit {
         } 
         catch (e: any) {
           this.errorMessage = e.message;
-          setTimeout(() => {
-            this.errorMessage = undefined;
-            this.booksService.currentBookId = undefined;
-            this.router.navigate(['Libraries']);
-          }, 4000);
         }
       });
     }
@@ -199,11 +185,6 @@ export class BooksComponent implements OnInit {
           } 
           catch (e: any) {
             this.errorMessage = e.message;
-            setTimeout(() => {
-              this.errorMessage = undefined;
-              this.booksService.currentBookTitle = undefined;
-              this.router.navigate(['Libraries']);
-            }, 4000);
           }
         });
     }
@@ -217,7 +198,7 @@ export class BooksComponent implements OnInit {
         .subscribe((response) => {
           try {
             console.log(response);
-            if (response.data.length === 0 || response === undefined) throw { message: 'No books where found of this author' };
+            if (response.data.length === 0 || response === undefined) throw { message: 'No books where found, try with a different author' };
 
             this.books = new MatTableDataSource(response.data);
             this.displayedColumns = Object.keys(response.data[0]);
@@ -227,11 +208,6 @@ export class BooksComponent implements OnInit {
           } 
           catch (e: any) {
             this.errorMessage = e.message;
-            setTimeout(() => {
-              this.errorMessage = undefined;
-              this.booksService.currentBookAuthor = undefined;
-              this.router.navigate(['Libraries']);
-            }, 4000);
           }
         });
     }
@@ -302,9 +278,6 @@ export class BooksComponent implements OnInit {
           this.displayedColumns = Object.keys(response.data[0]);
         } catch (e: any) {
           this.errorMessage = e.message;
-          setTimeout(() => {
-            this.errorMessage = undefined;
-          }, 4000);
         }
       });
   }
@@ -323,10 +296,6 @@ export class BooksComponent implements OnInit {
         } 
         catch (e: any) {
           this.errorMessage = e.message;
-          setTimeout(() => {
-            this.errorMessage = undefined;
-            this.router.navigate(['Libraries']);
-          }, 4000);
         }
       });
   }

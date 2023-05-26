@@ -81,5 +81,12 @@
     </button>
   </div>
 
-  <mat-error *ngIf="errorMessage" class="error-message">{{ errorMessage }}</mat-error>
+  <mat-error *ngIf="errorMessage" class="error-message">
+    <span>{{ errorMessage }}</span>
+    
+    <button (click)="goToLibraries()" mat-raised-button color="primary" class="go-back-btn">
+      <mat-icon style="margin:0; padding:0;">arrow_back</mat-icon>
+      <span>Libraries</span>
+    </button>
+  </mat-error>
 </div>
