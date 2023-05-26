@@ -13,6 +13,7 @@ export class RegisterComponent implements OnInit {
   currentUser!: User;
   successMessage: string | undefined;
   errorMessage: string | undefined;
+  emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 
   constructor(private userService: UserService, private router: Router) {
@@ -25,6 +26,11 @@ export class RegisterComponent implements OnInit {
   public register(formValue: User): void {
     this.successMessage = undefined;
     this.errorMessage = undefined;
+
+    if (!this.emailRegex.test(formValue.email)) {
+      this.errorMessage = "Email is not valid";
+      return;
+    }
 
     let foundUser = this.userService.users.find((user) => user.email === formValue.email);
 

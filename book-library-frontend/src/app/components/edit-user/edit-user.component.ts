@@ -17,6 +17,8 @@ export class EditUserComponent implements OnInit {
   successMessage: string | undefined;
   errorMessage: string | undefined;
   disabledAll: boolean = false;
+  emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 
   constructor(private userService: UserService, private router: Router, private route: ActivatedRoute) {
     this.currentUser = this.userService.getCurrentUser('currentUser');
@@ -36,6 +38,11 @@ export class EditUserComponent implements OnInit {
   }
 
   public editUser(formValue: User): void {
+    if (!this.emailRegex.test(formValue.email)) {
+      this.errorMessage = "Email is not valid";
+      return;
+    }
+
     let editedUser: User = {
       id: this.userToEdit.id,
       isSuperAdmin: this.userToEdit.isSuperAdmin,
