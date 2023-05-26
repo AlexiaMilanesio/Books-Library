@@ -1,10 +1,15 @@
 ﻿<Properties StartupConfiguration="{7C629C31-4F76-4BD0-8570-C9911E63CF13}|https">
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.books-library.Api PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="books-library.Api/Controllers/BooksController.cs">
     <Files>
-      <File FileName="books-library.Api/Controllers/BooksController.cs" Line="274" Column="1" />
-      <File FileName="books-library.Api/Wrappers/PagedResponse.cs" />
+      <File FileName="books-library.Api/Controllers/BooksController.cs" Line="29" Column="6" />
+      <File FileName="books-library.Data/Entities/Author.cs" />
+      <File FileName="books-library.Data/Entities/Book.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -14,16 +19,14 @@
               <Node name="Controllers" expanded="True">
                 <Node name="BooksController.cs" selected="True" />
               </Node>
-              <Node name="Wrappers" expanded="True" />
+            </Node>
+            <Node name="books-library.Data" expanded="True">
+              <Node name="Entities" expanded="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.books-library.Api PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

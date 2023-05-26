@@ -82,3 +82,87 @@
 /Users/alexia/Documents/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.pdb
 /Users/alexia/Documents/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.genruntimeconfig.cache
 /Users/alexia/Documents/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/ref/books-library.Api.dll
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/appsettings.Development.json
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/appsettings.json
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/books-library.Api
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/libraries.json
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/books.json
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/books-library.Api.deps.json
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/books-library.Api.runtimeconfig.json
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/books-library.Api.dll
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/books-library.Api.pdb
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/Microsoft.AspNetCore.OpenApi.dll
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/Microsoft.Bcl.AsyncInterfaces.dll
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.dll
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.InMemory.dll
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/Microsoft.OpenApi.dll
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/Newtonsoft.Json.dll
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/Swashbuckle.AspNetCore.Swagger.dll
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/books-library.Data.dll
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/books-library.Data.pdb
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.csproj.AssemblyReference.cache
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.GeneratedMSBuildEditorConfig.editorconfig
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.AssemblyInfoInputs.cache
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.AssemblyInfo.cs
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.csproj.CoreCompileInputs.cache
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.MvcApplicationPartsAssemblyInfo.cs
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.MvcApplicationPartsAssemblyInfo.cache
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/staticwebassets/msbuild.books-library.Api.Microsoft.AspNetCore.StaticWebAssets.props
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/staticwebassets/msbuild.build.books-library.Api.props
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/staticwebassets/msbuild.buildMultiTargeting.books-library.Api.props
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/staticwebassets/msbuild.buildTransitive.books-library.Api.props
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/staticwebassets.pack.json
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/staticwebassets.build.json
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/staticwebassets.development.json
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/scopedcss/bundle/books-library.Api.styles.css
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.csproj.CopyComplete
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.dll
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/refint/books-library.Api.dll
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.pdb
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.genruntimeconfig.cache
+/Users/alexia/Documents/Blazar Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/ref/books-library.Api.dll
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/appsettings.Development.json
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/appsettings.json
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/books-library.Api
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/libraries.json
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/books.json
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/books-library.Api.deps.json
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/books-library.Api.runtimeconfig.json
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/books-library.Api.dll
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/books-library.Api.pdb
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/Microsoft.AspNetCore.OpenApi.dll
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/Microsoft.Bcl.AsyncInterfaces.dll
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.dll
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.Abstractions.dll
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/Microsoft.EntityFrameworkCore.InMemory.dll
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/Microsoft.OpenApi.dll
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/Newtonsoft.Json.dll
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/Swashbuckle.AspNetCore.Swagger.dll
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/books-library.Data.dll
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/bin/Debug/net7.0/books-library.Data.pdb
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.csproj.AssemblyReference.cache
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.GeneratedMSBuildEditorConfig.editorconfig
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.AssemblyInfoInputs.cache
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.AssemblyInfo.cs
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.csproj.CoreCompileInputs.cache
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.MvcApplicationPartsAssemblyInfo.cs
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.MvcApplicationPartsAssemblyInfo.cache
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/staticwebassets/msbuild.books-library.Api.Microsoft.AspNetCore.StaticWebAssets.props
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/staticwebassets/msbuild.build.books-library.Api.props
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/staticwebassets/msbuild.buildMultiTargeting.books-library.Api.props
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/staticwebassets/msbuild.buildTransitive.books-library.Api.props
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/staticwebassets.pack.json
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/staticwebassets.build.json
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/staticwebassets.development.json
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/scopedcss/bundle/books-library.Api.styles.css
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.csproj.CopyComplete
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.dll
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/refint/books-library.Api.dll
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.pdb
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/books-library.Api.genruntimeconfig.cache
+/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Api/obj/Debug/net7.0/ref/books-library.Api.dll

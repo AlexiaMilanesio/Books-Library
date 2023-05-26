@@ -1,0 +1,32 @@
+[
+  {
+    "Id": 1,
+    "Name": "Central Library",
+    "Address": "1 Library Street",
+    "City": "Booktown"
+  },
+  {
+    "Id": 2,
+    "Name": "Community Library",
+    "Address": "5 Books Square",
+    "City": "Bookville"
+  },
+  {
+    "Id": 3,
+    "Name": "Regional Library",
+    "Address": "10 Library Avenue",
+    "City": "Story City"
+  },
+  {
+    "Id": 4,
+    "Name": "University Library",
+    "Address": "20 Study Road",
+    "City": "Knowledgeville"
+  },
+  {
+    "Id": 5,
+    "Name": "Public Library",
+    "Address": "3 Culture Plaza",
+    "City": "Knowledge City"
+  }
+]

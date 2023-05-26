@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "t8TToH+KMfjRYx3SGEGg8VwLH53mF4iu0+nb9l/IvJr7WKSEqCgqH7FL/g54PIy6ezxL9CeeElwOQlZ+0W85GQ==",
+  "dgSpecHash": "2awFQ49NyR3mgVNXW/60g5sHlu1rYLjugeEpIOl1ih9g5i0sAsP4g9FtrD/rAcZ1HFWWmyoIZl1ySgIr98tYxQ==",
   "success": true,
-  "projectFilePath": "/Users/alexia/Documents/BooksLibrary/book-library-backend/books-library.Data/books-library.Data.csproj",
+  "projectFilePath": "/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Data/books-library.Data.csproj",
   "expectedPackageFiles": [
     "/Users/alexia/.nuget/packages/microsoft.entityframeworkcore/7.0.5/microsoft.entityframeworkcore.7.0.5.nupkg.sha512",
     "/Users/alexia/.nuget/packages/microsoft.entityframeworkcore.abstractions/7.0.5/microsoft.entityframeworkcore.abstractions.7.0.5.nupkg.sha512",

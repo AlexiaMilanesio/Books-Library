@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/alexia/Documents/BooksLibrary/book-library-backend/books-library.Data/books-library.Data.csproj": {}
+    "/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Data/books-library.Data.csproj": {}
   },
   "projects": {
-    "/Users/alexia/Documents/BooksLibrary/book-library-backend/books-library.Data/books-library.Data.csproj": {
+    "/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Data/books-library.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/alexia/Documents/BooksLibrary/book-library-backend/books-library.Data/books-library.Data.csproj",
+        "projectUniqueName": "/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Data/books-library.Data.csproj",
         "projectName": "books-library.Data",
-        "projectPath": "/Users/alexia/Documents/BooksLibrary/book-library-backend/books-library.Data/books-library.Data.csproj",
+        "projectPath": "/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Data/books-library.Data.csproj",
         "packagesPath": "/Users/alexia/.nuget/packages/",
-        "outputPath": "/Users/alexia/Documents/BooksLibrary/book-library-backend/books-library.Data/obj/",
+        "outputPath": "/Users/alexia/Documents/Studies/Cursos/Programming/Blazar-Group/BooksLibrary/book-library-backend/books-library.Data/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/alexia/.nuget/NuGet/NuGet.Config"
