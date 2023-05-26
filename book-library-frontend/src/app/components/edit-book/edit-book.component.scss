@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin: auto;
+  padding-top: 3em;
 }
 
 h2 {
@@ -12,53 +12,47 @@ h2 {
 }
 
 .edit-book-container {
-  display: flex;
-  flex-direction: column;
-  width: 500px;
+  padding: 3em 4em;
 
-  p {
+  form {
     display: flex;
-    justify-content: flex-start;
-    align-self: flex-start;
-    padding: 1em;
-    margin-left: 1em;
-    border-radius: 2px;
-    background-color: rgb(236, 234, 239);
+    flex-direction: column;
+    width: 500px;
+
+    mat-card-title {
+      margin-bottom: 1.5em;
+    }
+
+    mat-card-subtitle {
+      font-size: 1.3em;
+      margin-bottom: 2em;
+    }
   }
-
-  input {
-    margin: 1em;
-    padding: 1em;
-  }
-}
-
-button {
-  align-self: center;
-  padding: 1em;
-}
-
-button:hover {
-  cursor: pointer;
-}
-
-.delete-btn {
-  color: rgb(236, 55, 55);
-}
-
-.edit-btn {
-  color: rgb(255, 136, 0)
 }
 
 .btn-container {
-  width: 450px;
+  margin-top: 1em;
   display: flex;
   justify-content: space-around;
 }
 
-.message {
-  width: 100%;
-  text-align: center;
+.delete-btn, .edit-btn {
+  color: white;
+}
+
+.delete-btn {
+  background-color: rgb(236, 55, 55);
+}
+
+.edit-btn {
+  background-color: rgb(255, 136, 0)
+}
+
+.success-message, .error-message {
   margin-top: 2em;
-  color: black;
-  font-weight: bold;
+  text-align: center;
+}
+
+.success-message {
+  color: rgb(7, 162, 7);
 }

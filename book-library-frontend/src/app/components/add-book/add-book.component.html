@@ -1,38 +1,130 @@
-<h2>Adding book</h2>
-
 <div class="general-container">
-  <div class="add-book-container">
-    <input type="text" placeholder="Enter title" #title />
-    <input type="text" placeholder="Enter year" #year />
-    <input type="text" placeholder="Enter publisher" #publisher />
-    <input type="text" placeholder="Enter image url" #image_url />
-    <input type="text" placeholder="Enter library id" #libraryId />
-    <input type="text" placeholder="Enter author name" #authorId />
+  <mat-card class="add-book-container">
+    <form #addBookForm="ngForm" (ngSubmit)="addBook(addBookForm.value)">
+      <mat-card-title>Adding new book</mat-card-title>
 
-    <div class="btn-container">
-      <button
-        (click)="addBook(title.value, year.value, publisher.value, image_url.value, libraryId.value, authorId.value)" class="add-btn"
-      >
-        Add book
-      </button>
+      <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input
+          type="text"
+          name="title"
+          placeholder="Enter title"
+          title
+          ngModel
+          matInput
+          required
+        />
+      </mat-form-field>
 
-      <button (click)="goToLibraries()">Show libraries</button>
-    </div>
-  </div>
+      <mat-form-field>
+        <mat-label>Year</mat-label>
+        <input
+          type="text"
+          name="year"
+          placeholder="Enter year"
+          year
+          ngModel
+          matInput
+          required
+        />
+      </mat-form-field>
 
-  <div *ngIf="book" class="added-book-container">
-    <h3>Added book</h3>
+      <mat-form-field>
+        <mat-label>Publisher</mat-label>
+        <input
+          type="text"
+          name="publisher"
+          placeholder="Enter publisher"
+          publisher
+          ngModel
+          matInput
+          required
+        />
+      </mat-form-field>
 
-    <div class="added-book">
-        <p>Isbn: {{ book.isbn }}</p>
-        <p class="book-title">Title: {{ book.title }}</p>
-        <p>Year: {{ book.year }}</p>
-        <p>Publisher: {{ book.publisher }}</p>
-        <img src="{{ book.image_url }}" alt="Book cover" />
-        <p>Library id: {{ book.libraryId }}</p>
-        <p>Author: {{ book.author }}</p>
-    </div>
+      <mat-form-field>
+        <mat-label>Image</mat-label>
+        <input
+          type="text"
+          name="image_url"
+          placeholder="Enter image url"
+          image_url
+          ngModel
+          matInput
+          required
+        />
+      </mat-form-field>
 
-    <p *ngIf="message" class="message">{{ message }}</p>
-  </div>
+      <mat-form-field>
+        <mat-label>Library</mat-label>
+        <mat-select
+          libraryId
+          name="libraryId"
+          [formControl]="selectedLibraryId"
+          (ngModelChange)="selectionChange()"
+          required
+        >
+          <mat-option
+            *ngFor="let library of libraries"
+            value="{{ library.id }}"
+          >
+            {{ library.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Author</mat-label>
+        <input
+          type="text"
+          name="author"
+          placeholder="Enter author name"
+          author
+          ngModel
+          matInput
+          required
+        />
+      </mat-form-field>
+
+      <div class="btn-container">
+        <button
+          type="submit"
+          mat-raised-button
+          color="primary"
+          class="add-btn"
+          [disabled]="addBookForm.invalid"
+        >
+          Add book
+        </button>
+
+        <button (click)="goToLibraries()" mat-raised-button color="primary">
+          Show libraries
+        </button>
+      </div>
+    </form>
+
+    <mat-error *ngIf="formErrorMessage" class="error-message">
+      {{ formErrorMessage }}
+    </mat-error>
+  </mat-card>
+
+
+  <mat-card *ngIf="book" class="added-book-container">
+    <mat-card-subtitle>Added book</mat-card-subtitle>
+    
+    <p>Isbn: {{ book.isbn }}</p>
+    <p class="book-title">Title: {{ book.title }}</p>
+    <p>Year: {{ book.year }}</p>
+    <p>Publisher: {{ book.publisher }}</p>
+    <img src="{{ book.image_url }}" alt="Book cover" />
+    <p>Library: {{ selectedLibraryId.value }}</p>
+    <p>Author: {{ book.author }}</p>
+
+    <mat-error *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </mat-error>
+    <mat-error *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </mat-error>
+  </mat-card>
 </div>

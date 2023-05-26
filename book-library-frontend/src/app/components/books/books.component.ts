@@ -48,7 +48,9 @@ export class BooksComponent implements OnInit {
 
 
   public getNextPage(): void {
-    this.pageNumber = this.pageNumber + 1;
+    if (this.pageNumber < this.totalPages) {
+      this.pageNumber = this.pageNumber + 1;
+    }
     if (this.selectedOrder.value === "titleOrder") {
       this.sortBooksByTitle();
       return;
@@ -73,7 +75,9 @@ export class BooksComponent implements OnInit {
 
 
   public getPreviousPage(): void {
-    this.pageNumber = this.pageNumber - 1;
+    if (this.pageNumber > 1) {
+      this.pageNumber = this.pageNumber - 1;
+    }
     if (this.selectedOrder.value === "titleOrder") {
       this.sortBooksByTitle();
       return;

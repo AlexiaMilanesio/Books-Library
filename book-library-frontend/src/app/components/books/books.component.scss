@@ -14,7 +14,7 @@ h2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 1em auto;
+  margin: .3em auto;
 
   .show-libraries-btn {
     border: none;
@@ -92,6 +92,10 @@ table {
     color: white;
     font-weight: bold;
     background-color: rgb(110, 19, 195);
+  }
+
+  button:hover {
+    cursor: pointer;
   }
 
   mat-form-field {

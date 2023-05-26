@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Book } from 'src/app/models/models';
+import { Book, Library } from 'src/app/models/models';
 import { BookService } from 'src/app/services/book.service';
 
 @Component({
@@ -9,55 +10,72 @@ import { BookService } from 'src/app/services/book.service';
   styleUrls: ['./edit-book.component.scss'],
 })
 export class EditBookComponent implements OnInit {
+  libraries!: Library[];
   currentBook!: Book;
-  message: string = "";
+  successMessage: string | undefined;
+  errorMessage: string | undefined;
+  selectedLibraryId;
+
 
   constructor(private booksService: BookService, private router: Router) {
+    this.booksService.getLibraries().subscribe((libraries) => {
+      this.libraries = libraries.data;
+    });
+
     this.currentBook = this.booksService.currentBook;
+    this.selectedLibraryId = new FormControl(this.currentBook.libraryId);
   }
 
   ngOnInit(): void {}
 
-  public editBook(title: string, year: string, publisher: string, image_url: string, libraryId: string, author: string): void {
+
+  public compareWith(object1: any, object2: any): boolean {
+    return object1 && object2 && object1.label === object2.label;
+  }
+  
+
+  public editBook(formValue: Book): void {
+    console.log(formValue)
+
     const editedBook: Book = {
       isbn: this.currentBook.isbn,
-      title: title,
-      year: Number(year),
-      publisher: publisher,
-      image_url: image_url,
-      libraryId: Number(libraryId),
-      author: author,
+      title: formValue.title,
+      year: Number(formValue.year),
+      publisher: formValue.publisher,
+      image_url: formValue.image_url,
+      libraryId: this.selectedLibraryId.value,
+      author: formValue.author,
     };
+    console.log(editedBook)
 
-    this.booksService.editBook(editedBook).subscribe(book => {
+    this.booksService.editBook(editedBook).subscribe((book) => {
       try {
-        if (!book) throw ({ message: "Book couldn't be edited" });
-
+        if (!book) throw { message: "Book couldn't be edited" };
         else {
-          console.log("Edited book:");
+          console.log('Edited book:');
           console.log(book);
-          this.message = "Book successfully edited";
+          this.errorMessage = undefined;
+          this.successMessage = 'Book successfully edited';
         }
-      }
-      catch (e: any) {
-        this.message = e.message;
+      } catch (e: any) {
+        this.errorMessage = e.message;
       }
     });
   }
 
-  
+
   public deleteBook(): void {
-    this.booksService.deleteBook(this.currentBook.isbn).subscribe(book => {
+    this.booksService.deleteBook(this.currentBook.isbn).subscribe((book) => {
       try {
-        if (!book) throw ({ message: "Book couldn't be deleted" });
+        if (!book) throw { message: "Book couldn't be deleted" };
         else {
-          console.log("Deleted book:");
+          console.log('Deleted book:');
           console.log(book);
-          this.message = "Book successfully deleted";
+          this.errorMessage = undefined;
+          this.successMessage = 'Book successfully deleted';
         }
-      }
-      catch(e: any) {
-        this.message = e.message;
+      } catch (e: any) {
+        this.errorMessage = e.message;
       }
     });
   }

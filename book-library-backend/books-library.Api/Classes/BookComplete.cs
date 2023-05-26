@@ -8,7 +8,7 @@ namespace books_library.Api.Wrappers
         public int year { get; set; }
         public string publisher { get; set; }
         public string image_url { get; set; }
-        public int libraryId { get; set; }
+        public int library { get; set; }
         public string author { get; set; }
     }
 }

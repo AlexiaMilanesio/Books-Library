@@ -14,6 +14,8 @@
     <button
       (click)="getBookId(bookId.value); bookId.value = ''"
       class="search-button"
+      mat-raised-button 
+      color="primary"
     >
       Search
     </button>
@@ -26,12 +28,16 @@
         placeholder="Enter book title" 
         matInput
         #bookTitle 
+        mat-raised-button 
+        color="primary"
       />
     </mat-form-field>
 
     <button
       (click)="getBooksByTitle(bookTitle.value); bookTitle.value = ''"
       class="search-button"
+      mat-raised-button 
+      color="primary"
     >
       Search
     </button>
@@ -49,6 +55,8 @@
     <button
       (click)="getBooksByAuthor(bookAuthor.value); bookAuthor.value = ''"
       class="search-button"
+      mat-raised-button 
+      color="primary"
     >
       Search
     </button>

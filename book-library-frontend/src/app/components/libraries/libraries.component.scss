@@ -7,10 +7,10 @@ h2 {
 
 .search-container {
   width: 100%;
-  padding-left: 3em;
-  margin: 1.5em 0 2em 0;
   display: flex;
-  gap: 3em;
+  justify-content: space-around;
+  margin-top: 1.5em;
+  margin-bottom: 2em;
 }
 
 .search-engine-container {
@@ -24,17 +24,9 @@ h2 {
   }
 }
 
-.search-button {
-  border: none;
-  border-radius: 3px;
-  padding: .5em 1em;
-  color: white;
-  font-weight: bold;
-  background-color: rgb(110, 19, 195);
-}
-
-.search-button:hover {
-  cursor: pointer;
+mat-form-field {
+  width: 280px;
+  margin-right: .5em;
 }
 
 .libraries-container {

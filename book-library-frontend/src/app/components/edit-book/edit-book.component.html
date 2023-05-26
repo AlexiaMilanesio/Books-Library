@@ -1,55 +1,120 @@
 <div class="general-container">
-  <h2>Editing book</h2>
+  <mat-card class="edit-book-container">
+    <form #editBookForm="ngForm" (ngSubmit)="editBook(editBookForm.value)">
+      <mat-card-title>Editing book</mat-card-title>
+      <mat-card-subtitle #isbn>Isbn: {{ currentBook.isbn }}</mat-card-subtitle>
 
-  <div class="edit-book-container">
-    <p #isbn>Isbn: {{ currentBook.isbn }}</p>
-    <input
-      type="text"
-      placeholder="Enter title"
-      [value]="currentBook.title"
-      #title
-    />
-    <input
-      type="text"
-      placeholder="Enter year"
-      [value]="currentBook.year"
-      #year
-    />
-    <input
-      type="text"
-      placeholder="Enter publisher"
-      [value]="currentBook.publisher"
-      #publisher
-    />
-    <input
-      type="text"
-      placeholder="Enter image url"
-      [value]="currentBook.image_url"
-      #image_url
-    />
-    <input
-      type="text"
-      placeholder="Enter library id"
-      [value]="currentBook.libraryId"
-      #libraryId
-    />
-    <input
-      type="text"
-      placeholder="Enter author name"
-      [value]="currentBook.author"
-      #author
-    />
-  </div>
+      <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input
+          type="text"
+          name="title"
+          placeholder="Enter title"
+          ngModel="{{ currentBook.title }}"
+          title
+          ngModel
+          matInput
+          required
+        />
+      </mat-form-field>
 
+      <mat-form-field>
+        <mat-label>Year</mat-label>
+        <input
+          type="text"
+          name="year"
+          placeholder="Enter year"
+          ngModel="{{ currentBook.year }}"
+          year
+          ngModel
+          matInput
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Publisher</mat-label>
+        <input
+          type="text"
+          name="publisher"
+          placeholder="Enter publisher"
+          ngModel="{{ currentBook.publisher }}"
+          publisher
+          ngModel
+          matInput
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Image</mat-label>
+        <input
+          type="text"
+          name="image_url"
+          placeholder="Enter image url"
+          ngModel="{{ currentBook.image_url }}"
+          image_url
+          ngModel
+          matInput
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Library</mat-label>
+        <mat-select
+          name="libraryId"
+          [formControl]="selectedLibraryId"
+          [compareWith]="compareWith"
+          required
+        >
+          <mat-option *ngFor="let library of libraries" value="{{ library.id }}">
+            {{ library.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Author</mat-label>
+        <input
+          type="text"
+          name="author"
+          placeholder="Enter author name"
+          ngModel="{{ currentBook.author }}"
+          author
+          ngModel
+          matInput
+          required
+        />
+      </mat-form-field>
+
+      
+      <div class="btn-container">
+        <button
+          type="submit"
+          mat-raised-button
+          class="edit-btn"
+          [disabled]="editBookForm.invalid"
+        >
+          Edit book
+        </button>
   
-  <div class="btn-container">
-    <button (click)="editBook(title.value, year.value, publisher.value, image_url.value, libraryId.value, author.value)" class="edit-btn">
-      Edit book
-    </button>
-    <button (click)="deleteBook()" class="delete-btn">Delete book</button>
-    <button (click)="goToLibraries()">Show libraries</button>
-  </div>
+        <button (click)="deleteBook()" mat-raised-button class="delete-btn">
+          Delete book
+        </button>
+  
+        <button (click)="goToLibraries()" mat-raised-button color="primary">
+          Show libraries
+        </button>
+      </div>
+    </form>
 
 
-  <p *ngIf="message !== ''" class="message">{{ message }}</p>
+    <mat-error *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </mat-error>
+    <mat-error *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </mat-error>
+  </mat-card>
 </div>
