@@ -22,7 +22,7 @@ mat-card {
     margin: .5em 0;
   }
 
-  .add-btn {
+  .add-btn:enabled {
     background-color: rgb(67, 178, 60);
   }
 }

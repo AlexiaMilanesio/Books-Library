@@ -1,7 +1,6 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
-import { Book, Filter, Library } from 'src/app/models/models';
+import { Component, OnInit } from '@angular/core';
+import { Book, Library, Filter } from 'src/app/models/models';
 import { BookService } from 'src/app/services/book.service';
-// import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
@@ -9,249 +8,228 @@ import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-books',
   templateUrl: './books.component.html',
-  styleUrls: ['./books.component.scss']
+  styleUrls: ['./books.component.scss'],
 })
 export class BooksComponent implements OnInit {
+  libraries!: Library[];
   libraryId: number | undefined;
   bookId: string | undefined;
   bookTitle: string | undefined;
   bookAuthor: string | undefined;
+
+  filter!: Filter;
   selectedOrder = new FormControl('');
+
   displayedColumns!: string[];
   books!: MatTableDataSource<Book>;
-  errorMessage: string | undefined;
+  
   length!: number;
-  pageNumber: number = 1; 
+  pageNumber: number = 1;
   lastPageNumber!: number;
   pageSize: number = 10;
   totalPages!: number;
   totalRecords!: number;
-  selectedPagination= new FormControl('10');
+  selectedPagination = new FormControl('10');
+
+  errorMessage: string | undefined;
 
 
   constructor(private booksService: BookService, private router: Router) {
+    this.booksService.getLibraries().subscribe((libraries) => {
+      this.libraries = libraries.data;
+    })
+
     this.libraryId = this.booksService.currentLibraryId;
     this.bookId = this.booksService.currentBookId;
-    this.bookAuthor = this.booksService.currentBookAuthor;
     this.bookTitle = this.booksService.currentBookTitle;
+    this.bookAuthor = this.booksService.currentBookAuthor;
+
+    this.filter = this.libraryId
+      ? { filter: this.libraryId.toString(), filterType: 'libraryId' }
+      : this.bookId // todo revisar
+      ? { filter: this.bookId, filterType: 'bookId' }
+      : this.bookTitle
+      ? { filter: this.bookTitle, filterType: 'bookTitle' }
+      : this.bookAuthor
+      ? { filter: this.bookAuthor, filterType: 'bookAuthor' }
+      : { filter: '', filterType: '' };
   }
 
   ngOnInit(): void {}
 
   ngAfterViewInit() {
-    if (this.libraryId) this.getLibraryBooks();
-    else if (this.bookId) this.getBookById();
-    else if (this.bookTitle) this.getBooksByTitle();
-    else if (this.bookAuthor) this.getBooksByAuthor();
-    else this.errorMessage = "There has been an error while loading books";
+    this.getServerData();
+  }
+
+
+  public getServerData(): void {
+    if (this.selectedOrder.value === 'titleOrder') {
+      this.sortBooksByTitle();
+      return;
+    }
+    else if (this.selectedOrder.value === 'yearOrder') {
+      this.sortBooksByYear();
+      return;
+    } 
+    else if (this.libraryId) {
+      this.getLibraryBooks();
+      return;
+    } 
+    else if (this.bookId) {
+      this.getBookById();
+      return;
+    } 
+    else if (this.bookTitle) {
+      this.getBooksByTitle();
+      return;
+    } 
+    else if (this.bookAuthor) {
+      this.getBooksByAuthor();
+      return;
+    } 
+    else {
+      this.errorMessage = 'There has been an error while loading books, try again later';
+      setTimeout(() => {
+        this.errorMessage = undefined;
+        this.router.navigate(['Libraries']);
+      }, 4000);
+    }
   }
 
 
   public getNextPage(): void {
-    if (this.pageNumber < this.totalPages) {
-      this.pageNumber = this.pageNumber + 1;
-    }
-    if (this.selectedOrder.value === "titleOrder") {
-      this.sortBooksByTitle();
-      return;
-    }
-    if (this.selectedOrder.value === "yearOrder") {
-      this.sortBooksByYear();
-      return;
-    }
-    if (this.libraryId) {
-      this.getLibraryBooks();
-      return;
-    }
-    if (this.bookTitle) {
-      this.getBooksByTitle();
-      return;
-    }
-    if (this.bookAuthor) {
-      this.getBooksByAuthor();
-      return;
-    }
+    if (this.pageNumber < this.totalPages) this.pageNumber = this.pageNumber + 1;
+    this.getServerData();
   }
 
 
   public getPreviousPage(): void {
-    if (this.pageNumber > 1) {
-      this.pageNumber = this.pageNumber - 1;
-    }
-    if (this.selectedOrder.value === "titleOrder") {
-      this.sortBooksByTitle();
-      return;
-    }
-    if (this.selectedOrder.value === "yearOrder") {
-      this.sortBooksByYear();
-      return;
-    }
-    if (this.libraryId) {
-      this.getLibraryBooks();
-      return;
-    }
-    if (this.bookTitle) {
-      this.getBooksByTitle();
-      return;
-    }
-    if (this.bookAuthor) {
-      this.getBooksByAuthor();
-      return;
-    }
+    if (this.pageNumber > 1) this.pageNumber = this.pageNumber - 1;
+    this.getServerData();
   }
 
 
   public getFirstPage(): void {
     this.pageNumber = 1;
-    if (this.selectedOrder.value === "titleOrder") {
-      this.sortBooksByTitle();
-      return;
-    }
-    if (this.selectedOrder.value === "yearOrder") {
-      this.sortBooksByYear();
-      return;
-    }
-    if (this.libraryId) {
-      this.getLibraryBooks();
-      return;
-    }
-    if (this.bookTitle) {
-      this.getBooksByTitle();
-      return;
-    }
-    if (this.bookAuthor) {
-      this.getBooksByAuthor();
-      return;
-    }
+    this.getServerData();
   }
 
 
   public getLastPage(): void {
+    this.updateTotalPages();
     this.pageNumber = this.totalPages;
-    if (this.selectedOrder.value === "titleOrder") {
-      this.sortBooksByTitle();
-      return;
-    }
-    if (this.selectedOrder.value === "yearOrder") {
-      this.sortBooksByYear();
-      return;
-    }
-    if (this.libraryId) {
-      this.getLibraryBooks();
-      return;
-    }
-    if (this.bookTitle) {
-      this.getBooksByTitle();
-      return;
-    }
-    if (this.bookAuthor) {
-      this.getBooksByAuthor();
-      return;
-    }
+    this.getServerData();
+  }
+
+
+  public getLibraryName(id: number): string {
+    let libraryName = this.libraries.find(library => library.id === id)?.name;
+    return libraryName ? libraryName : "";
   }
 
 
   public getLibraryBooks(): void {
     if (this.libraryId) {
-      this.booksService.getBooksByLibrary(this.libraryId, this.pageNumber, this.pageSize).subscribe((response) => {
-        try {
-          if (response.data.length === 0 || response === undefined) {
-            throw ({ message: "No books where found in this library" });
-          }
-          else {
+      this.booksService
+        .getBooksByLibrary(this.libraryId, this.pageNumber, this.pageSize)
+        .subscribe((response) => {
+          try {
+            if (response.data.length === 0 || response === undefined) throw { message: 'No books where found in this library' }; 
+            
             this.books = new MatTableDataSource(response.data);
             this.displayedColumns = Object.keys(response.data[0]);
             this.length = response.totalRecords;
             this.totalPages = response.totalPages;
             this.totalRecords = response.totalRecords;
+          } 
+          catch (e: any) {
+            this.errorMessage = e.message;
+            setTimeout(() => {
+              this.errorMessage = undefined;
+              this.booksService.currentLibraryId = undefined;
+              this.router.navigate(['Libraries']);
+            }, 4000);
           }
-        }
-        catch (e: any) {
-          this.errorMessage = e.message;
-          setTimeout(() => {
-            this.errorMessage = "";
-            this.booksService.currentLibraryId = undefined;
-            this.router.navigate(['Libraries']);
-          }, 4000);
-        }
-      })
+        });
     }
   }
 
 
   public getBookById(): void {
     if (this.bookId) {
-      this.booksService.getBookById(this.bookId).subscribe(response => {
+      this.booksService.getBookById(this.bookId).subscribe((response) => {
         try {
-          console.log(response)
-          if (response.data.length === 0) throw ({ message: "No book was found, try with a different id"});
-  
+          console.log(response);
+          if (response.data.length === 0) throw { message: 'No book was found, try with a different id' };
+
           this.books = new MatTableDataSource(response.data);
           this.displayedColumns = Object.keys(response.data[0]);
-        }
+        } 
         catch (e: any) {
           this.errorMessage = e.message;
           setTimeout(() => {
-            this.errorMessage = "";
+            this.errorMessage = undefined;
             this.booksService.currentBookId = undefined;
             this.router.navigate(['Libraries']);
           }, 4000);
         }
-      })
+      });
     }
   }
 
 
   public getBooksByTitle(): void {
     if (this.bookTitle) {
-      this.booksService.getBooksByTitle(this.bookTitle, this.pageNumber, this.pageSize).subscribe(response => {
-        try {
-          console.log(response)
-          if (response.data.length === 0 || response === undefined) {
-            throw ({ message: "No books where found with this title" });
+      this.booksService
+        .getBooksByTitle(this.bookTitle, this.pageNumber, this.pageSize)
+        .subscribe((response) => {
+          try {
+            console.log(response);
+            if (response.data.length === 0 || response === undefined) throw { message: 'No books where found, try with a different title' };
+    
+            this.books = new MatTableDataSource(response.data);
+            this.displayedColumns = Object.keys(response.data[0]);
+            this.length = response.totalRecords;
+            this.totalPages = response.totalPages;
+            this.totalRecords = response.totalRecords;
+          } 
+          catch (e: any) {
+            this.errorMessage = e.message;
+            setTimeout(() => {
+              this.errorMessage = undefined;
+              this.booksService.currentBookTitle = undefined;
+              this.router.navigate(['Libraries']);
+            }, 4000);
           }
-          this.books = new MatTableDataSource(response.data);
-          this.displayedColumns = Object.keys(response.data[0]);
-          this.length = response.totalRecords;
-          this.totalPages = response.totalPages;
-          this.totalRecords = response.totalRecords;
-        }
-        catch (e: any) {
-          this.errorMessage = e.message;
-          setTimeout(() => {
-            this.errorMessage = "";
-            this.booksService.currentBookTitle = undefined;
-            this.router.navigate(['Libraries']);
-          }, 4000);
-        }
-      });
+        });
     }
   }
 
-  
+
   public getBooksByAuthor(): void {
     if (this.bookAuthor) {
-      this.booksService.getBooksByAuthor(this.bookAuthor, this.pageNumber, this.pageSize).subscribe(response => {
-        try {
-          console.log(response)  
-          if (response.data.length === 0 || response === undefined) {
-            throw ({ message: "No books where found of this author" });
+      this.booksService
+        .getBooksByAuthor(this.bookAuthor, this.pageNumber, this.pageSize)
+        .subscribe((response) => {
+          try {
+            console.log(response);
+            if (response.data.length === 0 || response === undefined) throw { message: 'No books where found of this author' };
+
+            this.books = new MatTableDataSource(response.data);
+            this.displayedColumns = Object.keys(response.data[0]);
+            this.length = response.totalRecords;
+            this.totalPages = response.totalPages;
+            this.totalRecords = response.totalRecords;
+          } 
+          catch (e: any) {
+            this.errorMessage = e.message;
+            setTimeout(() => {
+              this.errorMessage = undefined;
+              this.booksService.currentBookAuthor = undefined;
+              this.router.navigate(['Libraries']);
+            }, 4000);
           }
-          this.books = new MatTableDataSource(response.data);
-          this.displayedColumns = Object.keys(response.data[0]);
-          this.length = response.totalRecords;
-          this.totalPages = response.totalPages;
-          this.totalRecords = response.totalRecords;
-        }
-        catch (e: any) {
-          this.errorMessage = e.message;
-          setTimeout(() => {
-            this.errorMessage = "";
-            this.booksService.currentBookAuthor = undefined;
-            this.router.navigate(['Libraries']);
-          }, 4000);
-        }
-      });
+        });
     }
   }
 
@@ -267,98 +245,85 @@ export class BooksComponent implements OnInit {
 
   public goToEditMode(bookToEdit: Book): void {
     this.booksService.setCurrentBook(bookToEdit);
-    this.router.navigate(["EditBook"]);
+    this.router.navigate(['EditBook']);
   }
 
 
   public orderChange(): void {
     this.pageNumber = 1;
 
-    if (this.selectedOrder.value === "titleOrder") this.sortBooksByTitle();
-    else if (this.selectedOrder.value === "yearOrder") this.sortBooksByYear();
+    if (this.selectedOrder.value === 'titleOrder') {
+      this.sortBooksByTitle();
+      return;
+    } 
+    else if (this.selectedOrder.value === 'yearOrder') {
+      this.sortBooksByYear();
+      return;
+    } 
     else {
       this.books = new MatTableDataSource(this.books.data);
       this.displayedColumns = Object.keys(this.books.data[0]);
     }
   }
 
-  public pageSizeChange(): void {
-    if (this.selectedPagination.value === "10") this.pageSize = 10;
-    else if (this.selectedPagination.value === "25") this.pageSize = 25;
-    else if (this.selectedPagination.value === "50") this.pageSize = 50;
-    else if (this.selectedPagination.value === "100") this.pageSize = 100;
-    
-    let totalPages = Math.ceil(this.totalRecords / this.pageSize);
-    if (totalPages < this.pageNumber) {
-      console.log(this.pageNumber)
-      this.pageNumber = totalPages;
-    } else {
-      console.log(this.pageNumber)
-      this.pageNumber;
-    }
 
-    if (this.libraryId) this.getLibraryBooks();
-    else if (this.bookId) this.getBookById();
-    else if (this.bookTitle) this.getBooksByTitle();
-    else if (this.bookAuthor) this.getBooksByAuthor();
-    else this.errorMessage = "There has been an error while loading books";
+  public pageSizeChange(): void {
+    if (this.selectedPagination.value === '10') this.pageSize = 10;
+    else if (this.selectedPagination.value === '25') this.pageSize = 25;
+    else if (this.selectedPagination.value === '50') this.pageSize = 50;
+    else if (this.selectedPagination.value === '100') this.pageSize = 100;
+
+    this.updateTotalPages();
+    this.getServerData();
   }
 
-  
+
+  public updateTotalPages() {
+    this.totalPages = Math.ceil(this.totalRecords / this.pageSize);
+
+    if (this.totalPages < this.pageNumber) this.pageNumber = this.totalPages;
+    else this.pageNumber;
+  }
+
+
   public sortBooksByTitle(): void {
-    let filter: Filter = 
-      this.libraryId ? { filter: this.libraryId.toString(), filterType: "libraryId" } : 
-      this.bookId ? { filter: this.bookId, filterType: "bookId" } : 
-      this.bookTitle ? { filter: this.bookTitle, filterType: "bookTitle" } : 
-      this.bookAuthor ? { filter: this.bookAuthor, filterType: "bookAuthor" } : 
-      { filter: '', filterType: '' };
+    this.booksService
+      .sortBooksByTitle(this.filter, this.pageNumber, this.pageSize)
+      .subscribe((response) => {
+        try {
+          console.log(response);
+          if (response.data.length === 0 || response === undefined) throw { message: "There's been an error while trying to sort books by title, try again later" };
 
-    this.booksService.sortBooksByTitle(filter, this.pageNumber, this.pageSize).subscribe(response => {
-      try {
-        console.log(response);
-        if (response.data.length === 0 || response === undefined) {
-          throw ({ message: "There's been an error while trying to sort books by title" });
+          this.books = new MatTableDataSource(response.data);
+          this.displayedColumns = Object.keys(response.data[0]);
+        } catch (e: any) {
+          this.errorMessage = e.message;
+          setTimeout(() => {
+            this.errorMessage = undefined;
+          }, 4000);
         }
-
-        this.books = new MatTableDataSource(response.data);
-        this.displayedColumns = Object.keys(response.data[0]);
-      }
-      catch (e: any) {
-        this.errorMessage = e.message;
-        setTimeout(() => {
-          this.errorMessage = "";
-        }, 4000);
-      }
-    })
+      });
   }
 
 
   public sortBooksByYear(): void {
-    let filter: Filter = 
-      this.libraryId ? { filter: this.libraryId.toString(), filterType: "libraryId" } : 
-      this.bookId ? { filter: this.bookId, filterType: "bookId" } : 
-      this.bookTitle ? { filter: this.bookTitle, filterType: "bookTitle" } : 
-      this.bookAuthor ? { filter: this.bookAuthor, filterType: "bookAuthor" } : 
-      { filter: '', filterType: '' };
-      
-    this.booksService.sortBooksByYear(filter, this.pageNumber, this.pageSize).subscribe(response => {
-      try {
-        console.log(response);
-        if (response.data.length === 0 || response === undefined) {
-          throw ({ message: "There's been an error while trying to sort books by year" });
-        }
+    this.booksService
+      .sortBooksByYear(this.filter, this.pageNumber, this.pageSize)
+      .subscribe((response) => {
+        try {
+          console.log(response);
+          if (response.data.length === 0 || response === undefined) throw { message: "There's been an error while trying to sort books by year, try again later" };
 
-        this.books = new MatTableDataSource(response.data);
-        this.displayedColumns = Object.keys(response.data[0]);
-      }
-      catch (e: any) {
-        this.errorMessage = e.message;
-        setTimeout(() => {
-          this.errorMessage = "";
-          // this.selectedOrder.value = "";
-          this.router.navigate(['Libraries']);
-        }, 4000);
-      }
-    })
+          this.books = new MatTableDataSource(response.data);
+          this.displayedColumns = Object.keys(response.data[0]);
+        } 
+        catch (e: any) {
+          this.errorMessage = e.message;
+          setTimeout(() => {
+            this.errorMessage = undefined;
+            this.router.navigate(['Libraries']);
+          }, 4000);
+        }
+      });
   }
 }

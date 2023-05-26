@@ -1,7 +1,7 @@
 <div class="general-container">
   <mat-card>
     <form #editionForm="ngForm" (ngSubmit)="editUser(editionForm.value)">
-      <mat-card-title>Edit</mat-card-title>
+      <mat-card-title>Editing user</mat-card-title>
 
       <mat-form-field>
         <mat-label>Name</mat-label>
@@ -55,18 +55,24 @@
         />
       </mat-form-field>
 
-      <button
-        type="submit"
-        mat-raised-button
-        color="primary"
-        [disabled]="editionForm.invalid"
-      >
-        Edit
-      </button>
+      <div class="btn-container">
+        <button
+          type="submit"
+          mat-raised-button
+          [disabled]="editionForm.invalid"
+          class="edit-btn"
+        >
+          Edit user
+        </button>
+  
+        <button (click)="goToProfile()" mat-raised-button color="primary" class="go-back-btn">
+          <mat-icon style="margin:0; padding:0;">arrow_back</mat-icon>Profile
+        </button>
+      </div>
     </form>
-  </mat-card>
 
-  <div *ngIf="editionError" class="message-container">
-    <p class="edition-error">{{ message }}</p>
-  </div>
+
+    <mat-error *ngIf="errorMessage" class="error-message">{{ errorMessage }}</mat-error>
+    <mat-error *ngIf="successMessage" class="success-message">{{ successMessage }}</mat-error>
+  </mat-card>
 </div>

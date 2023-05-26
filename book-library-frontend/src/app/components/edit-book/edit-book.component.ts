@@ -35,8 +35,6 @@ export class EditBookComponent implements OnInit {
   
 
   public editBook(formValue: Book): void {
-    console.log(formValue)
-
     const editedBook: Book = {
       isbn: this.currentBook.isbn,
       title: formValue.title,
@@ -46,7 +44,6 @@ export class EditBookComponent implements OnInit {
       libraryId: this.selectedLibraryId.value,
       author: formValue.author,
     };
-    console.log(editedBook)
 
     this.booksService.editBook(editedBook).subscribe((book) => {
       try {
@@ -81,7 +78,7 @@ export class EditBookComponent implements OnInit {
   }
 
 
-  public goToLibraries(): void {
-    this.router.navigate(['Libraries']);
+  public goToBooks(): void {
+    this.router.navigate(['Books']);
   }
 }

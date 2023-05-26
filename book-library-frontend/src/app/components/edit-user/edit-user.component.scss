@@ -31,16 +31,29 @@ form {
   }
 }
 
-mat-form-field,
-button {
-  max-height: 4.9em;
+.btn-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  button {
+    color: white;
+  }
+
+  .edit-btn:enabled {
+    background-color: rgb(255, 136, 0);
+  }
+
+  .go-back-btn {
+    padding-right: 1.5em;
+  }
+} 
+
+.success-message, .error-message {
+  margin-top: 2em;
+  text-align: center;
 }
 
-.message-container {
-  text-align: center;
-  margin-top: 2em;
-
-  .register-error {
-    color: rgb(223, 39, 39);
-  }
+.success-message {
+  color: rgb(7, 162, 7);
 }

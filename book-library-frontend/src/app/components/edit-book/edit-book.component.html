@@ -1,6 +1,6 @@
 <div class="general-container">
   <mat-card class="edit-book-container">
-    <form #editBookForm="ngForm" (ngSubmit)="editBook(editBookForm.value)">
+    <form #editBookForm="ngForm">
       <mat-card-title>Editing book</mat-card-title>
       <mat-card-subtitle #isbn>Isbn: {{ currentBook.isbn }}</mat-card-subtitle>
 
@@ -68,6 +68,7 @@
           [compareWith]="compareWith"
           required
         >
+          <mat-option disabled="">Select library</mat-option>
           <mat-option *ngFor="let library of libraries" value="{{ library.id }}">
             {{ library.name }}
           </mat-option>
@@ -92,6 +93,7 @@
       <div class="btn-container">
         <button
           type="submit"
+          (click)="editBook(editBookForm.value)"
           mat-raised-button
           class="edit-btn"
           [disabled]="editBookForm.invalid"
@@ -102,9 +104,9 @@
         <button (click)="deleteBook()" mat-raised-button class="delete-btn">
           Delete book
         </button>
-  
-        <button (click)="goToLibraries()" mat-raised-button color="primary">
-          Show libraries
+
+        <button (click)="goToBooks()" mat-raised-button color="primary" class="go-back-btn">
+          <mat-icon style="margin:0; padding:0;">arrow_back</mat-icon>Books
         </button>
       </div>
     </form>

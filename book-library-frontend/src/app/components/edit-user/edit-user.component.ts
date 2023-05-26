@@ -13,7 +13,8 @@ export class EditUserComponent implements OnInit {
   id!: string;
   userToEdit!: User;
   editionError!: string;
-  message!: string;
+  successMessage: string | undefined;
+  errorMessage: string | undefined;
 
   constructor(private userService: UserService, private router: Router, private route: ActivatedRoute) {
     this.currentUser = this.userService.getCurrentUser('currentUser');
@@ -51,6 +52,7 @@ export class EditUserComponent implements OnInit {
     }
     
     let updatedUsers: User[] = [];
+
     this.userService.getUsers('users').forEach(user => {
       if (user.id === this.userToEdit.id) {
         user = editedUser;
@@ -59,7 +61,13 @@ export class EditUserComponent implements OnInit {
     });
 
     this.userService.saveData('users', updatedUsers);
+    this.successMessage = "User successfully updated";
 
+    // this.router.navigate([`Profile/${this.currentUser.id}`]);
+  }
+
+
+  public goToProfile(): void {
     this.router.navigate([`Profile/${this.currentUser.id}`]);
   }
 }
