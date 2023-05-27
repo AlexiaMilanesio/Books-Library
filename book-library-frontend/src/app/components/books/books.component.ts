@@ -97,21 +97,18 @@ export class BooksComponent implements OnInit {
   public getNextPage(): void {
     if (this.pageNumber < this.totalPages) this.pageNumber = this.pageNumber + 1;
     this.getServerData();
-    setTimeout(() => window.scrollTo(0, 0), 500); // todo buscar otra solución
   }
 
 
   public getPreviousPage(): void {
     if (this.pageNumber > 1) this.pageNumber = this.pageNumber - 1;
     this.getServerData();
-    setTimeout(() => window.scrollTo(0, 0), 500); // todo buscar otra solución
   }
 
 
   public getFirstPage(): void {
     this.pageNumber = 1;
     this.getServerData();
-    setTimeout(() => window.scrollTo(0, 0), 500); // todo buscar otra solución
   }
 
 
@@ -119,7 +116,6 @@ export class BooksComponent implements OnInit {
     this.updateTotalPages();
     this.pageNumber = this.totalPages;
     this.getServerData();
-    setTimeout(() => window.scrollTo(0, 0), 500); // todo buscar otra solución
   }
 
 
@@ -135,13 +131,16 @@ export class BooksComponent implements OnInit {
         .getBooksByLibrary(this.libraryId, this.pageNumber, this.pageSize)
         .subscribe((response) => {
           try {
-            if (response.data.length === 0 || response === undefined) throw { message: 'No books where found in this library' }; 
+            if (response.data.length === 0 || response === undefined) {
+              throw { message: 'No books where found in this library' }; 
+            }
             
             this.books = new MatTableDataSource(response.data);
             this.displayedColumns = Object.keys(response.data[0]);
             this.length = response.totalRecords;
             this.totalPages = response.totalPages;
             this.totalRecords = response.totalRecords;
+            window.scrollTo(0, 0);
           } 
           catch (e: any) {
             this.errorMessage = e.message;
@@ -158,10 +157,13 @@ export class BooksComponent implements OnInit {
       this.booksService.getBookById(this.bookId).subscribe((response) => {
         try {
           console.log(response);
-          if (response.data.length === 0) throw { message: 'No book was found, try with a different id' };
+          if (response.data.length === 0) {
+            throw { message: 'No book was found, try with a different id' };
+          }
 
           this.books = new MatTableDataSource(response.data);
           this.displayedColumns = Object.keys(response.data[0]);
+          window.scrollTo(0, 0);
         } 
         catch (e: any) {
           this.errorMessage = e.message;
@@ -178,13 +180,16 @@ export class BooksComponent implements OnInit {
         .subscribe((response) => {
           try {
             console.log(response);
-            if (response.data.length === 0 || response === undefined) throw { message: 'No books where found, try with a different title' };
+            if (response.data.length === 0 || response === undefined) {
+              throw { message: 'No books where found, try with a different title' };
+            }
     
             this.books = new MatTableDataSource(response.data);
             this.displayedColumns = Object.keys(response.data[0]);
             this.length = response.totalRecords;
             this.totalPages = response.totalPages;
             this.totalRecords = response.totalRecords;
+            window.scrollTo(0, 0);
           } 
           catch (e: any) {
             this.errorMessage = e.message;
@@ -201,13 +206,16 @@ export class BooksComponent implements OnInit {
         .subscribe((response) => {
           try {
             console.log(response);
-            if (response.data.length === 0 || response === undefined) throw { message: 'No books where found, try with a different author' };
+            if (response.data.length === 0 || response === undefined) {
+              throw { message: 'No books where found, try with a different author' };
+            }
 
             this.books = new MatTableDataSource(response.data);
             this.displayedColumns = Object.keys(response.data[0]);
             this.length = response.totalRecords;
             this.totalPages = response.totalPages;
             this.totalRecords = response.totalRecords;
+            window.scrollTo(0, 0);
           } 
           catch (e: any) {
             this.errorMessage = e.message;
@@ -275,10 +283,13 @@ export class BooksComponent implements OnInit {
       .subscribe((response) => {
         try {
           console.log(response);
-          if (response.data.length === 0 || response === undefined) throw { message: "There's been an error while trying to sort books by title, try again later" };
+          if (response.data.length === 0 || response === undefined) {
+            throw { message: "There's been an error while trying to sort books by title, try again later" };
+          }
 
           this.books = new MatTableDataSource(response.data);
           this.displayedColumns = Object.keys(response.data[0]);
+          window.scrollTo(0, 0);
         } catch (e: any) {
           this.errorMessage = e.message;
         }
@@ -292,10 +303,13 @@ export class BooksComponent implements OnInit {
       .subscribe((response) => {
         try {
           console.log(response);
-          if (response.data.length === 0 || response === undefined) throw { message: "There's been an error while trying to sort books by year, try again later" };
+          if (response.data.length === 0 || response === undefined) {
+            throw { message: "There's been an error while trying to sort books by year, try again later" };
+          }
 
           this.books = new MatTableDataSource(response.data);
           this.displayedColumns = Object.keys(response.data[0]);
+          window.scrollTo(0, 0);
         } 
         catch (e: any) {
           this.errorMessage = e.message;
