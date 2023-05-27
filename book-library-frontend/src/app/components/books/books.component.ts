@@ -16,13 +16,10 @@ export class BooksComponent implements OnInit {
   bookId: string | undefined;
   bookTitle: string | undefined;
   bookAuthor: string | undefined;
-
   filter!: Filter;
   selectedOrder = new FormControl('');
-
   displayedColumns!: string[];
   books!: MatTableDataSource<Book>;
-  
   length!: number;
   pageNumber: number = 1;
   lastPageNumber!: number;
@@ -31,7 +28,6 @@ export class BooksComponent implements OnInit {
   totalRecords!: number;
   selectedPagination = new FormControl('10');
   showPagination: boolean = true;
-
   errorMessage: string | undefined;
 
 
