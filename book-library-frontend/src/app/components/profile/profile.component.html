@@ -1,52 +1,25 @@
 <div class="general-container">
   <mat-card>
-      <mat-card-title>{{ currentUser.name }} {{ currentUser.lastname }}</mat-card-title>
-      <div class="user-info">
-        <mat-card-subtitle>User information</mat-card-subtitle>
-        <p><span>User Id:</span> {{ currentUser.id }}</p>
-        <p><span>Administrator account:</span> {{ currentUser.isSuperAdmin ? "Yes" : "No" }}</p>
-        <p><span>Name:</span> {{ currentUser.name }}</p>
-        <p><span>Lastname:</span> {{ currentUser.lastname }}</p>
-        <p><span>Email:</span> {{ currentUser.email }}</p>
-        <p><span>Password:</span> {{ currentUser.password }}</p>
-      </div>
+    <mat-card-title>{{ currentUser.name }} {{ currentUser.lastname }}</mat-card-title>
     
-      <div class="btn-container">
-          <button (click)="goToEdit(currentUser.id)" mat-raised-button  class="edit-btn">Edit account</button>
-          <!-- <button (click)="deleteAccount(currentUser.id)" mat-raised-button class="delete-btn" *ngIf="!currentUser.isSuperAdmin">Delete account</button> -->
-      </div>
+    <div class="user-info">
+      <mat-card-subtitle>User information</mat-card-subtitle>
+      
+      <p><span>Id:</span> {{ currentUser.id }}</p>
+      <p><span>Administrator account:</span> {{ currentUser.isSuperAdmin ? "Yes" : "No" }}</p>
+      <p><span>Name:</span> {{ currentUser.name }}</p>
+      <p><span>Lastname:</span> {{ currentUser.lastname }}</p>
+      <p><span>Email:</span> {{ currentUser.email }}</p>
+      <p><span>Password:</span> {{ currentUser.password }}</p>
+    </div>
+
+    <div class="btn-container">
+      <button (click)="goToEdit(currentUser.id)" mat-raised-button class="edit-btn">Edit account</button>
+    </div>
   </mat-card>
 
-  
-  <div *ngIf="currentUser.isSuperAdmin === true"  class="register-container">
-    <mat-card>
-      <mat-card-subtitle class="users-title">Users</mat-card-subtitle>
-      
-      <mat-card-header>
-        <mat-card-title class="register-title">Register new account</mat-card-title>
-          
-        <button 
-          (click)="goToRegister()" 
-          mat-raised-button 
-          color="primary"
-          class="register-btn"
-        >
-          Register account
-        </button>
-      </mat-card-header>
 
-      <mat-card-content>
-        <mat-card *ngFor="let user of users">
-          <mat-card-subtitle>User {{ user.name }} {{ user.lastname }}</mat-card-subtitle>
-          <p><span>User Id:</span> {{ user.id }}</p>
-          <p><span>Administrator account:</span> {{ user.isSuperAdmin ? "Yes" : "No" }}</p>
-          <p><span>Email:</span> {{ user.email }}</p>
-          <p><span>Password:</span> {{ user.password }}</p>
-          <button (click)="goToEdit(user.id)" class="small-edit-btn">Edit</button>
-          <button (click)="deleteAccount(user.id)" *ngIf="!user.isSuperAdmin" class="small-delete-btn">Delete</button>
-        </mat-card>
-      </mat-card-content>
-    </mat-card>
-
+  <div *ngIf="currentUser.isSuperAdmin === true">
+    <app-users></app-users>
   </div>
 </div>

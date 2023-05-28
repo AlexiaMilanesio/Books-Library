@@ -34,6 +34,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { EditUserComponent } from './components/edit-user/edit-user.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { UsersComponent } from './components/users/users.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { LoaderComponent } from './components/loader/loader.component';
     EditUserComponent,
     NavbarComponent,
     LoaderComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,

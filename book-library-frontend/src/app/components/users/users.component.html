@@ -1,0 +1,38 @@
+<mat-card class="register-container">
+  <mat-card-subtitle class="users-title">Users</mat-card-subtitle>
+
+  <mat-card-header>
+    <div>
+      <mat-card-title class="register-title">Register new account</mat-card-title>
+
+      <button (click)="goToRegister()" mat-raised-button color="primary" class="register-btn">
+        Register account
+      </button>
+    </div>
+
+    <form>
+      <mat-form-field>
+        <mat-label>Search user</mat-label>
+        <input type="text" placeholder="Search user" name="user" #user matInput />
+      </mat-form-field>
+      
+      <button type="submit" (click)="searchUser(user.value)" mat-raised-button color="primary">Search</button>
+    </form>
+  </mat-card-header>
+
+  <mat-card-content *ngIf="!errorMessage">
+    <mat-card *ngFor="let user of users">
+      <mat-card-subtitle>User {{ user.name }} {{ user.lastname }}</mat-card-subtitle>
+
+      <p><span>Id:</span> {{ user.id }}</p>
+      <p><span>Administrator account:</span> {{ user.isSuperAdmin ? "Yes" : "No" }}</p>
+      <p><span>Email:</span> {{ user.email }}</p>
+      <p><span>Password:</span> {{ user.password }}</p>
+
+      <button (click)="goToEdit(user.id)" class="small-edit-btn">Edit</button>
+      <button (click)="deleteAccount(user.id)" *ngIf="!user.isSuperAdmin" class="small-delete-btn">Delete</button>
+    </mat-card>
+  </mat-card-content>
+
+  <mat-error *ngIf="errorMessage" class="error-message">{{ errorMessage }}</mat-error>
+</mat-card>
