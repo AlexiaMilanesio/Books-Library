@@ -23,7 +23,7 @@
       <p><span>Id:</span> {{ user.id }}</p>
       <p><span>Administrator account:</span> {{ user.isSuperAdmin ? "Yes" : "No" }}</p>
       <p><span>Email:</span> {{ user.email }}</p>
-      <p><span>Password:</span> {{ user.password }}</p>
+      <!-- <p>Change password</p> -->
 
       <button (click)="goToEdit(user.id)" class="small-edit-btn">Edit</button>
       <button (click)="deleteAccount(user.id)" *ngIf="!user.isSuperAdmin" class="small-delete-btn">Delete</button>
