@@ -10,14 +10,10 @@
       </button>
     </div>
 
-    <form>
-      <mat-form-field>
-        <mat-label>Search user</mat-label>
-        <input type="text" placeholder="Search user" name="user" #user matInput />
-      </mat-form-field>
-      
-      <button type="submit" (click)="searchUser(user.value)" mat-raised-button color="primary">Search</button>
-    </form>
+    <mat-form-field>
+      <mat-label>Search user</mat-label>
+      <input type="text" placeholder="Search user" name="user" #user matInput (keyup)="searchUser(user.value)" />
+    </mat-form-field>
   </mat-card-header>
 
   <mat-card-content *ngIf="!errorMessage">

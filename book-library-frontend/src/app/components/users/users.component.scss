@@ -59,16 +59,10 @@ mat-card {
       }
     }
 
-    form {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-
-      mat-form-field {
-        width: 80%;
-      }
+    mat-form-field {
+      width: 50%;
     }
+    
   }
 
   mat-card-content {
